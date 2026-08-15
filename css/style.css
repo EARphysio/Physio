@@ -27,7 +27,7 @@
   --sp-xs:  .4rem;
   --sp-sm:  .75rem;
   --sp-md:  1.25rem;
-  --sp-lg:  2rem;
+  --sp-lg:  1.35rem;
   --sp-xl:  3.5rem;
   --sp-2xl: 6rem;
 
@@ -1543,6 +1543,298 @@ footer {
   .contact-right { order: -1; width: 100%; }
   .contact-left  { order:  1; width: 100%; }
 }
+
+/* ============================================================
+   SELF-CARE GOODS SECTION  — 自我照護好物
+   ============================================================ */
+
+/* ── 花生球卡（圖左文右，整列通欄）── */
+.goods-hero-card {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: var(--sp-xl);
+  align-items: start;
+  background: var(--white);
+  border: 1px solid var(--cream-3);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  position: relative;
+  margin-bottom: var(--sp-lg);
+  transition: box-shadow .4s var(--spring);
+}
+.goods-hero-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-lt));
+  border-radius: var(--r-xl) var(--r-xl) 0 0;
+}
+.goods-hero-card:hover {
+  box-shadow: var(--sh-lg);
+}
+
+.ghc-info-col {
+  padding: var(--sp-xl) var(--sp-xl) var(--sp-xl) 0;
+  display: flex;
+  flex-direction: column;
+  gap: .9rem;
+}
+
+.ghc-info-col h3 {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--coffee);
+  letter-spacing: .04em;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.ghc-lead {
+  font-size: .88rem;
+  color: var(--coffee-lt);
+  line-height: 1.8;
+  margin: 0;
+}
+
+.ghc-section-title {
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+  font-family: var(--font-serif);
+  font-size: .88rem;
+  font-weight: 700;
+  color: var(--coffee);
+  letter-spacing: .05em;
+  padding-bottom: .4rem;
+  border-bottom: 1px solid var(--hair);
+}
+.ghc-section-title i {
+  color: var(--gold);
+  font-size: .85rem;
+}
+
+.ghc-features {
+  display: flex;
+  flex-direction: column;
+  gap: .45rem;
+  list-style: none;
+}
+.ghc-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: .5rem;
+  font-size: .84rem;
+  color: var(--coffee);
+  line-height: 1.6;
+}
+.ghc-star {
+  flex-shrink: 0;
+  font-size: .85rem;
+}
+.ghc-tip-wash {
+  margin-top: .3rem;
+  padding: .5rem .75rem;
+  background: var(--gold-bg);
+  border: 1px solid rgba(196,151,63,.22);
+  border-radius: var(--r-md);
+  font-size: .82rem;
+  color: var(--coffee-lt);
+  font-style: italic;
+}
+.ghc-tip-wash i {
+  color: var(--gold);
+  font-size: .82rem;
+}
+
+.ghc-specs {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  list-style: none;
+}
+.ghc-specs li {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  font-size: .84rem;
+  color: var(--coffee);
+}
+.ghc-spec-lbl {
+  min-width: 36px;
+  padding: .15rem .5rem;
+  background: var(--cream-2);
+  border: 1px solid var(--cream-3);
+  border-radius: var(--r-sm);
+  font-size: .72rem;
+  font-weight: 600;
+  color: var(--coffee-lt);
+  letter-spacing: .06em;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* 規格說明包裹框（在左欄圖片下方）*/
+.ghc-specs-box {
+  width: 100%;
+  padding: var(--sp-md) var(--sp-lg);
+  background: var(--cream);
+  border-top: 1px solid var(--cream-3);
+  display: flex;
+  flex-direction: column;
+  gap: .65rem;
+}
+
+/* 購買按鈕 */
+.ghc-buy-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .55rem;
+  padding: .85rem 1.2rem;
+  background: var(--gold);
+  color: #fff;
+  font-size: .95rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  border-radius: var(--r-md);
+  box-shadow: 0 3px 14px rgba(196,151,63,.4);
+  transition: transform .35s var(--spring), box-shadow .35s var(--spring), background .25s;
+  text-decoration: none;
+}
+.ghc-buy-btn:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 6px 22px rgba(196,151,63,.52);
+  background: var(--gold-dk);
+}
+.ghc-buy-btn i { font-size: .9rem; }
+
+/* 桌機：規格在圖片下方，購買按鈕在左欄底部；手機版同區塊隱藏 */
+.ghc-buy-desktop { margin: 0; }   /* 包含在 ghc-img-col flex 裡 */
+.ghc-buy-mobile  { display: none; }   /* 手機才顯示 */
+.ghc-specs-mobile { display: none; }  /* 手機才顯示 */
+
+/* 左欄：圖片 + 規格 + 按鈕垂直排列 */
+.ghc-img-col {
+  background: #f0faf8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--sp-xl) var(--sp-lg) 0;
+  min-height: 320px;
+}
+.ghc-img-col img {
+  width: 100%;
+  max-width: 340px;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 8px 24px rgba(95,61,46,.12));
+  transition: transform .5s var(--spring);
+  margin-bottom: 0;
+}
+.goods-hero-card:hover .ghc-img-col img {
+  transform: scale(1.04) translateY(-4px);
+}
+
+/* Responsive — 花生球英雄卡 */
+@media (max-width: 960px) {
+  .goods-hero-card {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-lg);
+  }
+  .ghc-img-col { min-height: 260px; }
+  .ghc-specs-box { padding: var(--sp-md); }
+}
+
+@media (max-width: 640px) {
+  .goods-hero-card {
+    grid-template-columns: 1fr;
+  }
+  /* 手機：圖片在上，規格說明移到文案區中（緊接圖片之後）*/
+  .ghc-img-col {
+    min-height: 220px;
+    padding: var(--sp-lg) var(--sp-lg) 0;
+  }
+  /* 桌機的規格框和購買按鈕：手機隱藏 */
+  .ghc-specs-box   { display: none; }
+  .ghc-buy-desktop { display: none; }
+  /* 手機版：在文案區顯示規格說明和購買按鈕 */
+  .ghc-specs-mobile { display: flex; flex-direction: column; gap: .65rem; }
+  .ghc-buy-mobile   { display: flex; }
+
+  .ghc-info-col { padding: var(--sp-md) var(--sp-md) var(--sp-lg); }
+}
+
+
+.gc-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-md);
+  background: var(--gold-bg);
+  border: 1px solid rgba(196,151,63,.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+.gc-body {
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+  flex: 1;
+}
+
+.gc-cat {
+  display: inline-block;
+  padding: .15rem .5rem;
+  background: var(--gold-bg);
+  border: 1px solid rgba(196,151,63,.25);
+  border-radius: var(--r-sm);
+  font-size: .68rem;
+  font-weight: 600;
+  color: var(--gold-dk);
+  letter-spacing: .06em;
+}
+
+.goods-card h3 {
+  font-family: var(--font-serif);
+  font-size: .96rem;
+  font-weight: 700;
+  color: var(--coffee);
+  letter-spacing: .03em;
+  margin: 0;
+}
+
+.goods-card p {
+  font-size: .82rem;
+  color: var(--coffee-lt);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.gc-tips {
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+  margin-top: .2rem;
+  padding-top: .55rem;
+  border-top: 1px solid var(--hair);
+}
+.gc-tips li {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  font-size: .78rem;
+  color: var(--coffee);
+}
+
+
 
 /* ============================================================
    PRINT  (prevent dark bg)
