@@ -509,7 +509,7 @@ table { border-collapse: collapse; width: 100%; }
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
-  padding: calc(var(--nav-h) + 3px + var(--sp-xl)) var(--sp-lg) var(--sp-xl);
+  padding: calc(var(--nav-h) + 1px + var(--sp-xl)) var(--sp-lg) var(--sp-xl);
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--sp-xl);
@@ -608,15 +608,70 @@ table { border-collapse: collapse; width: 100%; }
 }
 
 /* 介紹文字 */
-.hero-bio {
+.founder-main {
   display: flex;
   flex-direction: column;
-  gap: .6rem;
+  gap: var(--sp-md);
 }
-.hero-bio p {
+.founder-intro {
+  font-size: .9rem;
+  color: var(--coffee-lt);
+  line-height: 1.85;
+}
+.founder-quotes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .8rem;
+  background: var(--cream);
+  border-radius: var(--r-lg);
+  border-left: 3px solid var(--gold);
+  padding: var(--sp-md);
+}
+.founder-quotes li {
+  display: flex;
+  align-items: flex-start;
+  gap: .6rem;
   font-size: .88rem;
+  color: var(--coffee);
+  line-height: 1.75;
+}
+.fq-dot {
+  color: var(--gold);
+  font-size: .88rem;
+  flex-shrink: 0;
+  margin-top: .22rem;
+}
+.founder-quotes strong {
+  color: var(--coffee);
+  font-weight: 700;
+}
+.founder-closing {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  padding-top: .75rem;
+  border-top: 1px solid var(--cream-3);
+}
+.founder-closing p {
+  font-size: .87rem;
   color: var(--coffee-lt);
   line-height: 1.8;
+}
+.founder-side {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+@media (max-width: 960px) {
+  .founder-layout {
+    grid-template-columns: 1fr;
+  }
+  .founder-side {
+    gap: var(--sp-md);
+  }
 }
 .hero-bio strong { color: var(--coffee); font-weight: 600; }
 
@@ -680,10 +735,32 @@ table { border-collapse: collapse; width: 100%; }
 }
 
 /* ── 右側照片欄 ── */
+/* 1. 設定右側照片區改為垂直排列，讓數據可以排在照片正下方 */
 .hero-img-col {
   display: flex;
+  flex-direction: column; /* 瓜內容由上往下排*/
   align-items: center;
   justify-content: center;
+  gap: var(--sp-md);/* 照片與數劇之間的間隔*/
+}
+/* 2. 桌機版預設：顯示右側照片下的數據，隱藏左側文字區的數據 */
+.desktop-stats {
+  display: flex;
+  width: 100%; /* 讓數據卡片寬度與照片對齊 */
+  max-width: 480px; 
+}
+.mobile-stats {
+  display: none;
+}
+
+/* 3. 當螢幕縮小到手機/平板尺寸 (≤ 900px) 時反轉顯示 */
+@media (max-width: 900px) {
+  .desktop-stats {
+    display: none; /* 隱藏右側的數據 */
+  }
+  .mobile-stats {
+    display: flex; /* 恢復顯示左側原本的數據 */
+  }
 }
 .hero-photo-frame {
   position: relative;
@@ -723,7 +800,7 @@ table { border-collapse: collapse; width: 100%; }
   .hero-split-inner {
     grid-template-columns: 1fr;
     gap: var(--sp-lg);
-    padding-top: calc(var(--nav-h) + 3px + var(--sp-lg));
+    padding-top: calc(var(--nav-h) + 3px + var(--sp-sm));
   }
   .hero-img-col { order: -1; }
   .hero-photo   { height: 320px; object-position: center 20%; }
