@@ -890,6 +890,222 @@ table { border-collapse: collapse; width: 100%; }
   white-space: nowrap;
 }
 
+/* ── About 三欄卡片擴充 ── */
+.ac-divider {
+  height: 1px;
+  background: var(--cream-3);
+  margin: .75rem 0;
+}
+.about-card-desc {
+  font-size: .83rem;
+  color: var(--coffee-lt);
+  line-height: 1.75;
+  margin: .5rem 0;
+}
+
+/* EAR 理念條列 */
+.ear-concepts {
+  display: flex;
+  flex-direction: column;
+  gap: .65rem;
+  margin: .5rem 0;
+}
+.ear-concept-item {
+  display: flex;
+  align-items: flex-start;
+  gap: .7rem;
+}
+.eci-letter {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  border-radius: var(--r-sm);
+  background: var(--gold-bg);
+  border: 1px solid var(--cream-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Georgia, serif;
+  font-weight: 700;
+  font-size: .95rem;
+  color: var(--gold);
+  margin-top: .1rem;
+}
+.ear-concept-item div strong {
+  font-size: .84rem;
+  color: var(--coffee);
+  font-weight: 700;
+  display: block;
+  margin-bottom: .1rem;
+}
+.ear-concept-item div p {
+  font-size: .8rem;
+  color: var(--coffee-lt);
+  margin: 0;
+  line-height: 1.55;
+}
+.ear-tagline {
+  font-size: .78rem;
+  color: var(--gold);
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-align: center;
+  padding: .4rem 0;
+  border-top: 1px solid var(--cream-3);
+  border-bottom: 1px solid var(--cream-3);
+  margin: .5rem 0;
+}
+
+/* 商業合作卡片 */
+.collab-lead { margin-top: 0; }
+.collab-items {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  margin: .5rem 0;
+}
+.collab-item {
+  display: flex;
+  align-items: flex-start;
+  gap: .65rem;
+}
+.collab-icon {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: var(--r-md);
+  background: var(--gold-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+  font-size: .95rem;
+  margin-top: .05rem;
+}
+.collab-item div strong {
+  font-size: .84rem;
+  color: var(--coffee);
+  font-weight: 700;
+  display: block;
+  margin-bottom: .1rem;
+}
+.collab-item div p {
+  font-size: .78rem;
+  color: var(--coffee-lt);
+  margin: 0;
+  line-height: 1.5;
+}
+.collab-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  margin-top: .75rem;
+  padding: .6rem 1.25rem;
+  background: var(--gold);
+  color: #fff;
+  border-radius: var(--r-md);
+  font-size: .85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background .25s, transform .2s;
+  letter-spacing: .03em;
+}
+.collab-cta:hover { background: var(--gold-lt); transform: translateY(-2px); }
+
+/* ── RWD ── */
+@media (max-width: 960px) {
+  .founder-hero {
+    grid-template-columns: 1fr;
+  }
+  .founder-photo-col {
+    order: -1; /* 手機：照片移到最上方 */
+  }
+  .founder-photo {
+    aspect-ratio: 16/9;
+  }
+  .founder-layout {
+    grid-template-columns: 1fr;
+  }
+  .founder-side {
+    gap: var(--sp-md);
+  }
+}
+@media (max-width: 640px) {
+  .founder-name { font-size: 1.7rem; }
+  .founder-stats { grid-template-columns: repeat(3,1fr); }
+  .founder-actions { flex-direction: column; }
+  .btn-primary-gold, .btn-outline-gold { justify-content: center; }
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: var(--sp-md);
+}
+
+.about-card {
+  background: var(--cream);
+  border: 1px solid var(--cream-3);
+  border-radius: var(--r-lg);
+  padding: var(--sp-lg) var(--sp-md);
+  position: relative;
+  overflow: hidden;
+  transition: transform .4s var(--spring), box-shadow .4s var(--spring);
+}
+.about-card:hover {
+  transform: translateY(-5px) scale(1.015);
+  box-shadow: var(--sh-lg);
+}
+.ac-topline {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-lt));
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+}
+.ac-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--r-md);
+  background: var(--gold-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+  font-size: 1.1rem;
+  margin-bottom: .75rem;
+  margin-top: .25rem;
+}
+.about-card h3 {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--coffee);
+  margin-bottom: .5rem;
+  letter-spacing: .03em;
+}
+.about-card > p {
+  font-size: .85rem;
+  color: var(--coffee-lt);
+  margin-bottom: .75rem;
+}
+
+/* EAR rule divider */
+.ear-rule {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin: .6rem 0;
+}
+.ear-rule .er-line { flex: 1; height: 1px; background: var(--hair); }
+.ear-rule span {
+  font-size: .72rem;
+  color: var(--gold-dk);
+  font-weight: 600;
+  letter-spacing: .05em;
+  white-space: nowrap;
+}
+
 /* EAR trio */
 .ear-trio {
   display: flex;
@@ -1432,14 +1648,13 @@ footer {
   gap: .55rem;
 }
 .fn-heading {
-  font-size: .78rem;
+  font-size: .9rem;
   font-weight: 700;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: rgba(255,255,255,.5);
-  margin-bottom: .3rem;
-  padding-bottom: .45rem;
-  border-bottom: 1px solid rgba(255,255,255,.1);
+  color: rgba(255, 255, 255, 0.9);
+  padding-bottom: .3rem;
+  border-bottom: 2px solid rgba(255,255,255,.1);
 }
 .fn-list {
   display: flex;
