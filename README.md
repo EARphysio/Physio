@@ -1,122 +1,101 @@
-# EAR 身體平衡工作坊 — 靜態網站
+# EAR 聆芯身體平衡 — 官方網站
 
-**尤慧群物理治療師 × 宜安筋膜工作坊**
-
----
-
-## 🎨 設計版本紀錄
-
-| 版本 | 設計風格 | 狀態 |
-|------|----------|------|
-| Request 1 | 大地色系（奶茶米白 + 有機植物浮水印） | 已完成 |
-| Request 2 | 現代醫學科學（冷調石板藍 + 磚紅 Accent） | 已完成 |
-| **Request 3** | **暖奶茶 × 深咖啡 × 金色（目前版本）** | ✅ **現行** |
+> 尤慧群｜EAR聆芯健康顧問有限公司｜同理傾聽・體態對齊・運動恢復
 
 ---
 
-## ✅ 已完成功能
+## 已完成功能
 
-### 頁面結構
-- **Navbar**：頂部深咖啡細線 + 奶茶米白背景（`#F4EBE0`），左：品牌 LOGO，中：4 個帶圖標的導覽連結，右：IG/YT/LINE 彩色圓形圖標，手機版漢堡選單
-- **Hero**：荷葉浮水印背景 + 金色頂部雙橫線 + 葉脈燈泡 SVG Logo + 「EAR 身體平衡」大標題 + 三大功能入口圖標（立即預約 / 方案價格 / 交通位置）
-- **About**：三欄卡片：E.A.R. 核心理念 / 學歷臨床經歷 / 專業進修認證
-- **Pricing**：三欄方案卡（到府服務 / 門市服務 / 墊上嬋柔），含結構化 `<table>` 價格表
-- **Services**：六服務卡片網格（疼痛舒緩、姿勢矯正、筋膜放鬆、動作訓練、睡眠問題、自律神經）
-- **Populations**：三族群卡（運動員 / 孕產婦 / 銀髮族）
-- **Process**：四步驟流程說明（橫向追蹤線）
-- **Videos**：三影片卡 + YouTube 連結按鈕
-- **Contact**：聯絡資訊 + QR Code 展示
-- **Footer**：品牌標誌 + 網站地圖 + 關鍵字 SEO 標籤
-
-### 設計規格（Request 3）
-- **色盤**：`#FAF5EE` 奶茶米白 / `#5f3d2e` 深咖啡 / `#c4973f` 金色
-- **字型**：Noto Sans TC + Noto Serif TC（Google Fonts）
-- **圓角**：`4px–8px` 微圓角（規矩幾何矩形）
-- **分隔線**：極細 1px 實線（`#e4d4c0`）
-- **圖標**：Font Awesome 6.4 + Bootstrap Icons 1.13（CDN）
-
-### 動畫與互動
-- `[data-ani="slide-up"]`：IntersectionObserver 滑動進入動畫（Spring easing）
-- **Spring tilt**：滑鼠移過卡片時 3D perspective 彈簧傾斜效果（lerp 內插）
-- **Portal click pulse**：點擊功能入口時彈簧縮放反彈效果
-- **Active nav**：捲動時自動高亮當前 Section 對應連結
-- **Back-to-top**：捲動 > 400px 顯示回頂按鈕
+| 頁面區塊 | HTML id | 狀態 |
+|---|---|---|
+| 固定導覽列 (Navbar) | `#navbar` | ✅ |
+| 英雄區 (Hero) — 左文右圖 | `#hero` | ✅ |
+| 關於我 / EAR 核心理念 | `#about` | ✅ |
+| 服務項目 (6 項) | `#services` | ✅ |
+| 自我照護好物（花生球） | `#populations` | ✅ |
+| 服務流程（4 步驟） | `#process` | ✅ |
+| **FAQ 常見問答（含 Google AI 結構化資料）** | `#faq` | ✅ 新增 |
+| 預約諮詢 + QR Code | `#contact` | ✅ |
+| 頁尾 (Footer) | `#footer` | ✅ |
 
 ---
 
-## 🔗 功能頁面路徑
-
-| 路徑 | 說明 |
-|------|------|
-| `/` `#hero` | 首頁 Hero — Logo + 三大入口 |
-| `#about` | 關於 / EAR 理念 / 學歷 |
-| `#pricing` | 服務方案與收費（到府、門市、墊上嬋柔）|
-| `#services` | 六大專業服務項目 |
-| `#populations` | 服務族群（運動員、孕產婦、銀髮族）|
-| `#process` | 服務流程四步驟 |
-| `#videos` | 衛教影片 |
-| `#contact` | 聯絡方式 / 預約資訊 |
-
----
-
-## 📁 檔案結構
+## 檔案結構
 
 ```
-index.html          主頁面（完整 HTML5 語義標籤）
+index.html          主頁面
+architecture.html   網頁結構 × CSS 對應架構圖（開發參考用）
 css/
-  style.css         完整 CSS（CSS Custom Properties 設計 Token）
+  style.css         主樣式（設計 Token + 全域 + 各區塊）
+  faq.css           FAQ 問答區塊專用樣式
 js/
-  main.js           互動 JS（navbar / data-ani / spring tilt / back-to-top）
+  main.js           互動 JS（Scroll動畫、漢堡選單、回頂按鈕）
 img/
-  Eunicepic.png     治療師照片
+  EunicePic.png     創辦人照片
+  peanut-ball.png   花生球產品圖
   L_Line.png        LINE QR Code
-README.md           本文件
 ```
 
 ---
 
-## 📦 外部依賴（全部 CDN，無安裝）
+## FAQ 結構化資料說明
 
-| 資源 | 版本 | 用途 |
-|------|------|------|
-| Google Fonts | — | Noto Sans TC + Noto Serif TC |
-| Font Awesome | 6.4.0 | 圖標 |
-| Bootstrap Icons | 1.13.1 | 額外圖標 |
+### 設計目標
+將「衛教影片專區」升級為 **FAQ 結構化資料區塊**，大幅提高被 Google AI Overview 搜尋直接引用作為解答的機率。
 
----
+### 技術實作
+1. **`<script type="application/ld+json">` FAQPage Schema**（`index.html` head 區）
+   - 8 組 Q&A，涵蓋肌筋膜放鬆、嬋柔運動、肩頸緊繃、預約方式、服務地點、姿勢調整、運動恢復、睡眠品質
+   - 符合 [Google Rich Results FAQ 規範](https://developers.google.com/search/docs/appearance/structured-data/faqpage)
 
-## 🗂️ 資料模型
+2. **HTML `<details>/<summary>` 原生折疊**
+   - 無需 JavaScript，SEO 爬蟲可直接讀取全部 Q&A 文字
+   - 搭配 CSS 動畫提供視覺回饋
 
-本站為純靜態網站，**無後端資料庫**，所有內容直接寫入 HTML。
+3. **內容合規原則**（符合台灣衛生局法規）
+   - 未使用「治療」「診斷」「疾病」等醫療用語
+   - 所有描述使用「協助」「提供」「調整」「放鬆」等中性詞彙
+   - 急性/持續症狀均建議「先就醫確認診斷」
 
----
-
-## ❌ 尚未實作
-
-- [ ] 真實預約表單（需後端串接）
-- [ ] 實際 YouTube embed 影片 ID 更換
-- [ ] 實際 QR Code 圖片更換為正式 LINE QR
-- [ ] OG Image 社群分享縮圖
-- [ ] Google Analytics 追蹤碼
-
----
-
-## 🚀 部署說明
-
-請至 **Publish 頁籤** 一鍵發佈，系統將自動生成公開網址。
-
----
-
-## 🛠️ 技術規格
-
-- **HTML5** 語義標籤（`<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<footer>`）
-- **CSS3** Custom Properties + Flexbox + CSS Grid
-- **Vanilla JS**（無框架，`'use strict'`）
-- **Spring easing**：`cubic-bezier(0.22, 1, 0.36, 1)`
-- **IntersectionObserver API**：scroll animation + active nav
-- **SVG inline**：燈泡葉脈 Logo、三大入口圖標、荷葉浮水印、方案卡 Logo
-- **`<table>`** 結構化價格資料（screen reader 友善）
+### 8 題 FAQ 主題
+| # | 問題主題 |
+|---|---|
+| Q1 | 肌筋膜放鬆是什麼 |
+| Q2 | GYROKINESIS 嬋柔 vs 瑜伽 |
+| Q3 | 肩頸緊繃諮詢 |
+| Q4 | 如何預約服務 |
+| Q5 | 到府 vs 門市服務 |
+| Q6 | 骨盆前傾/駝背改善 |
+| Q7 | 運動後肌肉痠痛 |
+| Q8 | 睡眠品質與身體調整 |
 
 ---
 
-*最後更新：Request 3 暖奶茶設計版 — 2026*
+## 架構圖
+
+開啟 `architecture.html` 可查看：
+- 所有 HTML 區塊 ↔ CSS 類別的完整對應表
+- 設計 Token（顏色、間距、圓角、陰影）
+- RWD 斷點（960px / 900px / 640px）說明表
+- JavaScript 功能說明
+
+---
+
+## SEO 策略
+
+- `<title>` 主關鍵字前置
+- `<meta description>` ≤160 字，含主關鍵字
+- LocalBusiness Schema.org JSON-LD
+- FAQPage Schema.org JSON-LD（**新增**）
+- Open Graph + Twitter Card
+- Canonical URL
+- Footer 隱藏 SEO 關鍵字清單
+
+---
+
+## 公開網址
+
+- **GitHub Pages**：https://earphysio.github.io/Physio/
+- **Instagram**：https://www.instagram.com/earphysio/
+- **YouTube**：https://www.youtube.com/@euniceyu/shorts
+- **LINE**：https://lin.ee/N2vnfpX

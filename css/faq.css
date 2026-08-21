@@ -1,0 +1,200 @@
+/* ============================================================
+   EAR FAQ SECTION — Google AI Overview 結構化資料樣式
+   搭配 css/style.css 使用
+   ============================================================ */
+
+/* ── FAQ 容器 ── */
+.faq-grid {
+  display: flex;
+  flex-direction: column;
+  gap: .85rem;
+  margin-top: var(--sp-lg);
+}
+
+/* ── FAQ 每一題（details 元素）── */
+.faq-item {
+  background: var(--white);
+  border: 1.5px solid var(--cream-3);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  transition:
+    border-color .3s var(--ease),
+    box-shadow   .35s var(--spring);
+  box-shadow: var(--sh-sm);
+}
+
+.faq-item[open] {
+  border-color: var(--gold-lt);
+  box-shadow: var(--sh-md);
+}
+
+/* 頂部金色細線（[open] 狀態顯示） */
+.faq-item::before {
+  content: '';
+  display: block;
+  height: 0;
+  background: linear-gradient(90deg, var(--gold), var(--gold-lt));
+  transition: height .3s var(--ease);
+}
+.faq-item[open]::before {
+  height: 3px;
+}
+
+/* ── 問題 summary ── */
+.faq-q {
+  display: flex;
+  align-items: center;
+  gap: .85rem;
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  list-style: none;          /* 移除原生箭頭 */
+  user-select: none;
+  transition: background .25s var(--ease);
+}
+.faq-q::-webkit-details-marker { display: none; }
+.faq-q::marker { display: none; }
+
+.faq-item:hover .faq-q,
+.faq-item[open]  .faq-q {
+  background: var(--cream);
+}
+
+/* 序號圓形徽章 */
+.fq-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--r-full);
+  background: var(--gold-bg);
+  border: 1.5px solid var(--cream-3);
+  font-family: Georgia, serif;
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--gold-dk);
+  flex-shrink: 0;
+  letter-spacing: .02em;
+  transition: background .3s, border-color .3s, color .3s;
+}
+.faq-item[open] .fq-num {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #fff;
+}
+
+/* 問題文字 */
+.fq-text {
+  flex: 1;
+  font-family: var(--font-serif);
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--coffee);
+  line-height: 1.5;
+  letter-spacing: .03em;
+}
+
+/* 展開箭頭 */
+.fq-arrow {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--coffee-lt);
+  font-size: .75rem;
+  border-radius: var(--r-sm);
+  background: var(--cream-2);
+  transition: transform .35s var(--spring), background .25s, color .25s;
+}
+.faq-item[open] .fq-arrow {
+  transform: rotate(180deg);
+  background: var(--gold-bg);
+  color: var(--gold-dk);
+}
+
+/* ── 回答區塊 ── */
+.faq-a {
+  border-top: 1px solid var(--cream-3);
+  background: var(--cream);
+}
+
+.faq-a-inner {
+  padding: 1rem 1.25rem 1rem 4rem;  /* 對齊問題文字（序號34px + gap .85rem + padding）*/
+  display: flex;
+  flex-direction: column;
+  gap: .55rem;
+}
+
+.faq-a-inner p {
+  font-size: .88rem;
+  color: var(--coffee-lt);
+  line-height: 1.85;
+  margin: 0;
+}
+
+.faq-a-inner p strong {
+  color: var(--coffee);
+  font-weight: 700;
+}
+
+/* 注意事項提示 */
+.faq-note {
+  display: flex;
+  align-items: flex-start;
+  gap: .45rem;
+  padding: .5rem .75rem;
+  background: rgba(196,151,63,.07);
+  border: 1px solid rgba(196,151,63,.22);
+  border-radius: var(--r-md);
+  font-size: .82rem !important;
+  color: var(--coffee-lt) !important;
+  font-style: italic;
+}
+.faq-note i {
+  color: var(--gold);
+  font-size: .82rem;
+  flex-shrink: 0;
+  margin-top: .12rem;
+}
+
+/* ── 底部 YouTube 連結列 ── */
+.faq-yt-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: .75rem;
+  margin-top: var(--sp-xl);
+  padding-top: var(--sp-lg);
+  border-top: 1px solid var(--cream-3);
+  text-align: center;
+}
+.faq-yt-label {
+  font-size: .88rem;
+  color: var(--coffee-lt);
+  letter-spacing: .03em;
+}
+
+/* ── 手機 RWD ── */
+@media (max-width: 640px) {
+  .faq-q {
+    padding: .85rem 1rem;
+    gap: .65rem;
+  }
+  .fq-num {
+    width: 28px;
+    height: 28px;
+    font-size: .7rem;
+  }
+  .fq-text {
+    font-size: .88rem;
+  }
+  .faq-a-inner {
+    padding: .85rem 1rem .85rem 1rem; /* 手機版不縮排，全寬顯示 */
+  }
+  .faq-yt-row {
+    margin-top: var(--sp-lg);
+  }
+}
