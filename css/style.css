@@ -18,6 +18,7 @@
   --gold-lt:     #d9b96a;       /* 淺金 */
   --gold-bg:     rgba(196,151,63,.08); /* 金色透明底 */
   --hair:        #e4d4c0;       /* 極細分隔線 */
+  --Red:         #e20000; 
 
   /* Topography */
   --font-sans: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
@@ -1895,7 +1896,8 @@ footer {
 }
 .ghc-star {
   flex-shrink: 0;
-  font-size: .85rem;
+  font-size: 2rem;
+  color: var(--Red);
 }
 .ghc-tip-wash {
   margin-top: .3rem;
