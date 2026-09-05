@@ -12,6 +12,9 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" />
   <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+  
+<!-- 視窗Logo-->
+  <link rel="icon" href="img/EAR_Logo.png">
 
   <!--連到CSS-->
   <link rel="stylesheet" href="css/style.css" />
@@ -141,8 +144,8 @@
               <input type="tel" id="f-phone" placeholder="0912-345-678（選填）" maxlength="20" />
             </div>
             <div class="field">
-              <label for="f-line">您的 LINE ID</label>
-              <input type="text" id="f-line" placeholder="LINE ID（選填）" maxlength="50" />
+              <label for="f-line">您的 LINE 名稱</label>
+              <input type="text" id="f-line" placeholder="LINE 名稱" maxlength="50" />
             </div>
           </div>
         </div>
@@ -154,14 +157,15 @@
             <h2>想合作的類型 <span style="font-size:.78rem;color:var(--gold);font-weight:400;">（可複選）</span></h2>
           </div>
 
+          <!--增加嬋柔選項-->
           <div class="type-grid" id="type-grid">
-            <label class="type-tag">
-              <input type="checkbox" name="collab_type" value="企業內訓" />
-              <i class="fas fa-building"></i>企業內訓
-            </label>
             <label class="type-tag">
               <input type="checkbox" name="collab_type" value="健康講座" />
               <i class="fas fa-heart-pulse"></i>健康講座
+            </label>
+            <label class="type-tag">
+              <input type="checkbox" name="collab_type" value="嬋柔課程" />
+              <span style="font-size:1rem;line-height:1">🧘</span>嬋柔課程
             </label>
             <label class="type-tag">
               <input type="checkbox" name="collab_type" value="開課／公開課程" />
@@ -170,6 +174,10 @@
             <label class="type-tag">
               <input type="checkbox" name="collab_type" value="品牌／活動合作" />
               <i class="fas fa-handshake"></i>品牌／活動合作
+            </label>
+            <label class="type-tag">
+              <input type="checkbox" name="collab_type" value="企業內訓" />
+              <i class="fas fa-building"></i>企業內訓
             </label>
             <label class="type-tag">
               <input type="checkbox" name="collab_type" value="專業內容合作" />
@@ -304,7 +312,7 @@
             <tr><th>姓名</th><td id="c-name">—</td></tr>
             <tr><th>Email</th><td id="c-email">—</td></tr>
             <tr><th>電話</th><td id="c-phone">—</td></tr>
-            <tr><th>LINE ID</th><td id="c-line">—</td></tr>
+            <tr><th>LINE 名稱</th><td id="c-line">—</td></tr>
             <tr><th>合作類型</th><td id="c-type">—</td></tr>
             <tr><th>合作主題</th><td id="c-topic">—</td></tr>
             <tr><th>合作對象</th><td id="c-audience">—</td></tr>
@@ -549,7 +557,7 @@
       姓名:       document.getElementById('f-name').value.trim(),
       Email:      document.getElementById('f-email').value.trim(),
       電話:       document.getElementById('f-phone').value.trim(),
-      LINE_ID:    document.getElementById('f-line').value.trim(),
+      LINE_名稱:    document.getElementById('f-line').value.trim(),
       合作類型:   typeVals.join('、') || '（未選）',
       合作主題:   document.getElementById('f-topic').value.trim(),
       合作對象:   audVals.join('、') || '（未選）',
@@ -577,7 +585,7 @@
       document.getElementById('c-name').textContent      = payload.姓名;
       document.getElementById('c-email').textContent     = payload.Email;
       document.getElementById('c-phone').textContent     = payload.電話  || '（未填）';
-      document.getElementById('c-line').textContent      = payload.LINE_ID || '（未填）';
+      document.getElementById('c-line').textContent      = payload.LINE_名稱 || '（未填）';
       document.getElementById('c-type').textContent      = payload.合作類型;
       document.getElementById('c-topic').textContent     = payload.合作主題;
       document.getElementById('c-audience').textContent  = payload.合作對象 || '（未選）';
