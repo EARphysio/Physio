@@ -1,0 +1,542 @@
+
+    /* ════════════════════════════════════════
+       BOOKING.HTML — EAR 預約表樣式
+       ════════════════════════════════════════ */
+    body { background: var(--cream); min-height: 100vh; margin: 0; }
+
+    /* ── 頂部導覽 ── */
+    .collab-nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--cream-3);
+      padding: .9rem 2rem;
+      display: flex;
+      align-items: center;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      color: var(--coffee-lt);
+      font-size: .85rem;
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .back-link:hover { color: var(--gold); }
+    .collab-nav .brand {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--coffee);
+      margin-left: auto;
+    }
+
+    /* ── Banner ── */
+    .collab-banner {
+      width: 100%;
+      display: block;
+      line-height: 0;
+      overflow: hidden;
+      max-height: 200px;
+    }
+    .collab-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    /* ── 頁面標題列 ── */
+    .collab-title-bar {
+      background: linear-gradient(135deg, #5c3d2e 0%, #3a2218 100%);
+      padding: 2.5rem 2rem 2rem;
+      text-align: center;
+    }
+    .collab-title-bar .eye {
+      font-size: .75rem;
+      letter-spacing: .14em;
+      color: var(--gold-lt);
+      text-transform: uppercase;
+      margin-bottom: .6rem;
+    }
+    .collab-title-bar h1 {
+      font-family: var(--font-serif);
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 0 0 .6rem;
+    }
+    .collab-title-bar p {
+      font-size: .88rem;
+      color: rgba(255,255,255,.68);
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+
+    /* ── 表單容器 ── */
+    .collab-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 3rem;
+    }
+
+    /* ══ STEP-0：新客 / 舊客 圖片選擇 ══ */
+    #step-selection { display: block; }
+    .selection-hint {
+      text-align: center;
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      color: var(--coffee);
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+    .selection-hint span {
+      display: block;
+      font-family: var(--font-sans, inherit);
+      font-size: .8rem;
+      font-weight: 400;
+      color: var(--coffee-lt);
+      margin-top: .3rem;
+    }
+    .selection-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+    .selection-card {
+      border: 2px solid var(--cream-3);
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--white);
+      box-shadow: 0 2px 16px rgba(92,61,46,.07);
+      transition: border-color .25s, transform .25s, box-shadow .25s;
+      padding: 0;
+      position: relative;
+    }
+    .selection-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px rgba(200,151,58,.22);
+    }
+    .selection-card img {
+      width: 100%;
+      display: block;
+      border-radius: 12px;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /* ── 步驟卡片 ── */
+    .form-card {
+      background: var(--white);
+      border: 1px solid var(--cream-3);
+      border-radius: 14px;
+      padding: 1.75rem 1.5rem;
+      box-shadow: 0 2px 16px rgba(92,61,46,.07);
+      margin-bottom: 1.25rem;
+    }
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: .65rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: .75rem;
+      border-bottom: 2px solid var(--gold-bg);
+    }
+    .step-num {
+      width: 30px;
+      height: 30px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: var(--gold);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .8rem;
+      font-weight: 700;
+      font-family: Georgia, serif;
+    }
+    .step-header h2 {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--coffee);
+      margin: 0;
+    }
+    .step-header .step-badge {
+      margin-left: auto;
+      background: var(--gold-bg);
+      border: 1px solid var(--gold-lt);
+      border-radius: 20px;
+      padding: .18rem .7rem;
+      font-size: .72rem;
+      font-weight: 600;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+
+    /* 返回按鈕 */
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      padding: .45rem 1.1rem;
+      border: 1.5px solid var(--cream-3);
+      border-radius: 8px;
+      background: var(--white);
+      color: var(--coffee-lt);
+      font-size: .82rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color .2s, color .2s;
+      margin-bottom: 1.25rem;
+      font-family: inherit;
+    }
+    .btn-back:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ── 欄位 ── */
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: .3rem;
+      margin-bottom: 1rem;
+    }
+    .field:last-child { margin-bottom: 0; }
+    .field label {
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--coffee);
+      letter-spacing: .02em;
+    }
+    .field label .req { color: var(--gold); margin-left: .15rem; }
+    .field input[type="text"],
+    .field input[type="email"],
+    .field input[type="tel"],
+    .field input[type="date"],
+    .field select,
+    .field textarea {
+      padding: .62rem .85rem;
+      border: 1.5px solid var(--cream-3);
+      border-radius: 8px;
+      font-size: .88rem;
+      color: var(--coffee);
+      background: var(--cream);
+      font-family: inherit;
+      transition: border-color .2s, box-shadow .2s;
+      outline: none;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .field select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23a07850' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right .85rem center;
+      padding-right: 2.2rem;
+    }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(200,151,58,.12);
+      background: var(--white);
+    }
+    .field input.error,
+    .field select.error,
+    .field textarea.error { border-color: #d94040; }
+    .err-msg {
+      font-size: .74rem;
+      color: #d94040;
+      display: none;
+    }
+    .err-msg.show { display: block; }
+    .field textarea { resize: vertical; min-height: 100px; line-height: 1.65; }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    /* ── 子標題 ── */
+    .sub-label {
+      font-size: .8rem;
+      font-weight: 700;
+      color: var(--coffee-lt);
+      letter-spacing: .03em;
+      margin: 1rem 0 .4rem;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+    .sub-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--cream-3);
+    }
+
+    /* ── 排班表 ── */
+    .schedule-wrap { overflow-x: auto; margin-top: .5rem; }
+    .schedule-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .82rem;
+      min-width: 480px;
+    }
+    .schedule-table th {
+      background: var(--cream);
+      color: var(--coffee);
+      font-weight: 600;
+      padding: .55rem .4rem;
+      border-bottom: 2px solid var(--gold-bg);
+      text-align: center;
+      white-space: nowrap;
+    }
+    .schedule-table th.time-col { text-align: left; padding-left: .6rem; min-width: 96px; }
+    .schedule-table td {
+      text-align: center;
+      padding: .45rem .3rem;
+      border-bottom: 1px solid var(--cream-3);
+    }
+    .schedule-table td.time-col {
+      text-align: left;
+      padding-left: .6rem;
+      font-weight: 600;
+      color: var(--coffee);
+      white-space: nowrap;
+    }
+    .schedule-table tr:last-child td { border-bottom: none; }
+
+    /* 時段狀態標籤 */
+    .slot-tag {
+      display: inline-block;
+      padding: .25rem .55rem;
+      border-radius: 5px;
+      font-size: .75rem;
+      line-height: 1.3;
+      min-width: 44px;
+      text-align: center;
+    }
+    .slot-expired  { background: #f0ede8; color: #b0a090; border: 1px solid #ddd5c8; }
+    .slot-full     { background: #fde8e8; color: #b03030; border: 1px solid #f5c2c2; font-weight: 700; }
+    .slot-disabled { background: #f0ede8; border: 1px solid #ddd5c8; color: transparent; }
+
+    /* 可選時段 radio */
+    .slot-radio {
+      width: 18px; height: 18px;
+      accent-color: var(--gold);
+      cursor: pointer;
+      vertical-align: middle;
+    }
+
+    /* 週標題 */
+    .week-title {
+      font-size: .82rem;
+      font-weight: 700;
+      color: var(--coffee-lt);
+      letter-spacing: .03em;
+      margin: 1.1rem 0 .5rem;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+    .week-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--cream-3);
+    }
+
+    /* 排班讀取中 */
+    .schedule-loading {
+      text-align: center;
+      padding: 1.5rem;
+      color: var(--coffee-lt);
+      font-size: .88rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spin-icon {
+      display: inline-block;
+      width: 16px; height: 16px;
+      border: 2px solid var(--cream-3);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      vertical-align: middle;
+      margin-right: .4rem;
+    }
+
+    /* ── 勾選項 ── */
+    .check-group {
+      display: flex;
+      flex-direction: column;
+      gap: .55rem;
+      margin-top: .25rem;
+    }
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: .55rem;
+      cursor: pointer;
+    }
+    .check-item input[type="radio"],
+    .check-item input[type="checkbox"] {
+      width: 16px; height: 16px;
+      accent-color: var(--gold);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .check-item span { font-size: .86rem; color: var(--coffee); line-height: 1.4; }
+
+    /* ── 送出按鈕 ── */
+    .submit-area { text-align: center; margin-top: 2rem; }
+    .btn-submit {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      padding: .95rem 3.5rem;
+      background: var(--gold);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      letter-spacing: .06em;
+      transition: background .25s, transform .2s, box-shadow .2s;
+      box-shadow: 0 4px 18px rgba(200,151,58,.35);
+    }
+    .btn-submit:hover:not(:disabled) {
+      background: var(--gold-lt);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(200,151,58,.45);
+    }
+    .btn-submit:disabled { opacity: .6; cursor: not-allowed; }
+    .submit-note {
+      font-size: .78rem;
+      color: var(--coffee-lt);
+      margin-top: .75rem;
+    }
+    .submit-note i { color: var(--gold); margin-right: .25rem; }
+
+    /* spinner 按鈕內 */
+    .btn-spinner { display: none; }
+    .btn-spinner.show { display: inline-block; }
+    .btn-spinner::after {
+      content: '';
+      display: inline-block;
+      width: 14px; height: 14px;
+      border: 2px solid rgba(255,255,255,.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      vertical-align: middle;
+      margin-left: .3rem;
+    }
+
+    /* ── 確認頁 ── */
+    #confirm-page { display: none; }
+    #confirm-page.show { display: block; }
+    .confirm-card {
+      background: var(--white);
+      border: 1px solid var(--cream-3);
+      border-radius: 14px;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 4px 24px rgba(92,61,46,.1);
+      text-align: center;
+    }
+    .confirm-icon {
+      width: 68px; height: 68px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--gold-lt));
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.25rem;
+      font-size: 1.75rem; color: #fff;
+      box-shadow: 0 6px 20px rgba(200,151,58,.4);
+    }
+    .confirm-card h2 {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      color: var(--coffee);
+      margin-bottom: .5rem;
+    }
+    .confirm-card .confirm-sub {
+      font-size: .9rem;
+      color: var(--coffee-lt);
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+    .confirm-table {
+      width: 100%; border-collapse: collapse;
+      text-align: left; margin-bottom: 2rem;
+    }
+    .confirm-table th {
+      background: var(--cream);
+      padding: .65rem 1rem;
+      font-size: .8rem;
+      color: var(--coffee-lt);
+      font-weight: 600;
+      border-bottom: 1px solid var(--cream-3);
+      width: 34%;
+      vertical-align: top;
+    }
+    .confirm-table td {
+      padding: .65rem 1rem;
+      font-size: .86rem;
+      color: var(--coffee);
+      border-bottom: 1px solid var(--cream-3);
+      font-weight: 500;
+      white-space: pre-wrap;
+    }
+    .confirm-table tr:last-child th,
+    .confirm-table tr:last-child td { border-bottom: none; }
+    .btn-back-home {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .7rem 1.75rem;
+      border: 1.5px solid var(--gold);
+      color: var(--gold);
+      border-radius: 8px;
+      font-size: .9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background .2s, transform .2s;
+    }
+    .btn-back-home:hover { background: var(--gold-bg); transform: translateY(-2px); }
+
+    /* ── Error Toast ── */
+    #error-toast {
+      display: none;
+      position: fixed;
+      bottom: 2rem; left: 50%;
+      transform: translateX(-50%);
+      background: #c0392b;
+      color: #fff;
+      padding: .75rem 1.5rem;
+      border-radius: 8px;
+      font-size: .88rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,.2);
+      z-index: 9999;
+      white-space: nowrap;
+    }
+    #error-toast.show { display: block; }
+
+    /* ── 地址欄位 ── */
+    #address-box { display: none; }
+
+    /* ── RWD ── */
+    @media (max-width: 640px) {
+      .collab-title-bar h1 { font-size: 1.35rem; }
+      .collab-wrap { padding: 1.5rem 1rem 2.5rem; }
+      .field-row { grid-template-columns: 1fr; }
+      .selection-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .btn-submit { padding: .9rem 2.5rem; font-size: .95rem; }
+    }

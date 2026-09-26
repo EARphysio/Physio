@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EAR聆芯健康顧問 | 預約表</title>
+  <meta name="description" content="填寫合作洽談表單，與EAR聆芯健康顧問有限公司聯繫，歡迎企業內訓、健康講座、開課合作等邀約。" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet" />
+   <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" />
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+
+  <!--連到CSS-->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/booking.css" />
+</head>
+<body>
+
+  <!-- ========================================================
+       NAVBAR
+       頂部深咖啡細線 + 奶茶米白背景
+       左：🏠 EAR聆芯身體平衡
+       中：關於我 | 🎫 服務項目 | 📍 自我照護好物 | ▶ 常見問答 | 📅 立即預約
+       右：IG · YT · LINE 圓形彩色圖標
+       ======================================================== -->
+  <div class="nav-topline" aria-hidden="true"></div>
+  <header id="navbar" role="banner">
+    <nav class="nav-wrap" aria-label="主要導覽">
+
+      <!-- 左：品牌 -->
+      <div class="nav-brand">
+        <a href="index.html" class="nav-logo" aria-label="EAR 身體平衡 回到頂部">
+          <img src="img/logo.png" alt="logo" width="50">
+          <span class="nb-ear">EAR聆芯身體平衡</span>
+        </a>
+      </div>
+
+      <!-- 中：導覽連結 -->
+      <div class="nav-center">
+        <a href="#about" class="nav-link has-arrow">
+          <a href="index.html#about" role="menuitem">關於我</a>
+        </a>
+        <a href="#services" class="nav-link">
+          <a href="index.html#services" role="menuitem">服務項目</a>
+        </a>
+        <a href="#populations" class="nav-link">
+          <a href="index.html#populations" role="menuitem">自我照護好物</a>
+        </a>
+        <a href="#faq" class="nav-link">
+          <a href="index.html#faq" role="menuitem">常見問答</a>
+        </a>
+        <a href="#contact" class="nav-link">
+          <a href="index.html#contact" role="menuitem">立即預約</a>
+        </a>
+      </div>
+
+      <!-- 右：社群 -->
+      <div class="nav-socials">
+        <a href="https://www.instagram.com/earphysio/" target="_blank" rel="noopener noreferrer"
+           class="nsocial nsocial-ig" aria-label="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.youtube.com/@euniceyu/shorts"
+           target="_blank" rel="noopener noreferrer" class="nsocial nsocial-yt" aria-label="YouTube">
+          <i class="fab fa-youtube"></i>
+        </a>
+        <a href="https://lin.ee/N2vnfpX" target="_blank" rel="noopener noreferrer"
+           class="nsocial nsocial-line" aria-label="LINE">
+          <i class="bi bi-line"></i>
+        </a>
+      </div>
+
+      <!-- 漢堡選單 (手機用) -->
+      <button class="nav-toggle" id="navToggle" aria-label="切換選單" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <!-- 手機展開選單 -->
+    <div class="nav-mobile" id="navMobile">
+      <a href="index.html#hero"    class="nm-link"><i class="fas fa-home"></i>EAR聆芯身體平衡</a>
+      <a href="index.html#about"   class="nm-link">關於我</a>
+      <a href="index.html#services" class="nm-link">服務項目</a>
+      <a href="index.html#populations"   class="nm-link">自我照護好物</a>
+      <a href="index.html#faq" class="nm-link"> 常見問答</a>
+      <a href="index.html#contact" class="nm-link"> 立即預約</a>
+      <div class="nm-socials">
+        <a href="https://www.instagram.com/earphysio/" target="_blank" class="nsocial nsocial-ig"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.youtube.com/channel/UCzM4JnSAk8aUFCLA5UY1bzw" target="_blank" class="nsocial nsocial-yt"><i class="fab fa-youtube"></i></a>
+        <a href="https://lin.ee/N2vnfpX" target="_blank" class="nsocial nsocial-line"><i class="bi bi-line"></i></a>
+      </div>
+    </div>
+  </header>
+<body>
+
+  <div class="collab-nav">
+    <a href="index.html" class="back-link"><i class="fas fa-chevron-left"></i> 返回首頁</a>
+    <span class="brand">Return to Alignment</span>
+  </div>
+
+  <div class="collab-title-bar">
+    <div class="eye">ONLINE BOOKING</div>
+    <h1>線上預約</h1>
+    <p>請先選擇您是新客或舊客，填寫預約資料後，我們將以 Email 確認您的預約時段。</p>
+  </div>
+
+  <div class="collab-wrap">
+
+    <!-- STEP 0: 新舊客選擇 -->
+    <div id="step-selection">
+      <div class="selection-hint">
+        請問您是⋯？
+        <span>請點選下方圖片，進入對應的預約頁面</span>
+      </div>
+      <div class="selection-grid">
+        <!-- 修正1：新客 (false)、舊客 (true) 連結對調正確 -->
+        <button class="selection-card" type="button" onclick="startForm(false)" aria-label="新客預約">
+          <img src="img/booking-new.png" alt="新客戶預約 Initial Consultation">
+        </button>
+        <button class="selection-card" type="button" onclick="startForm(true)" aria-label="舊客預約">
+          <img src="img/booking-old.png" alt="舊客戶預約 Follow-up Session">
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 1: 表單頁面 -->
+    <div id="step-form" style="display:none;">
+      <button class="btn-back" type="button" onclick="goBack()">
+        <i class="fas fa-chevron-left"></i> 重新選擇
+      </button>
+
+      <form id="bookingForm" onsubmit="submitForm(event)">
+        <input type="hidden" id="isOldCustomer" value="false" />
+
+        <!-- 基本資料 -->
+        <div class="form-card">
+          <div class="step-header">
+            <span class="step-num">①</span>
+            <h2>基本資料</h2>
+            <span class="step-badge" id="customer-badge">新客</span>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="f-name">您的姓名 <span class="req">*</span></label>
+              <input type="text" id="f-name" required placeholder="請輸入真實姓名">
+            </div>
+            <div class="field">
+              <label for="f-email">電子郵件 <span class="req">*</span></label>
+              <input type="email" id="f-email" required placeholder="example@email.com">
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="f-phone">聯絡電話 <span class="req">*</span></label>
+              <input type="tel" id="f-phone" required placeholder="0912-345-678">
+            </div>
+            <div class="field">
+              <label for="f-line">LINE 名稱</label>
+              <input type="text" id="f-line" placeholder="LINE 顯示名稱（選填）">
+            </div>
+          </div>
+
+          <div id="new-customer-fields">
+            <div class="field-row">
+              <div class="field">
+                <label for="f-gender">生理性別 <span class="req">*</span></label>
+                <select id="f-gender">
+                  <option value="">請選擇</option>
+                  <option value="男">男</option>
+                  <option value="女">女</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="f-birthday">生日 <span class="req">*</span></label>
+                <input type="date" id="f-birthday">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 服務項目 -->
+        <div class="form-card">
+          <div class="step-header">
+            <span class="step-num">②</span>
+            <h2>服務項目</h2>
+          </div>
+          <div class="field">
+            <label for="f-service">選擇服務項目 <span class="req">*</span></label>
+            <select id="f-service" onchange="loadSchedule()" required>
+              <option value="">請先選擇服務項目</option>
+              <option value="manual">徒手/放鬆</option>
+              <option value="gyrokinesis">嬋柔(Gyrokinesis)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 預約時段 (依服務動態替換標題與說明) -->
+        <div class="form-card" id="schedule-card" style="display:none;">
+          <div class="step-header">
+            <span class="step-num">③</span>
+            <h2 id="schedule-title">預約時間選擇</h2>
+          </div>
+          
+          <p id="schedule-location-info" style="font-size:0.88rem; color:var(--coffee-lt); font-weight:600; margin-bottom:5px;"></p>
+          <p id="schedule-sub-hint" style="font-size:0.82rem; color:var(--coffee-lt); margin-bottom:15px;"></p>
+
+          <div id="schedule-loading" class="schedule-loading" style="display:none;">
+            <span class="spin-icon"></span>正在同步 Google 行事曆狀態⋯
+          </div>
+          <div id="schedule-container"></div>
+
+          <input type="hidden" id="f-date" required>
+          <input type="hidden" id="f-time" required>
+        </div>
+
+        <!-- 服務地點 -->
+        <div class="form-card">
+          <div class="step-header">
+            <span class="step-num">④</span>
+            <h2>服務地點選擇</h2>
+          </div>
+          <div class="field">
+            <select id="f-location" required onchange="toggleAddress()">
+              <option value="">請選擇地點</option>
+              <option value="中和據點｜親友限定">中和據點｜親友限定</option>
+              <option value="板橋館｜棒地物理治療所">板橋館｜棒地物理治療所</option>
+              <option value="善導寺館｜透視物理治療所">善導寺館｜透視物理治療所</option>
+              <option value="小巨蛋館｜連邦物理治療所">小巨蛋館｜連邦物理治療所</option>
+              <option value="國父紀念館｜心動動作工作室">國父紀念館｜心動動作工作室</option>
+              <option value="到府服務｜限雙北地區">到府服務｜限雙北地區</option>
+            </select>
+          </div>
+          <div class="field" id="address-box" style="display:none;">
+            <label for="f-address">服務環境說明：凡需爬坡或無電梯設備之場域，請務必私訊告知，感謝您的配合。<br>
+            ※ 若與前次服務地址相同，您可直接填寫「同前次」。 <span class="req">*</span></label>
+            <input type="text" id="f-address" placeholder="請輸入您到府服務確切地址。">
+          </div>
+        </div>
+
+        <!-- 修正3：不舒服的位置 (複選矩陣表) -->
+        <div class="form-card">
+          <div class="step-header">
+            <span class="step-num">⑤</span>
+            <h2>不舒服的位置 (複選)</h2>
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="matrix-table">
+              <thead>
+                <tr>
+                  <th>位置</th>
+                  <th>急性期: 小於 1 週</th>
+                  <th>亞急性期: 1 ～ 4 週</th>
+                  <th>慢性期: 1 ～ 6 個月</th>
+                  <th>長期痼疾: 6 個月...</th>
+                </tr>
+              </thead>
+              <tbody id="body-matrix-body">
+                <!-- 由 JS 自動產生列表列 -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 修正2：如何得知我們的資訊 (直式排版) -->
+        <div class="form-card">
+          <div class="step-header">
+            <span class="step-num">⑥</span>
+            <h2>如何得知我們的資訊 (複選) <span class="req">*</span></h2>
+          </div>
+          <!-- 套用 style.css 內建的 check-group 並加寬間距以符合圖片 -->
+          <div class="check-group" style="gap: 1.2rem; margin-top: 1rem;">
+            <label class="check-item">
+              <input type="checkbox" name="source" value="親友同儕 / 個案介紹"> 
+              <span>親友同儕 / 個案介紹</span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" name="source" value="專題演講 / 課程活動"> 
+              <span>專題演講 / 課程活動</span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" name="source" value="專業轉介 / 教練推薦"> 
+              <span>專業轉介 / 教練推薦</span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" name="source" value="Instagram: polarbear_physio"> 
+              <span>Instagram: polarbear_physio</span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" name="source" value="YouTube: 尤慧群物理治療師"> 
+              <span>YouTube: 尤慧群物理治療師</span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" name="source" value="賽事場邊 / 現場防護"> 
+              <span>賽事場邊 / 現場防護</span>
+            </label>
+            <label class="check-item" style="display: flex; align-items: center; width: 100%;">
+              <input type="checkbox" name="source" id="source-other-check" value="其他"> 
+              <span style="white-space: nowrap;">其他: </span>
+              <input type="text" id="source-other-text" placeholder="" style="flex: 1; max-width: 60%; border: none; border-bottom: 1px dashed var(--coffee-lt); background: transparent; padding: 2px 5px; margin-left: 8px;">
+            </label>
+          </div>
+        </div>
+
+        <div class="submit-area">
+          <button type="submit" class="btn-submit" id="submit-btn">
+            確認送出預約 <span class="btn-spinner" id="btn-spinner"></span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- STEP 2: 預約結果頁面 -->
+    <div id="confirm-page" style="display:none;">
+      <div class="confirm-card">
+        <div class="confirm-icon"><i class="fas fa-check"></i></div>
+        <h2>預約成功！</h2>
+        <p class="confirm-sub">我們已經保留您的預約時段，並同步寫入 Google 行事曆。<br>確認信已寄至您的 Email，請留意查收。</p>
+        
+        <table class="confirm-table">
+          <tr><th>預約姓名</th><td id="res-name"></td></tr>
+          <tr><th>服務項目</th><td id="res-service"></td></tr>
+          <tr><th>預約時間</th><td id="res-time"></td></tr>
+          <tr><th>服務地點</th><td id="res-location"></td></tr>
+        </table>
+
+        <a href="index.html" class="btn-back-home">返回首頁</a>
+      </div>
+    </div>
+
+  </div>
+<!-- ========================================================
+       FOOTER
+       電腦版：左側品牌欄 + 右側三導覽欄（服務項目/族群/快速連結）
+       手機版：單欄垂直堆疊，品牌→服務項目→服務族群→快速連結
+       ======================================================== -->
+  <footer id="footer" itemscope itemtype="https://schema.org/WPFooter">
+    <!-- 頂部橘金色線 -->
+    <div class="ft-topbar" aria-hidden="true"></div>
+
+    <div class="ft-inner">
+      <!-- ── 主要四欄網格 ── -->
+      <div class="ft-grid">
+
+        <!-- 欄1：品牌 + 社群 -->
+        <div class="ft-brand-col">
+          <!-- Logo 橘底方塊 + 品牌名 -->
+          <div class="ft-logo-row">
+            <img src="img/logo_white.png" alt="logo" width="50">
+            <span class="ft-brand-name">EAR聆芯身體平衡</span>
+          </div>
+          <!-- 品牌描述 -->
+          <p class="ft-brand-desc">
+            尤慧群<br>
+            用科學方法，還你自在的身體
+          </p>
+          <!-- 社群圖標 -->
+          <div class="ft-socials">
+            <a href="https://www.instagram.com/earphysio/"
+               target="_blank" rel="noopener noreferrer"
+               class="ft-social-btn" aria-label="Instagram @earphysio">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.youtube.com/@euniceyu/shorts"
+               target="_blank" rel="noopener noreferrer"
+               class="ft-social-btn" aria-label="YouTube 尤慧群身體保健頻道">
+              <i class="fab fa-youtube"></i>
+            </a>
+            <a href="https://lin.ee/N2vnfpX"
+               target="_blank" rel="noopener noreferrer"
+               class="ft-social-btn" aria-label="LINE @232neema">
+              <i class="bi bi-line"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- 欄2：服務項目 -->
+        <nav class="ft-nav-col" aria-label="服務項目導覽">
+          <h3 class="fn-heading">服務項目</h3>
+          <ul class="fn-list">
+            <li><a href="index.html#services">舒適度提升</a></li>
+            <li><a href="index.html#services">體態調整</a></li>
+            <li><a href="index.html#services">肌筋膜放鬆</a></li>
+            <li><a href="index.html#services">動作控制訓練</a></li>
+            <li><a href="index.html#services">睡眠品質調節</a></li>
+            <li><a href="index.html#services">身心壓力調節</a></li>
+          </ul>
+        </nav>
+
+        <!-- 欄3：自我照護好物 -->
+        <nav class="ft-nav-col" aria-label="自我照護好物導覽">
+          <h3 class="fn-heading">自我照護好物</h3>
+          <ul class="fn-list">
+            <li><a href="#populations">花生球</a></li>
+          </ul>
+        </nav>
+
+        <!-- 欄4：快速連結 -->
+        <nav class="ft-nav-col" aria-label="快速連結導覽">
+          <h3 class="fn-heading">快速連結</h3>
+          <ul class="fn-list">
+            <li><a href="index.html#about">關於我</a></li>
+            <li><a href="index.html#services">服務項目</a></li>
+            <li><a href="index.html#populations">自我照護好物</a></li>
+            <li><a href="index.html#process">服務流程</a></li>
+            <li><a href="index.html#faq">常見問答 FAQ</a></li>
+            <li><a href="index.html#contact">預約諮詢</a></li>
+          </ul>
+        </nav>
+
+      </div><!-- /ft-grid -->
+
+      <!-- ── 底部版權 + SEO 關鍵字 ── -->
+      <div class="ft-bottom">
+        <p class="ft-copy">Copyright© 2026 EAR聆芯身體平衡 All Rights Reserved  網頁設計by 大熊</p>
+        <!-- 隱藏 SEO 關鍵字標籤 -->
+        <ul class="ft-kws" aria-hidden="true">
+          <li>尤慧群</li><li>EAR聆芯身體平衡</li><li>體態調整</li>
+          <li>長期不適</li><li>身心緊繃</li><li>過度疲勞</li>
+          <li>運動防護</li><li>舒緩釋壓</li>
+          <li>動作優化</li><li>體能指導</li><li>徒手放鬆</li>
+        </ul>
+      </div>
+
+    </div><!-- /ft-inner -->
+  </footer>
+
+  <button class="back-to-top" id="backToTop" aria-label="回到頂部">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <script src="js/main.js"></script>
+  <script>
+    // 替換為部署好的 Web App URL
+    const GAS_URL = 'https://script.google.com/macros/s/您的_GAS_DEPLOYMENT_ID/exec';
+
+    const bodyLocations = ["頭頸", "肩膀", "上肢麻痛感", "上背育育", "腰薦椎區域", "骨盆/臀部", "髖關節", "膝關節", "踝關節/足底"];
+    const stages = ["急性期: 小於 1 週", "亞急性期: 1 ～ 4 週", "慢性期: 1 ～ 6 個月", "長期痼疾: 6 個月..."];
+
+    // 載入不舒服位置表格
+    document.addEventListener("DOMContentLoaded", function() {
+      const tbody = document.getElementById("body-matrix-body");
+      bodyLocations.forEach((loc, idx) => {
+        let tr = document.createElement("tr");
+        let tdName = document.createElement("td");
+        tdName.innerText = loc;
+        tr.appendChild(tdName);
+
+        stages.forEach((stg) => {
+          let td = document.createElement("td");
+          td.innerHTML = `<input type="checkbox" class="matrix-checkbox" name="matrix_check" value="${loc}_${stg}">`;
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      });
+    });
+
+    function startForm(isOld) {
+      document.getElementById("step-selection").style.display = "none";
+      document.getElementById("step-form").style.display = "block";
+      document.getElementById("isOldCustomer").value = isOld;
+      document.getElementById("customer-badge").innerText = isOld ? "舊客" : "新客";
+      document.getElementById("new-customer-fields").style.display = isOld ? "none" : "block";
+    }
+
+    function goBack() {
+      document.getElementById("step-form").style.display = "none";
+      document.getElementById("step-selection").style.display = "block";
+      document.getElementById("bookingForm").reset();
+      document.getElementById("schedule-card").style.display = "none";
+    }
+
+    function toggleAddress() {
+      let loc = document.getElementById("f-location").value;
+      document.getElementById("address-box").style.display = (loc === "到府服務｜限雙北地區") ? "block" : "none";
+    }
+
+    function loadSchedule() {
+      const service = document.getElementById("f-service").value;
+      const card = document.getElementById("schedule-card");
+      const title = document.getElementById("schedule-title");
+      const locInfo = document.getElementById("schedule-location-info");
+      const subHint = document.getElementById("schedule-sub-hint");
+      const loading = document.getElementById("schedule-loading");
+      const container = document.getElementById("schedule-container");
+
+      if(!service) { card.style.display = "none"; return; }
+      card.style.display = "block";
+      container.innerHTML = "";
+      loading.style.display = "block";
+
+      // 修正3 & 5：更新標題與資訊內容
+      if(service === "manual") {
+        title.innerText = "徒手/放鬆日期時間選擇";
+        locInfo.innerText = "上課地點：中和、板橋館、善導寺館、小巨蛋館、國父紀念館";
+        subHint.innerText = "徒手/放鬆：您方便預約的時段？ (複選)\n(建議挑選運動後 1～2天進行深層放鬆)";
+      } else if(service === "gyrokinesis") {
+        title.innerText = "嬋柔(Gyrokinesis) 團課：您想報名的日期？ (可複選)";
+        locInfo.innerText = "上課地點：國父紀念館";
+        subHint.innerText = "(透過脊椎流動來自癒自己的身體)";
+      }
+
+      // 從 API 讀取雙週即時排班
+      fetch(`${GAS_URL}?action=getSchedule&service=${service}`)
+        .then(res => res.json())
+        .then(data => {
+          loading.style.display = "none";
+          renderScheduleTables(data, service);
+        });
+    }
+
+    // 渲染雙週表格
+    function renderScheduleTables(data, serviceType) {
+      const container = document.getElementById("schedule-container");
+      let html = "";
+
+      function buildTable(weekData, weekLabel) {
+        let t = `<div class="week-title">${weekLabel} (${weekData.dateRange})</div>`;
+        t += `<div class="schedule-wrap"><table class="schedule-table"><thead><tr><th class="time-col">時段</th>`;
+        weekData.days.forEach(d => { t += `<th>${d.dateLabel}</th>`; });
+        t += `</tr></thead><tbody>`;
+
+        data.timeLabels.forEach((timeStr, tIdx) => {
+          t += `<tr><td class="time-col">${timeStr}</td>`;
+          weekData.days.forEach((d) => {
+            let slot = d.slots[tIdx];
+            t += `<td>`;
+            if (slot.status === "expired") {
+              t += `<span class="slot-tag slot-expired">過期</span>`;
+            } else if (slot.status === "full") {
+              t += `<span class="slot-tag slot-full">滿</span>`;
+            } else if (slot.status === "disabled") {
+              t += `<span class="slot-tag slot-disabled"></span>`;
+            } else if (slot.status === "available") {
+              t += `<input type="radio" name="slot" class="slot-radio" onchange="selectSlot('${d.fullDate}', '${timeStr}')">`;
+            }
+            t += `</td>`;
+          });
+          t += `</tr>`;
+        });
+        t += `</tbody></table></div>`;
+        return t;
+      }
+
+      html += buildTable(data.week1, "第一週");
+      html += buildTable(data.week2, "第二週");
+      container.innerHTML = html;
+    }
+
+    function selectSlot(dateStr, timeStr) {
+      document.getElementById("f-date").value = dateStr;
+      document.getElementById("f-time").value = timeStr;
+    }
+
+    function submitForm(e) {
+      e.preventDefault();
+      const dateVal = document.getElementById("f-date").value;
+      const timeVal = document.getElementById("f-time").value;
+      if(!dateVal || !timeVal) { alert("請點選一個可預約的時段！"); return; }
+
+      const btn = document.getElementById("submit-btn");
+      const spinner = document.getElementById("btn-spinner");
+      btn.disabled = true;
+      spinner.classList.add("show");
+
+      // 彙整不舒服位置
+      let selectedBody = [];
+      document.querySelectorAll('input[name="matrix_check"]:checked').forEach(cb => selectedBody.push(cb.value));
+
+      // 彙整得知管道
+      let selectedSources = [];
+      document.querySelectorAll('input[name="source"]:checked').forEach(cb => {
+        if(cb.value === "其他") {
+          let otherTxt = document.getElementById("source-other-text").value;
+          selectedSources.push("其他: " + otherTxt);
+        } else {
+          selectedSources.push(cb.value);
+        }
+      });
+
+      const payload = {
+        isOldCustomer: document.getElementById("isOldCustomer").value === "true",
+        name: document.getElementById("f-name").value,
+        email: document.getElementById("f-email").value,
+        phone: document.getElementById("f-phone").value,
+        lineName: document.getElementById("f-line").value,
+        gender: document.getElementById("f-gender").value,
+        birthday: document.getElementById("f-birthday").value,
+        serviceType: document.getElementById("f-service").value,
+        appointmentDate: dateVal,
+        appointmentTime: timeVal,
+        location: document.getElementById("f-location").value,
+        address: document.getElementById("f-address").value,
+        bodyCondition: selectedBody.join(", "),
+        sourceChannel: selectedSources.join(", ")
+      };
+
+      fetch(GAS_URL, {
+        method: "POST",
+        body: JSON.stringify(payload)
+      })
+      .then(res => res.json())
+      .then(res => {
+        if(res.success) {
+          document.getElementById("step-form").style.display = "none";
+          document.getElementById("confirm-page").style.display = "block";
+          document.getElementById("res-name").innerText = payload.name;
+          document.getElementById("res-service").innerText = (payload.serviceType === "manual") ? "徒手/放鬆" : "嬋柔(Gyrokinesis)";
+          document.getElementById("res-time").innerText = `${payload.appointmentDate} ${payload.appointmentTime}`;
+          document.getElementById("res-location").innerText = payload.location;
+        } else {
+          alert("預約失敗：" + res.error);
+        }
+      })
+      .catch(() => alert("連線錯誤"))
+      .finally(() => {
+        btn.disabled = false;
+        spinner.classList.remove("show");
+      });
+    }
+  </script>
+</body>
+</html>
