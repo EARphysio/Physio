@@ -100,11 +100,9 @@
     <a href="index.html" class="back-link"><i class="fas fa-chevron-left"></i> 返回首頁</a>
     <span class="brand">Return to Alignment</span>
   </div>
-
-  <div class="collab-title-bar">
-    <div class="eye">ONLINE BOOKING</div>
-    <h1>線上預約</h1>
-    <p>請先選擇您是新客或舊客，填寫預約資料後，我們將以 Email 確認您的預約時段。</p>
+   <!-- Banner -->
+  <div class="collab-banner">
+    <img src="img/collab-banner.jpg" alt="EAR 身體平衡 Return to Alignment" />
   </div>
 
   <div class="collab-wrap">
@@ -666,6 +664,7 @@
         } else {
           alert("預約失敗：" + res.error);
         }
+
       })
       .catch(() => alert("連線錯誤"))
       .finally(() => {
