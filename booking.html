@@ -15,7 +15,7 @@
 
   <!-- 視窗Logo-->
   <link rel="icon" href="img/EAR_Logo.png">
-  
+
   <!--連到CSS-->
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/booking.css" />
@@ -161,8 +161,8 @@
               <input type="tel" id="f-phone" required placeholder="0912-345-678">
             </div>
             <div class="field">
-              <label for="f-line">LINE 名稱</label>
-              <input type="text" id="f-line" placeholder="LINE 顯示名稱（選填）">
+              <label for="f-line">LINE 名稱 <span class="req">*</span></label>
+              <input type="text" id="f-line" required placeholder="LINE 顯示名稱">
             </div>
           </div>
 
@@ -613,6 +613,12 @@
       // 彙整目前身體狀況
       let selectedBody = [];
       document.querySelectorAll('input[name="matrix_check"]:checked').forEach(cb => selectedBody.push(cb.value));
+
+      // 📍 新增：檢查是否有勾選身體狀況，若無則給予彈窗通知並停止送出
+      if(selectedBody.length === 0) {
+        alert("請至少勾選一項「目前的身體狀況」！");
+        return; 
+      }
 
       // 彙整得知管道
       let selectedSources = [];
