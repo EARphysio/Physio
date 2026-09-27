@@ -371,7 +371,14 @@
       vertical-align: middle;
       margin-right: .4rem;
     }
-
+    /* 身體狀況 核取框位置 */
+    .matrix-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.88rem; }
+    /* 加入 white-space: nowrap 強制文字不換行，解決手機版對齊跑掉的問題 */
+    .matrix-table th, .matrix-table td { border: 1px solid var(--cream-3); padding: 8px; text-align: center; white-space: nowrap; }
+    .matrix-table th { background-color: var(--cream); font-weight: 600; color: var(--coffee); }
+    /* 將第一欄項目名稱固定在左側，滑動時才不會看不見是哪個部位 */
+    .matrix-table td:first-child { text-align: left; font-weight: 600; position: sticky; left: 0; background-color: #fff; z-index: 1; }
+    .matrix-checkbox { width: 18px; height: 18px; accent-color: var(--gold); cursor: pointer; margin: 0 auto; display: block; }
     /* ── 勾選項 ── */
     .check-group {
       display: flex;
