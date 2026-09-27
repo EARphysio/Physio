@@ -441,11 +441,11 @@
   <script>
     // 替換為部署好的 Web App URL
     const GAS_URL = 'https://script.google.com/macros/s/AKfycbwIPvTf7atwc7zXhH-rZlMe_8EIalVuycAg2N_1fFemjbGWrlynMLE0WzBxgUkGoxYxDQ/exec';
-
+                    
     const bodyLocations = ["頭頸", "肩膀", "上肢麻痛感", "上背膏肓", "腰薦椎區域", "骨盆/臀部", "髖關節", "膝關節", "踝關節/足底"];
     const stages = ["急性期: 小於 1 週", "亞急性期: 1 ～ 4 週", "慢性期: 1 ～ 6 個月", "長期痼疾: 6 個月..."];
 
-    // 載入不舒服位置表格
+    // 載入目前身體狀況置表格
     document.addEventListener("DOMContentLoaded", function() {
       const tbody = document.getElementById("body-matrix-body");
       bodyLocations.forEach((loc, idx) => {
@@ -609,7 +609,7 @@
       btn.disabled = true;
       spinner.classList.add("show");
 
-      // 彙整不舒服位置
+      // 彙整目前身體狀況
       let selectedBody = [];
       document.querySelectorAll('input[name="matrix_check"]:checked').forEach(cb => selectedBody.push(cb.value));
 
@@ -650,14 +650,19 @@
           document.getElementById("step-form").style.display = "none";
           document.getElementById("confirm-page").style.display = "block";
           // 📍 修正 2：將陣列中的多筆時段，轉化為可讀的字串並換行
-          let timeString = payload.appointmentSlots.map(slot => `${slot.date}${slot.time}`).join('\n');
+          // 防呆機制：確保 appointmentSlots 有資料才進行 map，避免 Apple 手機報錯
+          let timeString = (payload.appointmentSlots && payload.appointmentSlots.length > 0) 
+                           ? payload.appointmentSlots.map(slot => `${slot.date} ${slot.time}`).join('\n') 
+                           : "未提供時間";
+          
+          // 將預約資料寫入結果頁面
           document.getElementById("res-name").innerText = payload.name;
           document.getElementById("res-service").innerText = (payload.serviceType === "manual") ? "徒手/放鬆" : "嬋柔(Gyrokinesis)";
-          // 正確顯示複選的時間
           document.getElementById("res-time").innerText = timeString; 
           document.getElementById("res-location").innerText = payload.location;
           
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          // 修正：使用最傳統的捲動語法，完美相容所有新舊版 Apple 裝置
+          window.scrollTo(0, 0);
         } else {
           alert("預約失敗：" + res.error);
         }
