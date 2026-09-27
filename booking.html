@@ -645,10 +645,15 @@
         if(res.success) {
           document.getElementById("step-form").style.display = "none";
           document.getElementById("confirm-page").style.display = "block";
+          // 📍 修正 2：將陣列中的多筆時段，轉化為可讀的字串並換行
+          let timeString = payload.appointmentSlots.map(slot => `${slot.date}${slot.time}`).join('\n');
           document.getElementById("res-name").innerText = payload.name;
           document.getElementById("res-service").innerText = (payload.serviceType === "manual") ? "徒手/放鬆" : "嬋柔(Gyrokinesis)";
-          document.getElementById("res-time").innerText = `${payload.appointmentDate} ${payload.appointmentTime}`;
+          // 正確顯示複選的時間
+          document.getElementById("res-time").innerText = timeString; 
           document.getElementById("res-location").innerText = payload.location;
+          
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
           alert("預約失敗：" + res.error);
         }
