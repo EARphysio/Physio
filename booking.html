@@ -487,6 +487,30 @@
       const subHint = document.getElementById("schedule-sub-hint");
       const loading = document.getElementById("schedule-loading");
       const container = document.getElementById("schedule-container");
+      // ==========================================
+      // 📍 修正 ：動態切換服務地點選項
+      // ==========================================
+      const locSelect = document.getElementById("f-location");
+      const currentLoc = locSelect.value; // 記住當前選擇
+      locSelect.innerHTML = '<option value="">請選擇地點</option>'; // 清空重置
+
+      if (service === "gyrokinesis") {
+        locSelect.innerHTML += '<option value="國父紀念館｜心動動作工作室">國父紀念館｜心動動作工作室</option>';
+        locSelect.innerHTML += '<option value="到府服務｜限雙北地區">到府服務｜限雙北地區</option>';
+      } else {
+        locSelect.innerHTML += '<option value="中和據點｜親友限定">中和據點｜親友限定</option>';
+        locSelect.innerHTML += '<option value="板橋館｜棒地物理治療所">板橋館｜棒地物理治療所</option>';
+        locSelect.innerHTML += '<option value="善導寺館｜透視物理治療所">善導寺館｜透視物理治療所</option>';
+        locSelect.innerHTML += '<option value="小巨蛋館｜連邦物理治療所">小巨蛋館｜連邦物理治療所</option>';
+        locSelect.innerHTML += '<option value="國父紀念館｜心動動作工作室">國父紀念館｜心動動作工作室</option>';
+        locSelect.innerHTML += '<option value="到府服務｜限雙北地區">到府服務｜限雙北地區</option>';
+      }
+      
+      // 若原先選擇的地點在新列表中依然存在，則保留選擇
+      let hasOption = Array.from(locSelect.options).some(opt => opt.value === currentLoc);
+      if (hasOption) locSelect.value = currentLoc;
+      toggleAddress(); // 同步檢查是否需顯示詳細地址欄位
+      // ==========================================
 
       if(!service) { card.style.display = "none"; return; }
       card.style.display = "block";
@@ -536,7 +560,8 @@
             } else if (slot.status === "disabled") {
               t += `<span class="slot-tag slot-disabled"></span>`;
             } else if (slot.status === "available") {
-              t += `<input type="radio" name="slot" class="slot-radio" onchange="selectSlot('${d.fullDate}', '${timeStr}')">`;
+              // 將 radio 改為 checkbox，並允許複選
+              t += `<input type="checkbox" name="slot_checkbox" class="slot-checkbox" value="${d.fullDate}_${timeStr}" data-date="${d.fullDate}" data-time="${timeStr}">`;
             }
             t += `</td>`;
           });
@@ -558,9 +583,22 @@
 
     function submitForm(e) {
       e.preventDefault();
-      const dateVal = document.getElementById("f-date").value;
-      const timeVal = document.getElementById("f-time").value;
-      if(!dateVal || !timeVal) { alert("請點選一個可預約的時段！"); return; }
+      // ==========================================
+      // 📍 請將這段複選收集與驗證碼放在這裡：
+      // ==========================================
+      let selectedSlots = [];
+      document.querySelectorAll('input[name="slot_checkbox"]:checked').forEach(cb => {
+        selectedSlots.push({
+          date: cb.getAttribute("data-date"),
+          time: cb.getAttribute("data-time")
+        });
+      });
+
+      if (selectedSlots.length === 0) {
+        alert("請至少勾選一個可預約的時段！");
+        return;
+      }
+      // ==========================================
 
       const btn = document.getElementById("submit-btn");
       const spinner = document.getElementById("btn-spinner");
@@ -591,8 +629,7 @@
         gender: document.getElementById("f-gender").value,
         birthday: document.getElementById("f-birthday").value,
         serviceType: document.getElementById("f-service").value,
-        appointmentDate: dateVal,
-        appointmentTime: timeVal,
+        appointmentSlots: selectedSlots, // 傳遞複選的時段陣列
         location: document.getElementById("f-location").value,
         address: document.getElementById("f-address").value,
         bodyCondition: selectedBody.join(", "),
