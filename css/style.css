@@ -148,6 +148,7 @@ background: var(--hair);
 /* — Brand — */
 .nav-brand { flex-shrink: 0; }
 .nav-logo { display: flex; align-items: center; gap: .4rem; font-size: .88rem; font-weight: 700; color: var(--coffee); white-space: nowrap; }
+.nav-logo > img { max-height: 40px; object-fit: contain; flex-shrink: 0; }
 .nav-ico { font-size: .82rem; color: var(--coffee); }
 .nav-ico-yt { color: #c00; font-size: 1rem; }
 .nb-ear { font-size: 1.2rem; font-weight: 600; color: var(--coffee); letter-spacing: .06em; }
@@ -156,7 +157,7 @@ background: var(--hair);
 
 /* — Center links — */
 .nav-center {
-  flex: 1 1 auto;
+  flex: 1 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -164,6 +165,7 @@ background: var(--hair);
 }
 .nav-link {
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   gap: .35rem;
   padding: .3rem clamp(4px, 0.8vw, .65rem);
@@ -229,6 +231,8 @@ transition: transform .3s var(--spring), opacity .2s;
 /* — Mobile dropdown — */
 .nav-mobile {
 display: none;
+max-height: calc(100dvh - var(--nav-h) - 3px);
+overflow-y: auto;
 flex-direction: column;
 background: #F4EBE0;
 border-top: 1px solid var(--cream-3);
@@ -1330,8 +1334,19 @@ color: #fff;
 transform: scale(1.12);
 }
 .ps-ic {
+height: 40px;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-shrink: 0;
 font-size: 1.2rem;
 color: var(--gold);
+margin-bottom: .25rem;
+}
+.proc-step > img {
+height: 40px;
+object-fit: contain;
+flex-shrink: 0;
 margin-bottom: .25rem;
 }
 .proc-step h4 {
@@ -1749,6 +1764,16 @@ RESPONSIVE — Tablet (≤ 960px)
 /* ============================================================
 RESPONSIVE — Mobile (≤ 640px)
 ============================================================ */
+/* Keep desktop labels on one line; use the complete dropdown below 740px. */
+@media (max-width: 740px) {
+.nav-center   { display: none; }
+.nav-socials  { display: none; }
+.nav-toggle   { display: flex; flex-shrink: 0; }
+}
+@media (min-width: 741px) {
+.nav-mobile   { display: none !important; }
+}
+
 @media (max-width: 640px) {
 :root { --nav-h: 52px; }
 
@@ -2074,3 +2099,4 @@ PRINT  (prevent dark bg)
 body { background: #fff; color: #000; }
 .hero-section, .sec-cream { background: #fff; }
 }
+
