@@ -117,97 +117,63 @@ background: var(--hair);
 }
 
 /* ============================================================
-NAVBAR
+   NAVBAR (修正版：保證縮放不跑版)
 ============================================================ */
-.nav-topline {
-position: fixed;
-top: 0; left: 0; right: 0;
-height: 3px;
-background: var(--coffee-dk);
-z-index: 1001;
-}
+.nav-topline { position: fixed; top: 0; left: 0; right: 0; height: 3px; background: var(--coffee-dk); z-index: 1001; }
 
 #navbar {
-/* clamp(最小值, 推薦值, 最大值) 這裡代表字體最小不會小於 14px，最大不會大於 18px，中間會隨視窗寬度(vw)彈性縮放 */
-font-size: clamp(14px, 1.2vw, 18px); 
-    
-/* 左右間距也改用 vw 彈性縮放，避免空間不夠 */
-padding: 10px 1vw; 
-    
-/* 【關鍵設定】強制文字不能換行，避免變成直排 */
-white-space: nowrap; 
-position: fixed;
-top: 3px; left: 0; right: 0;
-height: var(--nav-h);
-background: #F4EBE0;
-border-bottom: 1px solid var(--cream-3);
-z-index: 1000;
-transition: box-shadow .3s var(--ease);
+  position: fixed;
+  top: 3px;
+  left: 0;
+  right: 0;
+  height: var(--nav-h);
+  background: #F4EBE0;
+  border-bottom: 1px solid var(--cream-3);
+  z-index: 1000;
+  transition: box-shadow .3s var(--ease);
 }
-#navbar.scrolled {
-box-shadow: 0 2px 12px rgba(95,61,46,.13);
-}
+#navbar.scrolled { box-shadow: 0 2px 12px rgba(95,61,46,.13); }
 
 .nav-wrap {
-max-width: 1200px;
-margin: 0 auto;
-height: 100%;
-display: flex;
-align-items: center;
-padding: 0 var(--sp-lg);
-gap: var(--sp-md);
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 均分空間，避免溢出 */
+  padding: 0 clamp(10px, 2vw, var(--sp-lg)); /* 彈性 padding */
+  gap: clamp(5px, 1vw, var(--sp-md)); /* 彈性 gap */
 }
 
 /* — Brand — */
 .nav-brand { flex-shrink: 0; }
-.nav-logo {
-display: flex;
-align-items: center;
-gap: .4rem;
-font-size: .88rem;
-font-weight: 700;
-color: var(--coffee);
-white-space: nowrap;
-}
+.nav-logo { display: flex; align-items: center; gap: .4rem; font-size: .88rem; font-weight: 700; color: var(--coffee); white-space: nowrap; }
 .nav-ico { font-size: .82rem; color: var(--coffee); }
 .nav-ico-yt { color: #c00; font-size: 1rem; }
-.nb-ear {
-font-size: 1.2rem;
-font-weight: 600;
-color: var(--coffee);
-letter-spacing: .06em;
-}
-.nb-sub {
-font-size: .78rem;
-font-weight: 400;
-color: var(--coffee-lt);
-}
-.nb-arrow {
-font-size: .55rem;
-color: var(--coffee-lt);
-margin-left: .1rem;
-}
+.nb-ear { font-size: 1.2rem; font-weight: 600; color: var(--coffee); letter-spacing: .06em; }
+.nb-sub { font-size: .78rem; font-weight: 400; color: var(--coffee-lt); }
+.nb-arrow { font-size: .55rem; color: var(--coffee-lt); margin-left: .1rem; }
 
 /* — Center links — */
 .nav-center {
-flex: 1;
-display: flex;
-align-items: center;
-justify-content: center;
-gap: .2rem;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(2px, 0.5vw, .2rem); /* 彈性字距，視窗縮小時自動收縮 */
 }
 .nav-link {
-display: flex;
-align-items: center;
-gap: .35rem;
-padding: .3rem .65rem;
-font-size: .8rem;
-font-weight: 500;
-color: var(--coffee);
-white-space: nowrap;
-border-radius: var(--r-sm);
-letter-spacing: .03em;
-transition: none; /* 無懸停效果 */
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  padding: .3rem clamp(4px, 0.8vw, .65rem);
+  font-size: clamp(12px, 1.2vw, 15px); /* 電腦版動態縮小字體，最小降至12px */
+  font-weight: 500;
+  color: var(--coffee);
+  white-space: nowrap; /* 確保單行不斷字 */
+  border-radius: var(--r-sm);
+  letter-spacing: .03em;
+  transition: none;
 }
 .nav-link .nav-ico { color: var(--coffee-lt); }
 .nav-link.has-arrow .nb-arrow { font-size: .5rem; }
@@ -1367,10 +1333,6 @@ transform: scale(1.12);
 font-size: 1.2rem;
 color: var(--gold);
 margin-bottom: .25rem;
-}
-.ps-Fascia {
-font-size: 1.2rem;
-color: var(--gold);
 }
 .proc-step h4 {
 font-size: .88rem;
