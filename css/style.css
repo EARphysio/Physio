@@ -128,6 +128,14 @@ z-index: 1001;
 }
 
 #navbar {
+/* clamp(最小值, 推薦值, 最大值) 這裡代表字體最小不會小於 14px，最大不會大於 18px，中間會隨視窗寬度(vw)彈性縮放 */
+font-size: clamp(14px, 1.2vw, 18px); 
+    
+/* 左右間距也改用 vw 彈性縮放，避免空間不夠 */
+padding: 10px 1vw; 
+    
+/* 【關鍵設定】強制文字不能換行，避免變成直排 */
+white-space: nowrap; 
 position: fixed;
 top: 3px; left: 0; right: 0;
 height: var(--nav-h);
@@ -1188,15 +1196,6 @@ transform: translateY(-5px) scale(1.018);
 box-shadow: var(--sh-md);
 }
 
-/* .sc-num {
-font-family: Georgia, serif;
-font-size: 2rem;
-font-weight: 700;
-color: var(--cream-3);
-line-height: 1;
-margin-bottom: .3rem;
-letter-spacing: -.02em;
-} */
 .sc-icon {
 font-size: 1.35rem;
 color: var(--gold);
@@ -1368,6 +1367,10 @@ transform: scale(1.12);
 font-size: 1.2rem;
 color: var(--gold);
 margin-bottom: .25rem;
+}
+.ps-Fascia {
+font-size: 1.2rem;
+color: var(--gold);
 }
 .proc-step h4 {
 font-size: .88rem;
