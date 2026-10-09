@@ -253,6 +253,13 @@ opacity: 0;
 transition: transform .35s var(--spring), opacity .25s var(--ease);
 }
 
+/* 點漢堡選單後，展開選單內容 */
+.nav-mobile.open{
+    display: flex;
+    transform: translateY(0);
+    opacity: 1;
+}
+
 .nm-link {
 display: flex;
 align-items: center;
