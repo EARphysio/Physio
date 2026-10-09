@@ -145,6 +145,13 @@ background: var(--hair);
   gap: clamp(5px, 1vw, var(--sp-md)); /* 彈性 gap */
 }
 
+/* 避免 logo 超過 Navbar 高度 */
+.nav-logo > img{
+    max-height: 40px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
 /* — Brand — */
 .nav-brand { flex-shrink: 0; }
 .nav-logo { display: flex; align-items: center; gap: .4rem; font-size: .88rem; font-weight: 700; color: var(--coffee); white-space: nowrap; }
@@ -156,7 +163,7 @@ background: var(--hair);
 
 /* — Center links — */
 .nav-center {
-  flex: 1 1 auto;
+  flex: 1 0 auto;  /* 不壓縮中間導覽區 */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -170,6 +177,7 @@ background: var(--hair);
   font-size: clamp(12px, 1.2vw, 15px); /* 電腦版動態縮小字體，最小降至12px */
   font-weight: 500;
   color: var(--coffee);
+  flex-shrink: 0;  /* 不壓縮個別連結 */
   white-space: nowrap; /* 確保單行不斷字 */
   border-radius: var(--r-sm);
   letter-spacing: .03em;
@@ -229,6 +237,8 @@ transition: transform .3s var(--spring), opacity .2s;
 /* — Mobile dropdown — */
 .nav-mobile {
 display: none;
+max-height: calc(100dvh - var(--nav-h) - 3px);
+overflow-y: auto; /* 選單太長時可捲動，查看全部項目 */
 flex-direction: column;
 background: #F4EBE0;
 border-top: 1px solid var(--cream-3);
@@ -242,11 +252,7 @@ transform: translateY(-8px);
 opacity: 0;
 transition: transform .35s var(--spring), opacity .25s var(--ease);
 }
-.nav-mobile.open {
-display: flex;
-transform: translateY(0);
-opacity: 1;
-}
+
 .nm-link {
 display: flex;
 align-items: center;
@@ -1330,10 +1336,23 @@ color: #fff;
 transform: scale(1.12);
 }
 .ps-ic {
-font-size: 1.2rem;
-color: var(--gold);
-margin-bottom: .25rem;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;    
+    font-size: 1.2rem;
+    color: var(--gold);
+    margin-bottom: .25rem;
 }
+/* 圖片與字型圖示使用相同的高度和下方間距 */
+.proc-step > img{
+    height: 40px;
+    object-fit: contain;
+    flex-shrink: 0;
+    margin-bottom: .25rem;
+}
+
 .proc-step h4 {
 font-size: .88rem;
 font-weight: 700;
@@ -1749,6 +1768,20 @@ RESPONSIVE — Tablet (≤ 960px)
 /* ============================================================
 RESPONSIVE — Mobile (≤ 640px)
 ============================================================ */
+/* 新增：740px 以下改用展開選單 */
+@media (max-width: 740px) {
+  .nav-center  { display: none; }
+  .nav-socials { display: none; }
+  .nav-toggle {
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+
+/* 新增：回到電腦版寬度時，隱藏展開選單 */
+@media (min-width: 741px) {
+  .nav-mobile { display: none !important; }
+}
 @media (max-width: 640px) {
 :root { --nav-h: 52px; }
 
