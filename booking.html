@@ -97,16 +97,31 @@
       </div>
     </div>
   </header>
-<body>
 
   <div class="collab-nav">
     <a href="index.html" class="back-link"><i class="fas fa-chevron-left"></i> 返回首頁</a>
     <span class="brand">Return to Alignment</span>
   </div>
-   <!-- Banner -->
-  <div class="collab-banner">
-    <img src="img/collab-banner.jpg" alt="EAR 身體平衡 Return to Alignment" />
-  </div>
+   <!-- Banner：圖片 + CSS 文字疊加（避免影片烘焙文字被裁切的問題）-->
+  <section class="hero-banner" aria-label="EAR 聆芯身體平衡 品牌橫幅">
+    <div class="hb-media" aria-hidden="true"></div>
+    <div class="hb-inner">
+      <div class="hb-text-col">
+        <h1 class="hb-title">
+          <span class="hb-title-line">聆聽身體的芯聲，</span>
+          <span class="hb-title-line">找回安穩的平衡。</span>
+        </h1>
+        <p class="hb-sub">EAR 聆芯 —— 結合物理治療專業與嬋柔運動。</p>
+        <p class="hb-desc">
+          <span class="hb-desc-line">我們相信，身體的疼痛與緊繃，</span>
+          <span class="hb-desc-line">是需要被溫柔傾聽的訊號。</span>
+          <span class="hb-desc-line">透過精準的引導與流動的伸展，</span>
+          <span class="hb-desc-line">我們陪你解開累積的壓力、優化體態，</span>
+          <span class="hb-desc-line">在動靜之間重拾輕盈、和諧的自己。</span>
+        </p>
+      </div>
+    </div>
+  </section>
 
   <div class="collab-wrap">
 
@@ -139,7 +154,7 @@
         <!-- 基本資料 -->
         <div class="form-card">
           <div class="step-header">
-            <span class="step-num">①</span>
+            <span class="step-num">1</span>
             <h2>基本資料</h2>
             <span class="step-badge" id="customer-badge">新客</span>
           </div>
@@ -187,7 +202,7 @@
         <!-- 服務項目 -->
         <div class="form-card">
           <div class="step-header">
-            <span class="step-num">②</span>
+            <span class="step-num">2</span>
             <h2>服務項目</h2>
           </div>
           <div class="field">
@@ -198,12 +213,19 @@
               <option value="gyrokinesis">嬋柔(Gyrokinesis)</option>
             </select>
           </div>
+          <p class="gyro-video-hint">
+            <i class="fab fa-youtube"></i>
+            還不清楚嬋柔(Gyrokinesis)是什麼嗎？
+            <a href="https://www.youtube.com/shorts/Bujdy9n6nP4?feature=share" target="_blank" rel="noopener noreferrer">
+              點此觀看示範短片 →
+            </a>
+          </p>
         </div>
 
         <!-- 預約時段 (依服務動態替換標題與說明) -->
         <div class="form-card" id="schedule-card" style="display:none;">
           <div class="step-header">
-            <span class="step-num">③</span>
+            <span class="step-num">3</span>
             <h2 id="schedule-title">預約時間選擇</h2>
           </div>
           
@@ -222,7 +244,7 @@
         <!-- 服務地點 -->
         <div class="form-card">
           <div class="step-header">
-            <span class="step-num">④</span>
+            <span class="step-num">3</span>
             <h2>服務地點選擇</h2>
           </div>
           <div class="field">
@@ -246,7 +268,7 @@
         <!-- 修正3：目前的身體狀況 (複選矩陣表) -->
         <div class="form-card">
       <div class="step-header">
-        <span class="step-num">⑤</span>
+        <span class="step-num">4</span>
         <h2>目前的身體狀況</h2>
       </div>
       <!-- 將文字獨立移至標題下方，並套用與「服務環境說明」相同的標籤樣式 -->
@@ -274,7 +296,7 @@
         <!-- 修正2：如何得知我們的資訊 (直式排版) -->
         <div class="form-card">
           <div class="step-header">
-            <span class="step-num">⑥</span>
+            <span class="step-num">5</span>
             <h2>如何得知我們的資訊 (複選) <span class="req">*</span></h2>
           </div>
           <!-- 套用 style.css 內建的 check-group 並加寬間距以符合圖片 -->

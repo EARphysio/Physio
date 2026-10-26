@@ -22,7 +22,7 @@ Design System: Warm Cream / Deep Coffee / Gold Accent
 
 /* Topography */
 --font-sans: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
---font-serif:'Noto Serif TC', serif;
+--font-serif:"Microsoft JhengHei", "微軟正黑體", serif;
 
 /* Spacing scale */
 --sp-xs:  .4rem;
