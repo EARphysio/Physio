@@ -718,3 +718,6 @@
       .selection-grid { grid-template-columns: 1fr; gap: 1rem; }
       .btn-submit { padding: .9rem 2.5rem; font-size: .95rem; }
     }
+
+/* 修改：舊客基本資料只有姓名時，姓名欄佔滿寬度 */
+#bookingForm.old-customer #name-email-row { grid-template-columns: minmax(0, 1fr); }
