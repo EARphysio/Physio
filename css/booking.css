@@ -465,6 +465,31 @@
     }
     .schedule-table tr:last-child td { border-bottom: none; }
 
+    /* 修改：手機版橫向滑動時，固定最左側「時段」欄（包含標題） */
+    @media (max-width: 640px) {
+      .schedule-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .schedule-table th.time-col,
+      .schedule-table td.time-col {
+        position: sticky;
+        left: 0;
+        min-width: 96px;
+        width: 96px;
+        box-sizing: border-box;
+        background: var(--white); /* 不透明底色，避免滑過的日期透出 */
+        z-index: 2;
+        box-shadow: 2px 0 3px rgba(92, 61, 46, .10);
+      }
+      .schedule-table th.time-col {
+        background: var(--cream);
+        z-index: 3; /* 標題固定欄高於一般儲存格 */
+      }
+    }
+    /* ★ V4 修改結束 */
+
+
     /* 時段狀態標籤 */
     .slot-tag {
       display: inline-block;
@@ -721,3 +746,11 @@
 
 /* 修改：舊客基本資料只有姓名時，姓名欄佔滿寬度 */
 #bookingForm.old-customer #name-email-row { grid-template-columns: minmax(0, 1fr); }
+
+/* 【修改 I】尚待治療師確認的時段：藍色「已約」 */
+.slot-reserved {
+  background: #e7f1ff;
+  color: #125f9b;
+  border: 1px solid #9ac6f0;
+  font-weight: 700;
+}
