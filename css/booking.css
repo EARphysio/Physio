@@ -256,29 +256,59 @@
       grid-template-columns: 1fr 1fr;
       gap: 1.25rem;
     }
+     /* 預約圖片圓角與外框貼合】
+       問題原因：booking-new.png、booking-old.png 原圖已有透明圓角，
+       而舊版 border-radius:16px 搭配 box-shadow 的外框，
+       是畫在按鈕矩形邊界，不會跟隨 PNG 的真實透明輪廓。
+
+       修正方式：
+       (1) 移除按鈕外框的 box-shadow 與 CSS 圓角裁切。
+       (2) 改用 drop-shadow，直接依原始 PNG 非透明的形狀製作細框與陰影。
+       (3) 不需要修改圖片，也不會影響 onclick 預約切換功能。
+       */
     .selection-card {
-      border: 2px solid var(--cream-3);
-      border-radius: 14px;
-      overflow: hidden;
-      cursor: pointer;
-      background: var(--white);
-      box-shadow: 0 2px 16px rgba(92,61,46,.07);
-      transition: border-color .25s, transform .25s, box-shadow .25s;
+      display: block;
+      width: 100%;
+      align-self: start;
       padding: 0;
+      border: none;
+      border-radius: 0;            /* 依 PNG 自有圓角，不再套第二層圓角 */
+      overflow: visible;           /* 不裁切圖片原本的透明圓角 */
+      background: transparent;
+      box-shadow: none;            /* 移除原本與圖片邊緣錯位的矩形外框 */
+      filter: drop-shadow(0 0 1px rgba(196,151,63,.55))
+              drop-shadow(0 2px 9px rgba(92,61,46,.10));
+      cursor: pointer;
       position: relative;
+      line-height: 0;
+      transition: filter .25s ease, transform .25s ease;
     }
     .selection-card:hover {
-      border-color: var(--gold);
       transform: translateY(-4px);
-      box-shadow: 0 10px 28px rgba(200,151,58,.22);
+      filter: drop-shadow(0 0 1.5px rgba(196,151,63,.95))
+              drop-shadow(0 8px 14px rgba(200,151,58,.22));
+    }
+    .selection-card:focus-visible {
+      outline: 3px solid var(--gold);
+      outline-offset: 3px;         /* 鍵盤焦點可見，與一般外框分開 */
     }
     .selection-card img {
-      width: 100%;
       display: block;
-      border-radius: 12px;
+      width: 100%;
+      height: auto;
+      border-radius: 0;            /* 不再次裁切 PNG 內建圓角 */
       user-select: none;
       pointer-events: none;
     }
+
+    /* 預約提示文字 */
+.selection-note {
+    margin: 1.1rem auto 0;
+    text-align: center;
+    color: #999b98;
+    font-size: clamp(.76rem, 1.25vw, .86rem);
+    line-height: 1.8;
+}
 
     /* ── 步驟卡片 ── */
     .form-card {
@@ -464,31 +494,6 @@
       white-space: nowrap;
     }
     .schedule-table tr:last-child td { border-bottom: none; }
-
-    /* 修改：手機版橫向滑動時，固定最左側「時段」欄（包含標題） */
-    @media (max-width: 640px) {
-      .schedule-wrap {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-      }
-      .schedule-table th.time-col,
-      .schedule-table td.time-col {
-        position: sticky;
-        left: 0;
-        min-width: 96px;
-        width: 96px;
-        box-sizing: border-box;
-        background: var(--white); /* 不透明底色，避免滑過的日期透出 */
-        z-index: 2;
-        box-shadow: 2px 0 3px rgba(92, 61, 46, .10);
-      }
-      .schedule-table th.time-col {
-        background: var(--cream);
-        z-index: 3; /* 標題固定欄高於一般儲存格 */
-      }
-    }
-    /* ★ V4 修改結束 */
-
 
     /* 時段狀態標籤 */
     .slot-tag {
@@ -746,11 +751,3 @@
 
 /* 修改：舊客基本資料只有姓名時，姓名欄佔滿寬度 */
 #bookingForm.old-customer #name-email-row { grid-template-columns: minmax(0, 1fr); }
-
-/* 【修改 I】尚待治療師確認的時段：藍色「已約」 */
-.slot-reserved {
-  background: #e7f1ff;
-  color: #125f9b;
-  border: 1px solid #9ac6f0;
-  font-weight: 700;
-}

@@ -18,7 +18,7 @@
 
   <!--連到CSS-->
   <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/booking.css" />
+  <link rel="stylesheet" href="css/booking.css" /> 
 </head>
 <body>
 
@@ -140,6 +140,8 @@
           <img src="img/booking-old.png" alt="舊客戶預約 Follow-up Session">
         </button>
       </div>
+      <!-- 新增兩張預約按鈕下方提示文字 -->
+      <p class="selection-note">💡 提示：點擊按鈕將開啟預約表單，填寫完成後，我們將於 24 小時內與您聯繫。</p>
     </div>
 
     <!-- STEP 1: 表單頁面 -->
@@ -159,18 +161,18 @@
             <span class="step-badge" id="customer-badge">新客</span>
           </div>
 
-          <div class="field-row" id="name-email-row">
+          <div class="field-row">
             <div class="field">
               <label for="f-name">您的姓名 <span class="req">*</span></label>
               <input type="text" id="f-name" required placeholder="請輸入真實姓名">
             </div>
-            <div class="field" id="email-field">
+            <div class="field">
               <label for="f-email">電子郵件 <span class="req">*</span></label>
               <input type="email" id="f-email" required placeholder="example@email.com">
             </div>
           </div>
 
-          <div class="field-row" id="contact-row">
+          <div class="field-row">
             <div class="field">
               <label for="f-phone">聯絡電話 <span class="req">*</span></label>
               <input type="tel" id="f-phone" required placeholder="0912-345-678">
@@ -293,8 +295,8 @@
           </div>
         </div>
 
-        <!-- 修正2：如何得知我們的資訊 (僅新客顯示) -->
-        <div class="form-card" id="source-card">
+        <!-- 修正2：如何得知我們的資訊 (直式排版) -->
+        <div class="form-card">
           <div class="step-header">
             <span class="step-num">5</span>
             <h2>如何得知我們的資訊 (複選) <span class="req">*</span></h2>
@@ -345,8 +347,8 @@
     <div id="confirm-page" style="display:none;">
       <div class="confirm-card">
         <div class="confirm-icon"><i class="fas fa-check"></i></div>
-        <h2>預約申請已送出</h2>
-        <p class="confirm-sub" id="confirm-sub">預約資料已送出，請留意後續通知。</p>
+        <h2>預約成功！</h2>
+        <p class="confirm-sub">我們已經保留您的預約時段，確認信已寄至您的 Email，請留意查收。</p>
         
         <table class="confirm-table">
           <tr><th>預約姓名</th><td id="res-name"></td></tr>
@@ -492,16 +494,6 @@
       document.getElementById("isOldCustomer").value = isOld;
       document.getElementById("customer-badge").innerText = isOld ? "舊客" : "新客";
       document.getElementById("new-customer-fields").style.display = isOld ? "none" : "block";
-      // 修改：舊客僅保留姓名；切回新客時恢復全部欄位與必填限制
-      document.getElementById("bookingForm").classList.toggle("old-customer", isOld);
-      document.getElementById("email-field").style.display = isOld ? "none" : "flex";
-      document.getElementById("contact-row").style.display = isOld ? "none" : "grid";
-      document.getElementById("source-card").style.display = isOld ? "none" : "block";
-      ["f-email", "f-phone", "f-line"].forEach(id => {
-        const field = document.getElementById(id);
-        field.required = !isOld;
-        if (isOld) field.value = "";
-      });
     }
 
     function goBack() {
@@ -569,16 +561,9 @@
       fetch(`${GAS_URL}?action=getSchedule&service=${service}`)
         .then(res => res.json())
         .then(data => {
-          if (data.success === false || !data.week1 || !data.week2) {
-            throw new Error("排班回應異常");
-          }
+          loading.style.display = "none";
           renderScheduleTables(data, service);
-        })
-        .catch(err => {
-          console.error("無法讀取預約時段：", err);
-          container.textContent = "目前無法載入時段，請重新整理或透過官方 LINE 聯繫治療師。";
-        })
-        .finally(() => { loading.style.display = "none"; });
+        });
     }
 
     // 渲染雙週表格
@@ -601,9 +586,6 @@
               t += `<span class="slot-tag slot-expired">過期</span>`;
             } else if (slot.status === "full") {
               t += `<span class="slot-tag slot-full">滿</span>`;
-            } else if (slot.status === "reserved") {
-              // 【修改 G】預約申請已送出，但尚待治療師確認
-              t += `<span class="slot-tag slot-reserved">已約</span>`;
             } else if (slot.status === "disabled") {
               t += `<span class="slot-tag slot-disabled"></span>`;
             } else if (slot.status === "available") {
@@ -649,6 +631,9 @@
 
       const btn = document.getElementById("submit-btn");
       const spinner = document.getElementById("btn-spinner");
+      btn.disabled = true;
+      spinner.classList.add("show");
+
       // 彙整目前身體狀況
       let selectedBody = [];
       document.querySelectorAll('input[name="matrix_check"]:checked').forEach(cb => selectedBody.push(cb.value));
@@ -659,29 +644,25 @@
         return; 
       }
 
-      const isOld = document.getElementById("isOldCustomer").value === "true";
-      // 舊客不提交已隱藏的資訊來源，新客維持原有資料收集方式
+      // 彙整得知管道
       let selectedSources = [];
-      if (!isOld) {
-        document.querySelectorAll('input[name="source"]:checked').forEach(cb => {
-          if (cb.value === "其他") {
-            selectedSources.push("其他: " + document.getElementById("source-other-text").value);
-          } else {
-            selectedSources.push(cb.value);
-          }
-        });
-      }
-      btn.disabled = true;
-      spinner.classList.add("show");
+      document.querySelectorAll('input[name="source"]:checked').forEach(cb => {
+        if(cb.value === "其他") {
+          let otherTxt = document.getElementById("source-other-text").value;
+          selectedSources.push("其他: " + otherTxt);
+        } else {
+          selectedSources.push(cb.value);
+        }
+      });
 
       const payload = {
-        isOldCustomer: isOld,
+        isOldCustomer: document.getElementById("isOldCustomer").value === "true",
         name: document.getElementById("f-name").value,
-        email: isOld ? "" : document.getElementById("f-email").value,
-        phone: isOld ? "" : document.getElementById("f-phone").value,
-        lineName: isOld ? "" : document.getElementById("f-line").value,
-        gender: isOld ? "" : document.getElementById("f-gender").value,
-        birthday: isOld ? "" : document.getElementById("f-birthday").value,
+        email: document.getElementById("f-email").value,
+        phone: document.getElementById("f-phone").value,
+        lineName: document.getElementById("f-line").value,
+        gender: document.getElementById("f-gender").value,
+        birthday: document.getElementById("f-birthday").value,
         serviceType: document.getElementById("f-service").value,
         appointmentSlots: selectedSlots, // 傳遞複選的時段陣列
         location: document.getElementById("f-location").value,
@@ -699,18 +680,6 @@
         if(res.success) {
           document.getElementById("step-form").style.display = "none";
           document.getElementById("confirm-page").style.display = "block";
-          // 【修改 H】確認頁：依後端實際通知結果顯示，不誤稱已寄信
-          const notified = res.notifications || {};
-          let notice = "申請已收到，時段暫時保留，待治療師與您確認後才正式成立。";
-          if (!isOld && notified.email === true) {
-            notice += "預約申請通知已寄往您填寫的 Email，請留意收件匣及垃圾郵件。";
-          } else if (!isOld) {
-            notice += "Email 尚未成功寄出，請主動透過官方 LINE 與治療師確認。";
-          }
-          if (notified.line !== true) {
-            notice += "系統未能成功傳送治療師 LINE 通知，請主動聯繫官方 LINE。";
-          }
-          document.getElementById("confirm-sub").innerText = notice;
           // 📍 修正 2：將陣列中的多筆時段，轉化為可讀的字串並換行
           // 防呆機制：確保 appointmentSlots 有資料才進行 map，避免 Apple 手機報錯
           let timeString = (payload.appointmentSlots && payload.appointmentSlots.length > 0) 

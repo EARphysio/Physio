@@ -964,6 +964,19 @@ color: var(--gold);
 font-size: .95rem;
 margin-top: .05rem;
 }
+
+/* 嬋柔包班文字對齊 */
+.about-card-collab .collab-item > img{
+width: 34px;
+height: 34px;
+flex: 0 0 34px;
+padding: 4px;
+margin-top: .05rem;
+border-radius: var(--r-md);
+background: var(--gold-bg);
+object-fit: contain;
+}
+
 .collab-item div strong {
 font-size: .84rem;
 color: var(--coffee);
