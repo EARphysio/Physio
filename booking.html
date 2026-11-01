@@ -18,7 +18,7 @@
 
   <!--連到CSS-->
   <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/booking.css" /> 
+  <link rel="stylesheet" href="css/booking.css" />
 </head>
 <body>
 
@@ -42,13 +42,22 @@
       </div>
 
       <!-- 中：導覽連結 -->
-       <div class="nav-center">
-        <a href="#about" class="nav-link has-arrow">關於我</a>
-        <a href="#services" class="nav-link">服務項目</a>
-        <a href="#populations" class="nav-link">自我照護好物</a>
-        <a href="#faq" class="nav-link">常見問答</a>
-        <a href="#contact" class="nav-link">線上預約</a>
-        <a href="collab.html" class="nav-link">合作邀請</a>
+      <div class="nav-center">
+        <a href="#about" class="nav-link has-arrow">
+          <a href="index.html#about" role="menuitem">關於我</a>
+        </a>
+        <a href="#services" class="nav-link">
+          <a href="index.html#services" role="menuitem">服務項目</a>
+        </a>
+        <a href="#populations" class="nav-link">
+          <a href="index.html#populations" role="menuitem">自我照護好物</a>
+        </a>
+        <a href="#faq" class="nav-link">
+          <a href="index.html#faq" role="menuitem">常見問答</a>
+        </a>
+        <a href="#contact" class="nav-link">
+          <a href="index.html#contact" role="menuitem">立即預約</a>
+        </a>
       </div>
 
       <!-- 右：社群 -->
@@ -81,7 +90,6 @@
       <a href="index.html#populations"   class="nm-link">自我照護好物</a>
       <a href="index.html#faq" class="nm-link"> 常見問答</a>
       <a href="index.html#contact" class="nm-link"> 立即預約</a>
-      <a href="collab.html" class="nm-link"> 合作邀請</a>
       <div class="nm-socials">
         <a href="https://www.instagram.com/earphysio/" target="_blank" class="nsocial nsocial-ig"><i class="fab fa-instagram"></i></a>
         <a href="https://www.youtube.com/channel/UCzM4JnSAk8aUFCLA5UY1bzw" target="_blank" class="nsocial nsocial-yt"><i class="fab fa-youtube"></i></a>
@@ -123,22 +131,22 @@
         請問您是⋯？
         <span>請點選下方圖片，進入對應的預約頁面</span>
       </div>
+      <!-- ★【2026-11-01 修改｜桌機左右雙欄、手機上下單欄；每張圖下方各自顯示說明】 -->
       <div class="selection-grid">
-        <!-- 修正1：新客 (false)、舊客 (true) 連結對調正確 -->
-        <button class="selection-card" type="button" onclick="startForm(false)" aria-label="新客預約">
-          <img src="img/booking-new.png" alt="新客戶預約 Initial Consultation">
-        </button>
-        <span>首次體驗含專業身體評估與客製化指導 <br>
-        (點擊開啟新客表單)
-        </span>
-        <button class="selection-card" type="button" onclick="startForm(true)" aria-label="舊客預約">
-          <img src="img/booking-old.png" alt="舊客戶預約 Follow-up Session">
-        </button>
-        <span>已建立個案紀錄者專用 <br>
-        (開啟舊客表單)
-        </span>
+        <div class="selection-item">
+          <button class="selection-card" type="button" onclick="startForm(false)" aria-label="新客預約">
+            <img src="img/booking-new.png" alt="新客戶預約 Initial Consultation">
+          </button>
+          <p class="selection-item-hint">*首次體驗含專業身體評估與客製化指導<br>（點擊開啟新客表單）</p>
+        </div>
+        <div class="selection-item">
+          <button class="selection-card" type="button" onclick="startForm(true)" aria-label="舊客預約">
+            <img src="img/booking-old.png" alt="舊客戶預約 Follow-up Session">
+          </button>
+          <p class="selection-item-hint">*已建立個案紀錄者專用<br>（開啟舊客表單）</p>
+        </div>
       </div>
-      <!-- 新增兩張預約按鈕下方提示文字 -->
+      <!-- ★【2026-10-31 新增｜兩張預約按鈕下方提示文字】 -->
       <p class="selection-note">💡 提示：點擊按鈕將開啟預約表單，填寫完成後，我們將於 24 小時內與您聯繫。</p>
     </div>
 
@@ -154,7 +162,7 @@
         <!-- 基本資料 -->
         <div class="form-card">
           <div class="step-header">
-            <span class="step-num">1</span>
+            <span class="step-num">①</span>
             <h2>基本資料</h2>
             <span class="step-badge" id="customer-badge">新客</span>
           </div>
@@ -202,7 +210,7 @@
         <!-- 服務項目 -->
         <div class="form-card">
           <div class="step-header">
-            <span class="step-num">2</span>
+            <span class="step-num">②</span>
             <h2>服務項目</h2>
           </div>
           <div class="field">
@@ -225,7 +233,7 @@
         <!-- 預約時段 (依服務動態替換標題與說明) -->
         <div class="form-card" id="schedule-card" style="display:none;">
           <div class="step-header">
-            <span class="step-num">3</span>
+            <span class="step-num">③</span>
             <h2 id="schedule-title">預約時間選擇</h2>
           </div>
           
@@ -244,7 +252,7 @@
         <!-- 服務地點 -->
         <div class="form-card">
           <div class="step-header">
-            <span class="step-num">3</span>
+            <span class="step-num">④</span>
             <h2>服務地點選擇</h2>
           </div>
           <div class="field">
@@ -268,7 +276,7 @@
         <!-- 修正3：目前的身體狀況 (複選矩陣表) -->
         <div class="form-card">
       <div class="step-header">
-        <span class="step-num">4</span>
+        <span class="step-num">⑤</span>
         <h2>目前的身體狀況</h2>
       </div>
       <!-- 將文字獨立移至標題下方，並套用與「服務環境說明」相同的標籤樣式 -->
@@ -296,7 +304,7 @@
         <!-- 修正2：如何得知我們的資訊 (直式排版) -->
         <div class="form-card">
           <div class="step-header">
-            <span class="step-num">5</span>
+            <span class="step-num">⑥</span>
             <h2>如何得知我們的資訊 (複選) <span class="req">*</span></h2>
           </div>
           <!-- 套用 style.css 內建的 check-group 並加寬間距以符合圖片 -->
