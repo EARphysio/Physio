@@ -127,9 +127,8 @@
 
     <!-- STEP 0: 新舊客選擇 -->
     <div id="step-selection">
-      <div class="selection-hint">
-        請問您是⋯？
-        <span>請點選下方圖片，進入對應的預約頁面</span>
+      <div class="selection-hint">歡迎來到聆芯
+        <span>為了提供最適合你的身體指導，請點選進入對應的預約頁面</span>
       </div>
       <!-- ★【2026-11-01 修改｜桌機左右雙欄、手機上下單欄；每張圖下方各自顯示說明】 -->
       <div class="selection-grid">
@@ -578,7 +577,12 @@
       let html = "";
 
       function buildTable(weekData, weekLabel) {
-        let t = `<div class="week-title">${weekLabel} (${weekData.dateRange})</div>`;
+         // ★ V5 修改：徒手／放鬆不顯示第一週、第二週
+        const heading = serviceType === "manual"
+          ? weekData.dateRange
+          : `${weekLabel} (${weekData.dateRange})`;
+
+        let t = `<div class="week-title">${heading}</div>`;
         t += `<div class="schedule-wrap"><table class="schedule-table"><thead><tr><th class="time-col">時段</th>`;
         weekData.days.forEach(d => { t += `<th>${d.dateLabel}</th>`; });
         t += `</tr></thead><tbody>`;
@@ -606,8 +610,8 @@
         return t;
       }
 
-      html += buildTable(data.week1, "第一週");
-      html += buildTable(data.week2, "第二週");
+      html += buildTable(data.week1);
+      html += buildTable(data.week2);
       container.innerHTML = html;
     }
 
