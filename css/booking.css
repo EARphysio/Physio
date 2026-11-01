@@ -98,17 +98,6 @@
     }
     .hb-title-line { display: block; }
 
-     /* ★【修改 1｜電腦版標題對齊】
-       第一行「聆聽身體的芯聲，」的「芯」（第 6 字）
-       對齊第二行「找回安穩的平衡。」的「找」（第 1 字）。
-       第一行向左約 5 個中文字寬；只改第一行，不移動副標題與內文。
-       可微調 -5.125em（更負＝更往左）。
-       使用 left 而非 transform，以免覆蓋淡入動畫的 translateY。 */
-    .hb-title-line:first-child {
-      position: relative;
-      left: -5.125em;
-    }
-
     .hb-sub {
       color: #55584d;
       font-size: clamp(.81rem, 1.23vw, 1.13rem);
@@ -170,15 +159,6 @@
       }
       .hb-text-col { flex: 1 1 100%; max-width: 100%; text-align: center; }
       .hb-title { font-size: clamp(1.1rem, 5vw, 1.35rem); }
-
-       /* ★【修改 2｜手機版標題對齊】
-         手機版改為第一行的「體」（第 4 字）對齊第二行的「找」。
-         向左約 3 個中文字寬；調整此數值不會改變桌機版。
-         保留 animation 設定，手機標題、內文同樣逐行淡入。 */
-      .hb-title-line:first-child {
-        left: -3.075em;
-      }
-
       .hb-sub { font-size: clamp(.78rem, 3.6vw, .92rem); }
       .hb-desc { font-size: clamp(.72rem, 3.2vw, .82rem); }
     }
@@ -251,12 +231,34 @@
       color: var(--coffee-lt);
       margin-top: .3rem;
     }
+    /* ★【2026-11-01 本次修改 1｜桌機：新客、舊客左右雙欄】
+       每張圖片與自己的提示文字包在 .selection-item 裡。 */
     .selection-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.25rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      justify-items: center;
+      align-items: start;
+      gap: 1.4rem;
     }
-     /* 預約圖片圓角與外框貼合】
+    .selection-item {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 0;
+    }
+    /* ★【2026-11-01 本次修改 2｜桌機、手機：提示固定在各自圖片下方】 */
+    .selection-item-hint {
+      margin: .45rem 0 0;
+      text-align: center;
+      color: #948c82;
+      font-family: "Microsoft JhengHei", "微軟正黑體", sans-serif;
+      font-size: .76rem;
+      font-weight: 500;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+    /* ★【2026-10-31 二次修正｜預約圖片圓角與外框完全貼合】
        問題原因：booking-new.png、booking-old.png 原圖已有透明圓角，
        而舊版 border-radius:16px 搭配 box-shadow 的外框，
        是畫在按鈕矩形邊界，不會跟隨 PNG 的真實透明輪廓。
@@ -265,7 +267,7 @@
        (1) 移除按鈕外框的 box-shadow 與 CSS 圓角裁切。
        (2) 改用 drop-shadow，直接依原始 PNG 非透明的形狀製作細框與陰影。
        (3) 不需要修改圖片，也不會影響 onclick 預約切換功能。
-       */
+    */
     .selection-card {
       display: block;
       width: 100%;
@@ -301,14 +303,19 @@
       pointer-events: none;
     }
 
-    /* 預約提示文字 */
-.selection-note {
-    margin: 1.1rem auto 0;
-    text-align: center;
-    color: #999b98f3;
-    font-size: clamp(.76rem, 1.25vw, .86rem);
-    line-height: 1.8;
-}
+    /* ★【2026-10-31 修改 2｜兩張預約按鈕下方的淡霧灰提示】
+       置於 selection-grid 外面，避免落在單一按鈕內；
+       手機與桌機共用，自動換行，不會造成水平捲動。 */
+    .selection-note {
+      margin: 1.1rem auto 0;
+      text-align: center;
+      color: #999b98;
+      font-family: "Microsoft JhengHei", "微軟正黑體", sans-serif;
+      font-size: clamp(.76rem, 1.25vw, .86rem);
+      font-weight: 400;
+      line-height: 1.8;
+      overflow-wrap: anywhere;
+    }
 
     /* ── 步驟卡片 ── */
     .form-card {
@@ -745,9 +752,9 @@
       .collab-title-bar h1 { font-size: 1.35rem; }
       .collab-wrap { padding: 1.5rem 1rem 2.5rem; }
       .field-row { grid-template-columns: 1fr; }
-      .selection-grid { grid-template-columns: 1fr; gap: 1rem; }
+      /* ★【2026-11-01 本次修改 3｜手機 640px 以下：上下單欄排列】 */
+      .selection-grid { grid-template-columns: minmax(0, 1fr); gap: 1.1rem; }
+      .selection-item { width: min(100%, 260px); }
+      .selection-item-hint { font-size: .7rem; }
       .btn-submit { padding: .9rem 2.5rem; font-size: .95rem; }
     }
-
-/* 修改：舊客基本資料只有姓名時，姓名欄佔滿寬度 */
-#bookingForm.old-customer #name-email-row { grid-template-columns: minmax(0, 1fr); }
