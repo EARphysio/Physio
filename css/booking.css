@@ -223,9 +223,7 @@
       max-width: 960px;
       margin: 0 auto;
       padding: 2.5rem 2rem 3rem;
-      background-image:
-        linear-gradient(rgba(255,255,255,.75), rgba(255,255,255,.75)),
-        url("../img/section-soft-bg.jpg");
+      background-image:url("../img/section-bg.jpg");
       background-repeat: no-repeat;
       background-position: center top;
       background-size: cover;
