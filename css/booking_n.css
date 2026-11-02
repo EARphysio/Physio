@@ -239,7 +239,7 @@
       display: block;
       font-family: var(--font-sans, inherit);
       font-size: 1rem;
-      font-weight: 400;
+      font-weight: 600;
       color: var(--coffee-lt);
       margin-top: .3rem;
     }
