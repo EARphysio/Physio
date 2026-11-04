@@ -199,7 +199,7 @@
         height: auto;
         min-height: 390px;       /* ★ 修改 A4：文字與底圖重疊，不另佔圖片下方空間 */
         padding: 1.25rem 1.1rem 1.5rem;
-        align-items: flex-end;  /* ★ 文字群組靠圖片下方 */
+        align-items: flex-start;  /* ★ 文字群組靠圖片下方 */
         justify-content: center;
       }
 
