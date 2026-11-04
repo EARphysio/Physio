@@ -160,25 +160,59 @@
       .hb-desc { font-size: clamp(.7rem, 1.05vw, .82rem); line-height: 1.55; }
     }
 
-    /* 手機：原有圖片在上、文字在下的布局維持不變 */
+    /* ★【2026-11-04 修改 A｜手機版 Banner：文字疊加於圖片】
+       修改位置：原 @media (max-width: 760px) 手機 Banner 區塊。
+       保留標題兩行、副標及五行介紹原本的文字、字級、置中與逐行動畫。
+       只調整圖片定位、Banner 高度及文字容器疊放方式。 */
     @media (max-width: 760px) {
-      .hero-banner { aspect-ratio: auto; }
-      .hb-media {
-        position: static;
-        width: 100%;
-        aspect-ratio: 1 / 1;
-        background-image: url("../img/banner-mobile.png");
-        background-position: center top;
+      .hero-banner {
+        aspect-ratio: auto;
+        min-height: 390px;       /* ★ 修改 A1：圖片與文字共用同一個 Banner */
       }
+
+      .hb-media {
+        position: absolute;      /* ★ 修改 A2：由 static 改為 absolute，圖片作為底層 */
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        aspect-ratio: auto;      /* ★ 取消原本的 1:1 圖片佔位 */
+        background-image: url("../img/banner-mobile.png");
+        background-position: center center;
+        background-size: cover;
+      }
+
+      /* ★ 修改 A3：在圖片底部加入淡米白漸層，確保文字與木地板背景有對比 */
+      .hb-media::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom,
+          rgba(251, 246, 239, 0) 27%,
+          rgba(251, 246, 239, .35) 48%,
+          rgba(251, 246, 239, .88) 69%,
+          rgba(251, 246, 239, .96) 100%);
+      }
+
       .hb-inner {
+        position: relative;
+        z-index: 1;
         height: auto;
+        min-height: 390px;       /* ★ 修改 A4：文字與底圖重疊，不另佔圖片下方空間 */
         padding: 1.25rem 1.1rem 1.5rem;
+        align-items: flex-end;  /* ★ 文字群組靠圖片下方 */
         justify-content: center;
       }
+
+      /* 以下文字設定維持原樣：不變更文字分行、字級與置中方式 */
       .hb-text-col { flex: 1 1 100%; max-width: 100%; text-align: center; }
       .hb-title { font-size: clamp(1.1rem, 5vw, 1.35rem); }
       .hb-sub { font-size: clamp(.78rem, 3.6vw, .92rem); }
       .hb-desc { font-size: clamp(.72rem, 3.2vw, .82rem); }
+    }
+
+    /* ★【2026-11-04 修改 B｜窄螢幕防止文字溢出】 */
+    @media (max-width: 360px) {
+      .hero-banner, .hb-inner { min-height: 420px; }
     }
 
     /* 尊重系統減少動態效果設定 */
@@ -773,4 +807,19 @@
       .selection-item { width: min(100%, 260px); }
       .selection-item-hint { font-size: .7rem; }
       .btn-submit { padding: .9rem 2.5rem; font-size: .95rem; }
+      /* ★【2026-11-04 修改 4｜僅手機版固定排班表左側「時段」欄】
+         橫向滑動日期時，時段欄保留在左側；不更動週標題、資料與桌機版。 */
+      .schedule-table th.time-col,
+      .schedule-table td.time-col {
+        position: sticky;
+        left: 0;
+        z-index: 2;
+      }
+      .schedule-table th.time-col {
+        background: var(--cream);
+        z-index: 3;
+      }
+      .schedule-table td.time-col {
+        background: var(--white);
+      }
     }
