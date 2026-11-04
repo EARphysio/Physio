@@ -61,7 +61,7 @@
     .hb-media {
       position: absolute;
       inset: 0;
-      background-image: url("../img/banner-hero-desktop.png");
+      background-image: url("../img/banner-desktop.png");
       background-repeat: no-repeat;
       background-position: center center;
       background-size: cover;
@@ -167,7 +167,7 @@
         position: static;
         width: 100%;
         aspect-ratio: 1 / 1;
-        background-image: url("../img/banner-hero-mobile.jpg");
+        background-image: url("../img/banner-mobile.png");
         background-position: center top;
       }
       .hb-inner {
