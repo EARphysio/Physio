@@ -167,7 +167,7 @@
     @media (max-width: 760px) {
       .hero-banner {
         aspect-ratio: auto;
-        min-height: 390px;       /* ★ 修改 A1：圖片與文字共用同一個 Banner */
+        min-height: 280px;       /* ★【2026-11-04 修改 5A】縮短手機 Banner 下方留白 */
       }
 
       .hb-media {
@@ -197,9 +197,9 @@
         position: relative;
         z-index: 1;
         height: auto;
-        min-height: 390px;       /* ★ 修改 A4：文字與底圖重疊，不另佔圖片下方空間 */
+        min-height: 280px;       /* ★【2026-11-04 修改 5B】與 Banner 同高，保留原文字排版 */
         padding: 1.25rem 1.1rem 1.5rem;
-        align-items: flex-start;  /* ★ 文字群組靠圖片下方 */
+        align-items: flex-end;  /* ★ 文字群組靠圖片下方 */
         justify-content: center;
       }
 
@@ -212,7 +212,7 @@
 
     /* ★【2026-11-04 修改 B｜窄螢幕防止文字溢出】 */
     @media (max-width: 360px) {
-      .hero-banner, .hb-inner { min-height: 420px; }
+      .hero-banner, .hb-inner { min-height: 310px; } /* ★【2026-11-04 修改 5C】同步縮短窄螢幕留白 */
     }
 
     /* 尊重系統減少動態效果設定 */
@@ -268,7 +268,7 @@
     .selection-hint {
       text-align: center;
       font-family: var(--font-serif);
-      font-size: 1rem;
+      font-size: 1.8rem;
       color: var(--coffee);
       margin-bottom: 1.5rem;
       font-weight: 600;
@@ -276,7 +276,7 @@
     .selection-hint span {
       display: block;
       font-family: var(--font-sans, inherit);
-      font-size: .8rem;
+      font-size: 1rem;
       font-weight: 400;
       color: var(--coffee-lt);
       margin-top: .3rem;
@@ -800,7 +800,7 @@
     /* ── RWD ── */
     @media (max-width: 640px) {
       .collab-title-bar h1 { font-size: 1.35rem; }
-      .collab-wrap { padding: 1.5rem 1rem 2.5rem; }
+      .collab-wrap { padding: 0 1rem 2.5rem; } /* ★【2026-11-04 修改 5D】移除 Banner 與歡迎文字間的上方內距 */
       .field-row { grid-template-columns: 1fr; }
       /* ★【2026-11-01 本次修改 3｜手機 640px 以下：上下單欄排列】 */
       .selection-grid { grid-template-columns: minmax(0, 1fr); gap: 1.1rem; }
