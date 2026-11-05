@@ -88,13 +88,13 @@
     }
 
     .hb-title {
-      font-family: var(--font-serif, 'Noto Serif TC', serif);
+      font-family: var(--font-serif, serif);
       color: #474c43;
       font-size: clamp(1.5rem, 2.55vw, 2.65rem);
-      font-weight: 700;
-      line-height: 1.3;
+      font-weight: 650;
+      line-height: 1.5;
       letter-spacing: .025em;
-      margin: 0 0 .55em;
+      /* margin: 0 0 .55em; */
     }
     .hb-title-line { display: block; }
 
@@ -154,7 +154,7 @@
          向左約 3 個中文字寬；調整此數值不會改變桌機版。
          保留 animation 設定，手機標題、內文同樣逐行淡入。 */
       .hb-title-line:first-child {
-        left: -3.075em;
+        left: -1.075em;
       }
       .hb-sub { font-size: clamp(.76rem, 1.18vw, .9rem); margin-bottom: .4em; }
       .hb-desc { font-size: clamp(.7rem, 1.05vw, .82rem); line-height: 1.55; }
@@ -204,7 +204,7 @@
       }
 
       /* 以下文字設定維持原樣：不變更文字分行、字級與置中方式 */
-      .hb-text-col { flex: 1 1 100%; max-width: 100%; text-align: center; }
+      .hb-text-col { flex: 1 1 100%; max-width: 100%; text-align: center; position: relative; top:-24px; left: 45px;} /*文字向上移動*/
       .hb-title { font-size: clamp(1.1rem, 5vw, 1.35rem); }
       .hb-sub { font-size: clamp(.78rem, 3.6vw, .92rem); }
       .hb-desc { font-size: clamp(.72rem, 3.2vw, .82rem); }
@@ -268,7 +268,7 @@
     .selection-hint {
       text-align: center;
       font-family: var(--font-serif);
-      font-size: 1.8rem;
+      font-size: 1.3rem;
       color: var(--coffee);
       margin-bottom: 1.5rem;
       font-weight: 600;
