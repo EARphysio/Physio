@@ -301,10 +301,9 @@
     .selection-item-hint {
       margin: .45rem 0 0;
       text-align: center;
-      color: #948c82;
       font-family: var(--font-serif);
-      font-size: .76rem;
-      font-weight: 500;
+      font-size: .8rem;
+      font-weight: 550;
       line-height: 1.5;
       overflow-wrap: anywhere;
     }
@@ -359,7 +358,6 @@
     .selection-note {
       margin: 1.1rem auto 0;
       text-align: center;
-      color: #999b98;
       font-family: var(--font-serif);
       font-size: clamp(.76rem, 1.25vw, .86rem);
       font-weight: 400;
