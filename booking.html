@@ -132,16 +132,22 @@
         <span>請點選下方圖片，進入對應的預約頁面</span>
       </div>
       <div class="selection-grid">
-        <!-- 修正1：新客 (false)、舊客 (true) 連結對調正確 -->
-        <button class="selection-card" type="button" onclick="startForm(false)" aria-label="新客預約">
-          <img src="img/booking-new.png" alt="新客戶預約 Initial Consultation">
-        </button>
-        <button class="selection-card" type="button" onclick="startForm(true)" aria-label="舊客預約">
-          <img src="img/booking-old.png" alt="舊客戶預約 Follow-up Session">
-        </button>
+        <!-- 桌機左右雙欄，手機上下單欄，每張預約圖下方各自顯示說明 -->
+        <div class="selection-item">
+          <button class="selection-card" type="button" onclick="startForm(false)" aria-label="新客預約">
+            <img src="img/booking-new.png" alt="新客戶預約 Initial Consultation">
+          </button>
+          <p class="selection-item-hint">*首次體驗含專業身體評估與客製化指導<br>(點擊開啟新客表單)</P>
+        </div>
+        <div class="selection-item">
+          <button class="selection-card" type="button" onclick="startForm(true)" aria-label="舊客預約">
+            <img src="img/booking-old.png" alt="舊客戶預約 Follow-up Session">
+          </button>
+          <p class="selection-item-hint">*已建立個案紀錄者專用<br>(開啟舊客表單)</P>
+        </div>
       </div>
       <!-- ★【 新增｜兩張預約按鈕下方提示文字】 -->
-      <p class="selection-note">💡 提示：點擊按鈕將開啟預約表單，填寫完成後，我們將於 24 小時內與您聯繫。</p>
+      <p class="selection-note">💡：點擊按鈕將開啟預約表單，填寫完成後，我們將於 24 小時內與您聯繫。</p>
     </div>
 
     <!-- STEP 1: 表單頁面 -->
@@ -156,7 +162,7 @@
         <!-- 基本資料 -->
         <div class="form-card">
           <div class="step-header">
-            <span class="step-num">①</span>
+            <span class="step-num">1</span>
             <h2>基本資料</h2>
             <span class="step-badge" id="customer-badge">新客</span>
           </div>
@@ -204,7 +210,7 @@
         <!-- 服務項目 -->
         <div class="form-card">
           <div class="step-header">
-            <span class="step-num">②</span>
+            <span class="step-num">2</span>
             <h2>服務項目</h2>
           </div>
           <div class="field">
@@ -227,7 +233,7 @@
         <!-- 預約時段 (依服務動態替換標題與說明) -->
         <div class="form-card" id="schedule-card" style="display:none;">
           <div class="step-header">
-            <span class="step-num">③</span>
+            <span class="step-num">3</span>
             <h2 id="schedule-title">預約時間選擇</h2>
           </div>
           
@@ -246,7 +252,7 @@
         <!-- 服務地點 -->
         <div class="form-card">
           <div class="step-header">
-            <span class="step-num">④</span>
+            <span class="step-num">4</span>
             <h2>服務地點選擇</h2>
           </div>
           <div class="field">
@@ -270,7 +276,7 @@
         <!-- 修正3：目前的身體狀況 (複選矩陣表) -->
         <div class="form-card">
       <div class="step-header">
-        <span class="step-num">⑤</span>
+        <span class="step-num">5</span>
         <h2>目前的身體狀況</h2>
       </div>
       <!-- 將文字獨立移至標題下方，並套用與「服務環境說明」相同的標籤樣式 -->
@@ -298,7 +304,7 @@
         <!-- 修正2：如何得知我們的資訊 (直式排版) -->
         <div class="form-card">
           <div class="step-header">
-            <span class="step-num">⑥</span>
+            <span class="step-num">6</span>
             <h2>如何得知我們的資訊 (複選) <span class="req">*</span></h2>
           </div>
           <!-- 套用 style.css 內建的 check-group 並加寬間距以符合圖片 -->
@@ -572,7 +578,11 @@
       let html = "";
 
       function buildTable(weekData, weekLabel) {
-        let t = `<div class="week-title">${weekLabel} (${weekData.dateRange})</div>`;
+        // 不顯示第一週、第二週
+        const heading = serviceType === "manual"
+          ?weekData.dateRange
+          :`${weekLabel} (${weekData.dateRange})`;
+        let t = `<div class="week-title">${heading} </div>`;
         t += `<div class="schedule-wrap"><table class="schedule-table"><thead><tr><th class="time-col">時段</th>`;
         weekData.days.forEach(d => { t += `<th>${d.dateLabel}</th>`; });
         t += `</tr></thead><tbody>`;
@@ -600,8 +610,8 @@
         return t;
       }
 
-      html += buildTable(data.week1, "第一週");
-      html += buildTable(data.week2, "第二週");
+      html += buildTable(data.week1,);
+      html += buildTable(data.week2,);
       container.innerHTML = html;
     }
 
