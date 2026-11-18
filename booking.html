@@ -19,6 +19,14 @@
   <!--連到CSS-->
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/booking.css" />
+  <!-- 修改 8：已預約的時段使用藍色標籤 -->
+  <style>
+    .schedule-table .slot-booked {
+      color: #174a8b;
+      background-color: #e8f1ff;
+      border: 1px solid #aac8f0;
+    }
+  </style>
 </head>
 <body>
 
@@ -617,6 +625,9 @@
             t += `<td>`;
             if (slot.status === "expired") {
               t += `<span class="slot-tag slot-expired">過期</span>`;
+            // 修改 9：只有後端明確標為已預約時，才顯示藍色「已約」。
+            } else if (["booked", "reserved", "已約"].includes(slot.status)) {
+              t += `<span class="slot-tag slot-booked">已約</span>`;
             } else if (slot.status === "full") {
               t += `<span class="slot-tag slot-full">滿</span>`;
             } else if (slot.status === "disabled") {
