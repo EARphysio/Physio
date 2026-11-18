@@ -167,23 +167,24 @@
             <span class="step-badge" id="customer-badge">新客</span>
           </div>
 
-          <div class="field-row">
+          <!-- 修改 1：舊客的基本資料只顯示姓名與 LINE 名稱 -->
+          <div class="field-row" id="booking-name-row">
             <div class="field">
               <label for="f-name">您的姓名 <span class="req">*</span></label>
               <input type="text" id="f-name" required placeholder="請輸入真實姓名">
             </div>
-            <div class="field">
+            <div class="field" id="booking-email-field">
               <label for="f-email">電子郵件 <span class="req">*</span></label>
               <input type="email" id="f-email" required placeholder="example@email.com">
             </div>
           </div>
 
-          <div class="field-row">
+          <div class="field-row" id="booking-contact-row">
             <div class="field">
               <label for="f-phone">聯絡電話 <span class="req">*</span></label>
               <input type="tel" id="f-phone" required placeholder="0912-345-678">
             </div>
-            <div class="field">
+            <div class="field" id="booking-line-field">
               <label for="f-line">LINE 名稱 <span class="req">*</span></label>
               <input type="text" id="f-line" required placeholder="LINE 顯示名稱">
             </div>
@@ -301,8 +302,8 @@
           </div>
         </div>
 
-        <!-- 修正2：如何得知我們的資訊 (直式排版) -->
-        <div class="form-card">
+        <!-- 修改 2：這張卡片只對新客顯示 -->
+        <div class="form-card" id="booking-source-card">
           <div class="step-header">
             <span class="step-num">6</span>
             <h2>如何得知我們的資訊 (複選) <span class="req">*</span></h2>
@@ -354,7 +355,8 @@
       <div class="confirm-card">
         <div class="confirm-icon"><i class="fas fa-check"></i></div>
         <h2>預約成功！</h2>
-        <p class="confirm-sub">我們已經保留您的預約時段，確認信已寄至您的 Email，請留意查收。</p>
+        <!-- 修改 3：依新客或舊客顯示不同的確認訊息 -->
+        <p class="confirm-sub" id="booking-confirm-message">我們已經保留您的預約時段，確認信已寄至您的 Email，請留意查收。</p>
         
         <table class="confirm-table">
           <tr><th>預約姓名</th><td id="res-name"></td></tr>
@@ -500,6 +502,27 @@
       document.getElementById("isOldCustomer").value = isOld;
       document.getElementById("customer-badge").innerText = isOld ? "舊客" : "新客";
       document.getElementById("new-customer-fields").style.display = isOld ? "none" : "block";
+
+      // 修改 4：切換舊客欄位，並關閉隱藏欄位的瀏覽器必填驗證
+      const nameRow = document.getElementById("booking-name-row");
+      const contactRow = document.getElementById("booking-contact-row");
+      const lineField = document.getElementById("booking-line-field");
+      const sourceCard = document.getElementById("booking-source-card");
+
+      if (isOld) {
+        nameRow.appendChild(lineField);
+      } else {
+        contactRow.appendChild(lineField);
+      }
+
+      document.getElementById("booking-email-field").style.display = isOld ? "none" : "";
+      contactRow.style.display = isOld ? "none" : "";
+      document.getElementById("f-email").disabled = isOld;
+      document.getElementById("f-phone").disabled = isOld;
+      sourceCard.style.display = isOld ? "none" : "";
+      sourceCard.querySelectorAll("input").forEach(input => {
+        input.disabled = isOld;
+      });
     }
 
     function goBack() {
@@ -639,11 +662,6 @@
       }
       // ==========================================
 
-      const btn = document.getElementById("submit-btn");
-      const spinner = document.getElementById("btn-spinner");
-      btn.disabled = true;
-      spinner.classList.add("show");
-
       // 彙整目前身體狀況
       let selectedBody = [];
       document.querySelectorAll('input[name="matrix_check"]:checked').forEach(cb => selectedBody.push(cb.value));
@@ -654,9 +672,10 @@
         return; 
       }
 
-      // 彙整得知管道
+      // 修改 5：只收集新客的來源，舊客的 Email 和電話也以空字串送出
+      const isOldCustomer = document.getElementById("isOldCustomer").value === "true";
       let selectedSources = [];
-      document.querySelectorAll('input[name="source"]:checked').forEach(cb => {
+      document.querySelectorAll('input[name="source"]:checked:not(:disabled)').forEach(cb => {
         if(cb.value === "其他") {
           let otherTxt = document.getElementById("source-other-text").value;
           selectedSources.push("其他: " + otherTxt);
@@ -666,10 +685,10 @@
       });
 
       const payload = {
-        isOldCustomer: document.getElementById("isOldCustomer").value === "true",
+        isOldCustomer,
         name: document.getElementById("f-name").value,
-        email: document.getElementById("f-email").value,
-        phone: document.getElementById("f-phone").value,
+        email: isOldCustomer ? "" : document.getElementById("f-email").value,
+        phone: isOldCustomer ? "" : document.getElementById("f-phone").value,
         lineName: document.getElementById("f-line").value,
         gender: document.getElementById("f-gender").value,
         birthday: document.getElementById("f-birthday").value,
@@ -678,8 +697,14 @@
         location: document.getElementById("f-location").value,
         address: document.getElementById("f-address").value,
         bodyCondition: selectedBody.join(", "),
-        sourceChannel: selectedSources.join(", ")
+        sourceChannel: isOldCustomer ? "" : selectedSources.join(", ")
       };
+
+      // 修改 6：通過前端檢查後才鎖定送出按鈕，讓使用者補填後能再送出
+      const btn = document.getElementById("submit-btn");
+      const spinner = document.getElementById("btn-spinner");
+      btn.disabled = true;
+      spinner.classList.add("show");
 
       fetch(GAS_URL, {
         method: "POST",
@@ -689,6 +714,10 @@
       .then(res => {
         if(res.success) {
           document.getElementById("step-form").style.display = "none";
+          // 修改 7：舊客未填 Email，成功畫面只顯示預約結果
+          document.getElementById("booking-confirm-message").textContent = isOldCustomer
+            ? "我們已收到您的預約，請確認下方的預約資訊。"
+            : "我們已經保留您的預約時段，確認信已寄至您的 Email，請留意查收。";
           document.getElementById("confirm-page").style.display = "block";
           // 📍 修正 2：將陣列中的多筆時段，轉化為可讀的字串並換行
           // 防呆機制：確保 appointmentSlots 有資料才進行 map，避免 Apple 手機報錯
