@@ -628,7 +628,8 @@
         locInfo.textContent = location ? "上課地點：" + location : "";
         subHint.textContent = "每堂限 4 名｜週一 20:00–20:30、週三 11:00–11:55";
         if (!location) {
-          showScheduleMessage("請先選擇服務地點，再查看剩餘名額。");
+          // 【排班修正 1】選服務後先告知使用者下一步，尚未選地點不發送排班請求。
+          showScheduleMessage("請先在上方選擇「國父紀念館」或「到府服務」，再查看可預約場次。");
           return;
         }
       } else {
@@ -696,7 +697,15 @@
       }).sort((a, b) => a.date.localeCompare(b.date));
 
       if (sessions.length === 0) {
-        showScheduleMessage("這個地點目前沒有開放報名的團課。");
+        // 【排班修正 2】按後端回報的原因顯示提示，舊版回應仍可正常讀取。
+        const messages = {
+          NO_CONFIGURED_SESSIONS: "目前尚未新增嬋柔場次。若需預約，請聯繫 EAR 官方 LINE。",
+          NO_OPEN_SESSIONS: "這個地點未來 14 天沒有開放報名的團課，可改選其他地點。",
+          CALENDAR_CONFLICT: "這個地點已安排的團課時段目前無法開放報名，請聯繫 EAR 官方 LINE。"
+        };
+        const message = Object.hasOwn(messages, data.emptyReason) ? messages[data.emptyReason]
+          : "這個地點目前沒有開放報名的團課。";
+        showScheduleMessage(message);
         return;
       }
 
@@ -872,9 +881,17 @@
         if(res.success) {
           document.getElementById("step-form").style.display = "none";
           // 修改 7：舊客未填 Email，成功畫面只顯示預約結果
-          document.getElementById("booking-confirm-message").textContent = isOldCustomer
+          // 【排班修正 3】團課已確認時顯示報名結果，寄信成功才提示查收。
+          let message = isOldCustomer
             ? "我們已收到您的預約，請確認下方的預約資訊。"
             : "我們已經保留您的預約時段，確認信已寄至您的 Email，請留意查收。";
+          if (isGyro) {
+            message = res.alreadyRegistered
+              ? "您已報名所選的嬋柔團課，請確認下方的場次。"
+              : "嬋柔團課報名已確認，請核對下方的場次。";
+            if (res.notifications?.email === true) message += " 確認信已寄出，請留意查收。";
+          }
+          document.getElementById("booking-confirm-message").textContent = message;
           document.getElementById("confirm-page").style.display = "block";
           // 📍 修正 2：將陣列中的多筆時段，轉化為可讀的字串並換行
           // 防呆機制：確保 appointmentSlots 有資料才進行 map，避免 Apple 手機報錯
