@@ -264,7 +264,7 @@
           <p id="schedule-sub-hint" style="font-size:0.82rem; color:var(--coffee-lt); margin-bottom:15px;"></p>
 
           <div id="schedule-loading" class="schedule-loading" style="display:none;">
-            <span class="spin-icon"></span>正在同步 Google 行事曆狀態⋯
+            <span class="spin-icon"></span><span id="schedule-loading-message">正在同步 Google 行事曆狀態⋯</span>
           </div>
           <div id="schedule-container" aria-live="polite"></div>
 
@@ -627,7 +627,8 @@
       if (isGyro) {
         title.textContent = "嬋柔團課預約（可複選）";
         locInfo.textContent = location ? "上課地點：" + location : "";
-        subHint.textContent = "每堂限 4 名｜週一 20:00–20:55、週三 11:00–11:55";
+        // 【共用名額】兩個地點顯示同一堂課的剩餘名額。
+        subHint.textContent = "兩地共用每堂 4 名｜週一 20:00–20:55、週三 11:00–11:55";
         if (!location) {
           // 【排班修正 1】選服務後先告知使用者下一步，尚未選地點不發送排班請求。
           showScheduleMessage("請先在上方選擇「國父紀念館」或「到府服務」，再查看可預約場次。");
@@ -639,6 +640,8 @@
         subHint.innerText = "徒手/放鬆：您方便預約的時段？ (複選)\n(建議挑選運動後 1～2天進行深層放鬆)";
       }
 
+      document.getElementById("schedule-loading-message").textContent = isGyro
+        ? "正在查詢團課剩餘名額⋯" : "正在同步 Google 行事曆狀態⋯";
       loading.style.display = "block";
       // Apps Script 的新查詢須提供所選地點的場次和即時剩餘名額。
       const url = isGyro
@@ -703,15 +706,7 @@
       }).sort((a, b) => a.date.localeCompare(b.date));
 
       if (sessions.length === 0) {
-        // 【排班修正 2】按後端回報的原因顯示提示，舊版回應仍可正常讀取。
-        const messages = {
-          NO_CONFIGURED_SESSIONS: "目前尚未新增嬋柔場次。若需預約，請聯繫 EAR 官方 LINE。",
-          NO_OPEN_SESSIONS: "這個地點未來 14 天沒有開放報名的團課，可改選其他地點。",
-          CALENDAR_CONFLICT: "這個地點已安排的團課時段目前無法開放報名，請聯繫 EAR 官方 LINE。"
-        };
-        const message = Object.hasOwn(messages, data.emptyReason) ? messages[data.emptyReason]
-          : "這個地點目前沒有開放報名的團課。";
-        showScheduleMessage(message);
+        showScheduleMessage("未來 14 天目前沒有開放報名的嬋柔團課。");
         return;
       }
 
