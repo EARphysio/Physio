@@ -627,7 +627,7 @@
         title.textContent = "嬋柔團課預約（可複選）";
         locInfo.textContent = location ? "上課地點：" + location : "";
         // 【共用名額】兩個地點顯示同一堂課的剩餘名額。
-        subHint.textContent = "兩地共用每堂 4 名｜週一 20:00–20:55、週三 11:00–11:55";
+        subHint.textContent = "週一 20:00–20:55、週三 11:00–11:55";
         if (!location) {
           // 【排班修正 1】選服務後先告知使用者下一步，尚未選地點不發送排班請求。
           showScheduleMessage("請先在上方選擇「國父紀念館」或「到府服務」，再查看可預約場次。");
@@ -679,15 +679,12 @@
     // 查詢回傳：location、capacityEnforced（true）、sessions（陣列）。
     // 場次欄位：id、date（YYYY-MM-DD）、remaining（0～4）。
     function renderGyroSchedule(data, location, keepSessionIds) {
-      // 【時段修正 4】後端判定場次設定錯誤時，顯示原因。
-      if (data?.code === "GYRO_SESSION_CONFIG") {
-        showScheduleMessage("團課場次的日期或時段等設定有誤，請聯繫 EAR 官方 LINE。");
-        return;
-      }
       if (data.location !== location || data.capacityEnforced !== true || !Array.isArray(data.sessions)) {
         throw new Error("團課名額資料尚未就緒");
       }
       const sessionIds = new Set();
+      const locationOptions = Array.from(document.getElementById("f-location").options)
+        .map(option => option.value).filter(Boolean);
       const sessions = data.sessions.map(session => {
         if (typeof session.date !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(session.date)) {
           throw new Error("場次日期不正確");
@@ -697,7 +694,9 @@
         const time = GYRO_CLASS_TIMES[day];
         if (!time || date.toISOString().slice(0, 10) !== session.date ||
             typeof session.id !== "string" || !session.id || sessionIds.has(session.id) ||
-            !Number.isInteger(session.remaining) || session.remaining < 0 || session.remaining > GYRO_CAPACITY) {
+            !Number.isInteger(session.remaining) || session.remaining < 0 || session.remaining > GYRO_CAPACITY ||
+            typeof session.locationConflict !== "boolean" ||
+            (session.bookedLocation !== null && !locationOptions.includes(session.bookedLocation))) {
           throw new Error("場次資料不正確");
         }
         sessionIds.add(session.id);
@@ -719,11 +718,20 @@
         dateLabel.textContent = session.date.replaceAll("-", "/") +
           (session.day === 1 ? "（一）" : "（三）") + " " + session.time;
 
-        const open = session.remaining > 0;
+        // 【地點與取消 3】已確定地點的場次，只有在該地點才可勾選。
+        const hasSeats = session.remaining > 0;
+        const otherLocation = session.bookedLocation && session.bookedLocation !== location;
+        const open = hasSeats && !otherLocation && !session.locationConflict;
         const status = document.createElement("span");
         status.className = open ? "gyro-session-open" : "gyro-session-full";
-        status.textContent = open ? "剩 " + session.remaining + " 名" : "額滿";
+        status.textContent = session.locationConflict ? "場次地點待確認，請聯繫 EAR 官方 LINE"
+          : hasSeats ? "剩 " + session.remaining + " 名" : "額滿";
         row.append(dateLabel);
+        if (!session.locationConflict && session.bookedLocation) {
+          const place = document.createElement("span");
+          place.textContent = "上課地點：" + session.bookedLocation;
+          row.append(place);
+        }
 
         if (open) {
           const label = document.createElement("label");
@@ -741,10 +749,27 @@
           row.append(label);
         } else {
           row.append(status);
+          if (otherLocation && hasSeats && !session.locationConflict) {
+            const switchButton = document.createElement("button");
+            switchButton.type = "button";
+            switchButton.className = "btn-back";
+            switchButton.textContent = "切換至" + session.bookedLocation.split("｜")[0] + "預約";
+            switchButton.addEventListener("click", () => switchGyroLocation(session.bookedLocation));
+            row.append(switchButton);
+          }
         }
         list.append(row);
       });
       document.getElementById("schedule-container").replaceChildren(list);
+    }
+
+    function switchGyroLocation(location) {
+      const select = document.getElementById("f-location");
+      if (select.disabled || document.getElementById("f-service").value !== "gyrokinesis" ||
+          select.value === location || !Array.from(select.options).some(option => option.value === location)) return;
+      if (!window.confirm("切換到「" + location + "」？原先勾選的場次會清除，請重新選課。")) return;
+      select.value = location;
+      handleBookingLocationChange();
     }
 
     // 渲染雙週表格
@@ -907,6 +932,9 @@
           
           // 修正：使用最傳統的捲動語法，完美相容所有新舊版 Apple 裝置
           window.scrollTo(0, 0);
+        } else if (isGyro && res.code === "SESSION_LOCATION_CHANGED") {
+          alert(res.error);
+          loadSchedule();
         } else if (isGyro && res.code === "SESSION_FULL") {
           alert("所選堂次已有名額變動，本次尚未預約。請確認更新後的名額再送出。");
           loadSchedule(selectedSlots.map(slot => slot.sessionId));
