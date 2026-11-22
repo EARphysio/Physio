@@ -494,6 +494,7 @@
 
   <script src="js/main.js"></script>
   <script>
+    // godrelive帳號的 Web App URL https://script.google.com/macros/s/AKfycbwIPvTf7atwc7zXhH-rZlMe_8EIalVuycAg2N_1fFemjbGWrlynMLE0WzBxgUkGoxYxDQ/exec
     const GAS_URL = 'https://script.google.com/macros/s/AKfycbxVYFEKPOmj0IHjp0wNw7eTs5s60h_vMOfT-RLTAaypnKHfQhGFD49Y-GlxTESBFNwX/exec';
                     
     const bodyLocations = ["頭頸", "肩膀", "上肢麻痛感", "上背膏肓", "腰薦椎區域", "骨盆/臀部", "髖關節", "膝關節", "踝關節/足底"];
@@ -572,7 +573,7 @@
       }
     }
 
-    function loadSchedule(keepGyroSessionIds = []) {
+    function loadSchedule(keepGyroSessionKeys = []) {
       const requestId = ++scheduleRequest;
       const service = document.getElementById("f-service").value;
       const card = document.getElementById("schedule-card");
@@ -654,7 +655,7 @@
         })
         .then(data => {
           if (requestId !== scheduleRequest) return;
-          if (isGyro) renderGyroSchedule(data, location, keepGyroSessionIds);
+          if (isGyro) renderGyroSchedule(data, location, keepGyroSessionKeys);
           else renderScheduleTables(data, service);
         })
         .catch(() => {
@@ -675,14 +676,14 @@
       document.getElementById("schedule-container").replaceChildren(notice);
     }
 
-    // 嬋柔修改 5：讀取後端名額。每堂有獨立編號，額滿時不顯示勾選框。
+    // 【欄位新版 4】用日期與起訖時間辨識堂次，額滿時不顯示勾選框。
     // 查詢回傳：location、capacityEnforced（true）、sessions（陣列）。
-    // 場次欄位：id、date（YYYY-MM-DD）、remaining（0～4）。
-    function renderGyroSchedule(data, location, keepSessionIds) {
+    // 場次欄位：date（YYYY-MM-DD）、time、remaining（0～4）。
+    function renderGyroSchedule(data, location, keepSessionKeys) {
       if (data.location !== location || data.capacityEnforced !== true || !Array.isArray(data.sessions)) {
         throw new Error("團課名額資料尚未就緒");
       }
-      const sessionIds = new Set();
+      const sessionKeys = new Set();
       const locationOptions = Array.from(document.getElementById("f-location").options)
         .map(option => option.value).filter(Boolean);
       const sessions = data.sessions.map(session => {
@@ -692,15 +693,16 @@
         const date = new Date(session.date + "T00:00:00Z");
         const day = date.getUTCDay();
         const time = GYRO_CLASS_TIMES[day];
-        if (!time || date.toISOString().slice(0, 10) !== session.date ||
-            typeof session.id !== "string" || !session.id || sessionIds.has(session.id) ||
+        const key = session.date + " " + time;
+        if (!time || session.time !== time || !Number.isFinite(date.getTime()) ||
+            date.toISOString().slice(0, 10) !== session.date || sessionKeys.has(key) ||
             !Number.isInteger(session.remaining) || session.remaining < 0 || session.remaining > GYRO_CAPACITY ||
             typeof session.locationConflict !== "boolean" ||
             (session.bookedLocation !== null && !locationOptions.includes(session.bookedLocation))) {
           throw new Error("場次資料不正確");
         }
-        sessionIds.add(session.id);
-        return { ...session, time, day };
+        sessionKeys.add(key);
+        return { ...session, time, day, key };
       }).sort((a, b) => a.date.localeCompare(b.date));
 
       if (sessions.length === 0) {
@@ -742,9 +744,8 @@
           checkbox.className = "slot-checkbox";
           checkbox.dataset.date = session.date;
           checkbox.dataset.time = session.time;
-          checkbox.dataset.sessionId = session.id;
           checkbox.setAttribute("aria-label", "報名 " + dateLabel.textContent + "，" + status.textContent);
-          checkbox.checked = keepSessionIds.includes(session.id);
+          checkbox.checked = keepSessionKeys.includes(session.key);
           label.append(checkbox, status);
           row.append(label);
         } else {
@@ -828,15 +829,15 @@
       // ==========================================
       // 📍 請將這段複選收集與驗證碼放在這裡：
       // ==========================================
-      // 嬋柔修改 6：團課多送場次編號，徒手沿用原本的日期和時段欄位
+      // 嬋柔修改 6：預約送出日期與時段
       const serviceSelect = document.getElementById("f-service");
       const locationSelect = document.getElementById("f-location");
       const isGyro = serviceSelect.value === "gyrokinesis";
       const selectedSlots = Array.from(
         document.querySelectorAll('#schedule-container input[name="slot_checkbox"]:checked'),
         checkbox => {
-          const { date, time, sessionId } = checkbox.dataset;
-          return isGyro ? { date, time, sessionId } : { date, time };
+          const { date, time } = checkbox.dataset;
+          return { date, time };
         }
       );
 
@@ -937,7 +938,7 @@
           loadSchedule();
         } else if (isGyro && res.code === "SESSION_FULL") {
           alert("所選堂次已有名額變動，本次尚未預約。請確認更新後的名額再送出。");
-          loadSchedule(selectedSlots.map(slot => slot.sessionId));
+          loadSchedule(selectedSlots.map(slot => slot.date + " " + slot.time));
         } else {
           alert("預約失敗：" + res.error);
         }
