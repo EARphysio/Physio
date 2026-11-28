@@ -821,3 +821,143 @@
         background: var(--white);
       }
     }
+
+/* 預約服務分頁 */
+.booking-service-title {
+  margin: 0 0 .75rem;
+  text-align: center;
+  color: var(--coffee);
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  font-weight: 700;
+}
+.booking-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.5fr;
+  gap: clamp(.25rem, 1vw, .6rem);
+  border-bottom: 1px solid var(--cream-3);
+  margin-bottom: 1.25rem;
+}
+
+.booking-tabs [role="tab"] {
+  min-height: 44px;
+  padding: .5rem clamp(.25rem, 1.2vw, .85rem);
+  border: 1px solid transparent;
+  border-bottom: 0;
+  border-radius: .5rem .5rem 0 0;
+  background: transparent;
+  color: var(--coffee);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.booking-tabs [role="tab"] span {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.booking-tabs [role="tab"]:hover,
+.booking-tabs [role="tab"][aria-selected="true"] {
+  background: var(--cream);
+}
+
+.booking-tabs [role="tab"][aria-selected="true"] {
+  border-color: var(--cream-3);
+  box-shadow: inset 0 3px 0 var(--gold);
+}
+
+.booking-tabs [role="tab"]:focus-visible {
+  outline: 2px solid var(--coffee);
+  outline-offset: -3px;
+}
+
+@media (max-width: 640px) {
+  .booking-tabs {
+    grid-template-columns: minmax(0, 1fr);
+    border-bottom: 0;
+    gap: .5rem;
+  }
+
+  .booking-tabs [role="tab"] {
+    border: 1px solid var(--cream-3);
+    border-radius: .5rem;
+  }
+}
+
+#booking-collaboration-frame {
+  display: block;
+  width: 100%;
+  min-height: 4rem;
+  border: 0;
+}
+
+/* 預約表單欄位與時段 */
+#step-form,
+#schedule-card,
+#schedule-loading {
+  display: none;
+}
+
+#schedule-location-info {
+  color: var(--coffee-lt);
+  font-size: .88rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+#schedule-sub-hint {
+  color: var(--coffee-lt);
+  font-size: .82rem;
+  margin-bottom: 15px;
+}
+
+.booking-matrix-label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.booking-matrix-scroll {
+  overflow-x: auto;
+}
+
+.booking-source-options {
+  gap: 1.2rem;
+  margin-top: 1rem;
+}
+
+.booking-source-other {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.booking-source-other span {
+  white-space: nowrap;
+}
+
+#source-other-text {
+  flex: 1;
+  max-width: 60%;
+  border: none;
+  border-bottom: 1px dashed var(--coffee-lt);
+  background: transparent;
+  padding: 2px 5px;
+  margin-left: 8px;
+}
+
+.schedule-table .slot-booked {
+  color: #174a8b;
+  background-color: #e8f1ff;
+  border: 1px solid #aac8f0;
+}
+.gyro-sessions { display: grid; gap: .65rem; margin: .75rem 0 0; padding: 0; list-style: none; }
+.gyro-session {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: .5rem 1rem; padding: .7rem .9rem; background: #fff; border: 1px solid #dfd5c8;
+  border-radius: .6rem;
+}
+.gyro-session-date { font-weight: 700; }
+.gyro-session-choice { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; cursor: pointer; }
+.gyro-session-open { color: #315844; }
+.gyro-session-full { color: #a32323; }
+.gyro-schedule-message { padding: .5rem 0; }

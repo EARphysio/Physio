@@ -19,28 +19,6 @@
   <!--連到CSS-->
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/booking.css" />
-  <!-- 修改 8：已預約的時段使用藍色標籤 -->
-  <style>
-    .schedule-table .slot-booked {
-      color: #174a8b;
-      background-color: #e8f1ff;
-      border: 1px solid #aac8f0;
-    }
-  </style>
-  <!-- 嬋柔修改 1：團課清單樣式，可在窄螢幕上換行 -->
-  <style>
-    .gyro-sessions { display: grid; gap: .65rem; margin: .75rem 0 0; padding: 0; list-style: none; }
-    .gyro-session {
-      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
-      gap: .5rem 1rem; padding: .7rem .9rem; background: #fff; border: 1px solid #dfd5c8;
-      border-radius: .6rem;
-    }
-    .gyro-session-date { font-weight: 700; }
-    .gyro-session-choice { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; cursor: pointer; }
-    .gyro-session-open { color: #315844; }
-    .gyro-session-full { color: #a32323; }
-    .gyro-schedule-message { padding: .5rem 0; }
-  </style>
 </head>
 <body>
 
@@ -146,6 +124,18 @@
   </section>
 
   <div class="collab-wrap">
+    <h2 class="booking-service-title" id="booking-service-title">請選擇服務類別</h2>
+    <div class="booking-tabs" role="tablist" aria-labelledby="booking-service-title">
+      <button type="button" id="tab-manual" role="tab" aria-selected="false" aria-controls="panel-manual" data-service="manual">徒手放鬆</button>
+      <button type="button" id="tab-gyrokinesis" role="tab" aria-selected="false" aria-controls="panel-gyrokinesis" data-service="gyrokinesis" tabindex="-1">嬋柔心動團課</button>
+      <button type="button" id="tab-collaboration" role="tab" aria-selected="false" aria-controls="panel-collaboration" data-service="collaboration" tabindex="-1"><span>嬋柔私課／包班</span><span>（含團體包班）</span></button>
+    </div>
+    <section id="panel-manual" role="tabpanel" aria-labelledby="tab-manual" hidden></section>
+    <section id="panel-gyrokinesis" role="tabpanel" aria-labelledby="tab-gyrokinesis" hidden></section>
+    <section id="panel-collaboration" role="tabpanel" aria-labelledby="tab-collaboration" hidden>
+      <iframe id="booking-collaboration-frame" title="嬋柔私課／包班合作邀請表單"></iframe>
+    </section>
+    <div id="booking-flow" hidden>
 
     <!-- STEP 0: 新舊客選擇 -->
     <div id="step-selection">
@@ -173,7 +163,7 @@
     </div>
 
     <!-- STEP 1: 表單頁面 -->
-    <div id="step-form" style="display:none;">
+    <div id="step-form">
       <button class="btn-back" type="button" onclick="goBack()">
         <i class="fas fa-chevron-left"></i> 重新選擇
       </button>
@@ -230,40 +220,25 @@
           </div>
         </div>
 
-        <!-- 服務項目 -->
-        <div class="form-card">
+        <!-- 預約時段 (依服務動態替換標題與說明) -->
+        <div class="form-card" id="schedule-card">
           <div class="step-header">
-            <span class="step-num">2</span>
-            <h2>服務項目</h2>
+            <span class="step-num" id="booking-schedule-step">2</span>
+            <h2 id="schedule-title">預約時間選擇</h2>
           </div>
-          <div class="field">
-            <label for="f-service">選擇服務項目 <span class="req">*</span></label>
-            <select id="f-service" onchange="loadSchedule()" required>
-              <option value="">請先選擇服務項目</option>
-              <option value="manual">徒手/放鬆</option>
-              <option value="gyrokinesis">嬋柔(Gyrokinesis)</option>
-            </select>
-          </div>
-          <p class="gyro-video-hint">
+          
+          <p id="schedule-location-info"></p>
+          <p id="schedule-sub-hint"></p>
+
+          <p class="gyro-video-hint" id="booking-gyro-video" hidden>
             <i class="fab fa-youtube"></i>
             還不清楚嬋柔(Gyrokinesis)是什麼嗎？
             <a href="https://www.youtube.com/shorts/Bujdy9n6nP4?feature=share" target="_blank" rel="noopener noreferrer">
               點此觀看示範短片 →
             </a>
           </p>
-        </div>
 
-        <!-- 預約時段 (依服務動態替換標題與說明) -->
-        <div class="form-card" id="schedule-card" style="display:none;">
-          <div class="step-header">
-            <span class="step-num" id="booking-schedule-step">3</span>
-            <h2 id="schedule-title">預約時間選擇</h2>
-          </div>
-          
-          <p id="schedule-location-info" style="font-size:0.88rem; color:var(--coffee-lt); font-weight:600; margin-bottom:5px;"></p>
-          <p id="schedule-sub-hint" style="font-size:0.82rem; color:var(--coffee-lt); margin-bottom:15px;"></p>
-
-          <div id="schedule-loading" class="schedule-loading" style="display:none;">
+          <div id="schedule-loading" class="schedule-loading">
             <span class="spin-icon"></span><span id="schedule-loading-message">正在同步 Google 行事曆狀態⋯</span>
           </div>
           <div id="schedule-container" aria-live="polite"></div>
@@ -272,14 +247,14 @@
           <input type="hidden" id="f-time" required>
         </div>
 
-        <!-- 嬋柔修改 2：保留地點選單，選嬋柔時把此區移到名額表上方 -->
+        <!-- 徒手放鬆服務地點 -->
         <div class="form-card" id="booking-location-card">
           <div class="step-header">
-            <span class="step-num" id="booking-location-step">4</span>
+            <span class="step-num" id="booking-location-step">3</span>
             <h2>服務地點選擇</h2>
           </div>
           <div class="field">
-            <select id="f-location" required onchange="handleBookingLocationChange()">
+            <select id="f-location" required onchange="toggleAddress()">
               <option value="">請選擇地點</option>
               <option value="中和據點｜親友限定">中和據點｜親友限定</option>
               <option value="板橋館｜棒地物理治療所">板橋館｜棒地物理治療所</option>
@@ -289,7 +264,7 @@
               <option value="到府服務｜限雙北地區">到府服務｜限雙北地區</option>
             </select>
           </div>
-          <div class="field" id="address-box" style="display:none;">
+          <div class="field" id="address-box">
             <label for="f-address">服務環境說明：凡需爬坡或無電梯設備之場域，請務必私訊告知，感謝您的配合。<br>
             ※ 若與前次服務地址相同，您可直接填寫「同前次」。 <span class="req">*</span></label>
             <input type="text" id="f-address" placeholder="請輸入您到府服務確切地址。">
@@ -299,14 +274,14 @@
         <!-- 修正3：目前的身體狀況 (複選矩陣表) -->
         <div class="form-card">
       <div class="step-header">
-        <span class="step-num">5</span>
+        <span class="step-num" id="booking-condition-step">4</span>
         <h2>目前的身體狀況</h2>
       </div>
       <!-- 將文字獨立移至標題下方，並套用與「服務環境說明」相同的標籤樣式 -->
-      <label style="display: block; margin-bottom: 8px;">
+      <label class="booking-matrix-label">
         精準評估您的身體狀況，請條列目前欲改善的主要訴求：(複選)
       </label>
-          <div style="overflow-x:auto;">
+          <div class="booking-matrix-scroll">
             <table class="matrix-table">
               <thead>
                 <tr>
@@ -327,11 +302,11 @@
         <!-- 修改 2：這張卡片只對新客顯示 -->
         <div class="form-card" id="booking-source-card">
           <div class="step-header">
-            <span class="step-num">6</span>
+            <span class="step-num" id="booking-source-step">5</span>
             <h2>如何得知我們的資訊 (複選) <span class="req">*</span></h2>
           </div>
           <!-- 套用 style.css 內建的 check-group 並加寬間距以符合圖片 -->
-          <div class="check-group" style="gap: 1.2rem; margin-top: 1rem;">
+          <div class="check-group booking-source-options">
             <label class="check-item">
               <input type="checkbox" name="source" value="親友同儕 / 個案介紹"> 
               <span>親友同儕 / 個案介紹</span>
@@ -356,10 +331,10 @@
               <input type="checkbox" name="source" value="賽事場邊 / 現場防護"> 
               <span>賽事場邊 / 現場防護</span>
             </label>
-            <label class="check-item" style="display: flex; align-items: center; width: 100%;">
+            <label class="check-item booking-source-other">
               <input type="checkbox" name="source" id="source-other-check" value="其他"> 
-              <span style="white-space: nowrap;">其他: </span>
-              <input type="text" id="source-other-text" placeholder="" style="flex: 1; max-width: 60%; border: none; border-bottom: 1px dashed var(--coffee-lt); background: transparent; padding: 2px 5px; margin-left: 8px;">
+              <span>其他: </span>
+              <input type="text" id="source-other-text" placeholder="">
             </label>
           </div>
         </div>
@@ -373,7 +348,7 @@
     </div>
 
     <!-- STEP 2: 預約結果頁面 -->
-    <div id="confirm-page" style="display:none;">
+    <div id="confirm-page">
       <div class="confirm-card">
         <div class="confirm-icon"><i class="fas fa-check"></i></div>
         <h2>預約成功！</h2>
@@ -391,6 +366,7 @@
       </div>
     </div>
 
+    </div><!-- /booking-flow -->
   </div>
 <!-- ========================================================
        FOOTER
@@ -494,7 +470,6 @@
 
   <script src="js/main.js"></script>
   <script>
-    // godrelive帳號的 Web App URL https://script.google.com/macros/s/AKfycbwIPvTf7atwc7zXhH-rZlMe_8EIalVuycAg2N_1fFemjbGWrlynMLE0WzBxgUkGoxYxDQ/exec
     const GAS_URL = 'https://script.google.com/macros/s/AKfycbxVYFEKPOmj0IHjp0wNw7eTs5s60h_vMOfT-RLTAaypnKHfQhGFD49Y-GlxTESBFNwX/exec';
                     
     const bodyLocations = ["頭頸", "肩膀", "上肢麻痛感", "上背膏肓", "腰薦椎區域", "骨盆/臀部", "髖關節", "膝關節", "踝關節/足底"];
@@ -519,6 +494,7 @@
     });
 
     function startForm(isOld) {
+      if (activeService !== "manual" && activeService !== "gyrokinesis") return;
       document.getElementById("step-selection").style.display = "none";
       document.getElementById("step-form").style.display = "block";
       document.getElementById("isOldCustomer").value = isOld;
@@ -545,109 +521,132 @@
       sourceCard.querySelectorAll("input").forEach(input => {
         input.disabled = isOld;
       });
-    }
-
-    // 嬋柔修改 3：定義每堂的上限及台灣時間的固定時段
-    const GYRO_CAPACITY = 4;
-    // 【時段修正 3】團課時段須與 Apps Script 及場次表一致。
-    const GYRO_CLASS_TIMES = { 1: "20:00–20:55", 3: "11:00–11:55" };
-    let scheduleRequest = 0;
-
-    function goBack() {
-      scheduleRequest += 1;
-      document.getElementById("step-form").style.display = "none";
-      document.getElementById("step-selection").style.display = "block";
-      document.getElementById("bookingForm").reset();
       loadSchedule();
     }
 
-    function toggleAddress() {
-      let loc = document.getElementById("f-location").value;
-      document.getElementById("address-box").style.display = (loc === "到府服務｜限雙北地區") ? "block" : "none";
+    const GYRO_STUDIO = "國父紀念館｜心動動作工作室";
+    const HOME_SERVICE_LOCATION = "到府服務｜限雙北地區";
+    const GYRO_CAPACITY = 4;
+    const GYRO_CLASS_TIMES = { 1: "20:00–20:55", 3: "11:00–11:55" };
+    const serviceTabs = Array.from(document.querySelectorAll(".booking-tabs [role='tab']"));
+    const bookingFlow = document.getElementById("booking-flow");
+    const collaborationFrame = document.getElementById("booking-collaboration-frame");
+    let activeService = "";
+    let bookingPending = false;
+    let scheduleRequest = 0;
+    const collaborationOrigin = location.protocol === "file:" ? "null" : location.origin;
+    const verticalServiceTabs = window.matchMedia("(max-width: 640px)");
+    const serviceTabList = document.querySelector(".booking-tabs");
+
+    function updateServiceTabOrientation() {
+      serviceTabList.setAttribute("aria-orientation", verticalServiceTabs.matches ? "vertical" : "horizontal");
     }
 
-    function handleBookingLocationChange() {
-      toggleAddress();
-      if (document.getElementById("f-service").value === "gyrokinesis") {
-        loadSchedule();
+    updateServiceTabOrientation();
+    verticalServiceTabs.addEventListener("change", updateServiceTabOrientation);
+
+    function focusServiceTab(index) {
+      serviceTabs.forEach((tab, current) => {
+        tab.tabIndex = current === index ? 0 : -1;
+      });
+      serviceTabs[index].focus();
+    }
+
+    serviceTabs.forEach((tab, index) => {
+      tab.addEventListener("click", () => {
+        const service = tab.dataset.service;
+        if (bookingPending || service === activeService) return;
+        focusServiceTab(index);
+        activeService = service;
+        serviceTabs.forEach(button => {
+          const selected = button === tab;
+          button.setAttribute("aria-selected", String(selected));
+          document.getElementById(button.getAttribute("aria-controls")).hidden = !selected;
+        });
+
+        const isCollaboration = service === "collaboration";
+        goBack();
+        bookingFlow.hidden = isCollaboration;
+        if (isCollaboration) {
+          if (!collaborationFrame.hasAttribute("src")) collaborationFrame.src = "collab.html?embed=booking";
+          return;
+        }
+        document.getElementById(tab.getAttribute("aria-controls")).append(bookingFlow);
+      });
+      tab.addEventListener("keydown", event => {
+        const lastIndex = serviceTabs.length - 1;
+        const indexByKey = {
+          [verticalServiceTabs.matches ? "ArrowUp" : "ArrowLeft"]: (index + lastIndex) % serviceTabs.length,
+          [verticalServiceTabs.matches ? "ArrowDown" : "ArrowRight"]: (index + 1) % serviceTabs.length,
+          Home: 0,
+          End: lastIndex
+        };
+        if (!Object.hasOwn(indexByKey, event.key)) return;
+        event.preventDefault();
+        focusServiceTab(indexByKey[event.key]);
+      });
+    });
+
+    window.addEventListener("message", event => {
+      // 本機預覽的 file: 頁面來源為 null，同樣檢查訊息是否由此 iframe 送出。
+      if (event.source !== collaborationFrame.contentWindow || event.origin !== collaborationOrigin) return;
+      const { type, height } = event.data || {};
+      if (type === "ear:collab-height" && Number.isSafeInteger(height) && height > 0) {
+        collaborationFrame.style.height = height + "px";
       }
+      if (type === "ear:collab-confirmed") {
+        collaborationFrame.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+
+    function goBack() {
+      if (bookingPending) return;
+      scheduleRequest += 1;
+      document.getElementById("step-form").style.display = "none";
+      document.getElementById("confirm-page").style.display = "none";
+      document.getElementById("step-selection").style.display = "block";
+      document.getElementById("bookingForm").reset();
+      document.getElementById("schedule-container").replaceChildren();
+      document.getElementById("schedule-loading").style.display = "none";
+      document.getElementById("schedule-card").style.display = "none";
+    }
+
+    function toggleAddress() {
+      const showAddress = activeService === "manual" &&
+        document.getElementById("f-location").value === HOME_SERVICE_LOCATION;
+      document.getElementById("address-box").style.display = showAddress ? "block" : "none";
     }
 
     function loadSchedule(keepGyroSessionKeys = []) {
       const requestId = ++scheduleRequest;
-      const service = document.getElementById("f-service").value;
+      const isGyro = activeService === "gyrokinesis";
       const card = document.getElementById("schedule-card");
-      const title = document.getElementById("schedule-title");
-      const locInfo = document.getElementById("schedule-location-info");
-      const subHint = document.getElementById("schedule-sub-hint");
       const loading = document.getElementById("schedule-loading");
-      const container = document.getElementById("schedule-container");
-      // ==========================================
-      // 📍 修正 ：動態切換服務地點選項
-      // ==========================================
-      const locSelect = document.getElementById("f-location");
-      const currentLoc = locSelect.value; // 記住當前選擇
-      locSelect.innerHTML = '<option value="">請選擇地點</option>'; // 清空重置
+      const locationSelect = document.getElementById("f-location");
+      document.getElementById("booking-location-card").hidden = isGyro;
+      locationSelect.disabled = isGyro;
+      document.getElementById("booking-gyro-video").hidden = !isGyro;
+      document.getElementById("booking-condition-step").textContent = isGyro ? "3" : "4";
+      document.getElementById("booking-source-step").textContent = isGyro ? "4" : "5";
+      toggleAddress();
 
-      if (service === "gyrokinesis") {
-        locSelect.innerHTML += '<option value="國父紀念館｜心動動作工作室">國父紀念館｜心動動作工作室</option>';
-        locSelect.innerHTML += '<option value="到府服務｜限雙北地區">到府服務｜限雙北地區</option>';
-      } else {
-        locSelect.innerHTML += '<option value="中和據點｜親友限定">中和據點｜親友限定</option>';
-        locSelect.innerHTML += '<option value="板橋館｜棒地物理治療所">板橋館｜棒地物理治療所</option>';
-        locSelect.innerHTML += '<option value="善導寺館｜透視物理治療所">善導寺館｜透視物理治療所</option>';
-        locSelect.innerHTML += '<option value="小巨蛋館｜連邦物理治療所">小巨蛋館｜連邦物理治療所</option>';
-        locSelect.innerHTML += '<option value="國父紀念館｜心動動作工作室">國父紀念館｜心動動作工作室</option>';
-        locSelect.innerHTML += '<option value="到府服務｜限雙北地區">到府服務｜限雙北地區</option>';
-      }
-      
-      // 若原先選擇的地點在新列表中依然存在，則保留選擇
-      let hasOption = Array.from(locSelect.options).some(opt => opt.value === currentLoc);
-      if (hasOption) locSelect.value = currentLoc;
-      toggleAddress(); // 同步檢查是否需顯示詳細地址欄位
-      // ==========================================
-
-      // 嬋柔修改 4：先選地點才查團課，徒手保留原本的卡片順序和查詢
-      const isGyro = service === "gyrokinesis";
-      const locationCard = document.getElementById("booking-location-card");
-      const location = locSelect.value;
-      if (isGyro) {
-        card.before(locationCard);
-      } else {
-        card.after(locationCard);
-      }
-      document.getElementById("booking-location-step").textContent = isGyro ? "3" : "4";
-      document.getElementById("booking-schedule-step").textContent = isGyro ? "4" : "3";
-
-      container.replaceChildren();
-      loading.style.display = "none";
-      card.style.display = service ? "block" : "none";
-      if (!service) return;
-
-      if (isGyro) {
-        title.textContent = "嬋柔團課預約（可複選）";
-        locInfo.textContent = location ? "上課地點：" + location : "";
-        // 【共用名額】兩個地點顯示同一堂課的剩餘名額。
-        subHint.textContent = "週一 20:00–20:55、週三 11:00–11:55";
-        if (!location) {
-          // 【排班修正 1】選服務後先告知使用者下一步，尚未選地點不發送排班請求。
-          showScheduleMessage("請先在上方選擇「國父紀念館」或「到府服務」，再查看可預約場次。");
-          return;
-        }
-      } else {
-        title.innerText = "徒手/放鬆日期時間選擇";
-        locInfo.innerText = "上課地點：中和、板橋館、善導寺館、小巨蛋館、國父紀念館";
-        subHint.innerText = "徒手/放鬆：您方便預約的時段？ (複選)\n(建議挑選運動後 1～2天進行深層放鬆)";
-      }
-
+      document.getElementById("schedule-container").replaceChildren();
+      card.style.display = "block";
+      document.getElementById("schedule-title").textContent = isGyro
+        ? "嬋柔團課預約（可複選）" : "徒手放鬆日期時間選擇";
+      document.getElementById("schedule-location-info").textContent = isGyro
+        ? "上課地點：" + GYRO_STUDIO
+        : "服務地點：中和、板橋館、善導寺館、小巨蛋館、國父紀念館";
+      document.getElementById("schedule-sub-hint").innerText = isGyro
+        ? "週一 20:00–20:55、週三 11:00–11:55"
+        : "徒手放鬆：您方便預約的時段？ (複選)\n(建議挑選運動後 1～2天進行深層放鬆)";
       document.getElementById("schedule-loading-message").textContent = isGyro
         ? "正在查詢團課剩餘名額⋯" : "正在同步 Google 行事曆狀態⋯";
       loading.style.display = "block";
-      // Apps Script 的新查詢須提供所選地點的場次和即時剩餘名額。
-      const url = isGyro
-        ? GAS_URL + "?action=getGyroSchedule&service=gyrokinesis&location=" + encodeURIComponent(location)
-        : GAS_URL + "?action=getSchedule&service=" + service;
 
+      const url = isGyro
+        ? GAS_URL + "?action=getGyroSchedule&service=gyrokinesis&location=" + encodeURIComponent(GYRO_STUDIO)
+        : GAS_URL + "?action=getSchedule&service=manual";
       fetch(url, { cache: "no-store" })
         .then(response => {
           if (!response.ok) throw new Error("無法讀取排班");
@@ -655,20 +654,19 @@
         })
         .then(data => {
           if (requestId !== scheduleRequest) return;
-          if (isGyro) renderGyroSchedule(data, location, keepGyroSessionKeys);
-          else renderScheduleTables(data, service);
+          if (isGyro) renderGyroSchedule(data, keepGyroSessionKeys);
+          else renderScheduleTables(data, "manual");
         })
         .catch(() => {
           if (requestId !== scheduleRequest) return;
           showScheduleMessage(isGyro
-            ? "目前無法取得團課名額，請稍後重新選擇地點。"
-            : "目前無法取得預約時段，請稍後重新選擇服務。");
+            ? "目前無法取得團課名額，請稍後重新查詢。"
+            : "目前無法取得預約時段，請稍後重新查詢。");
         })
         .finally(() => {
           if (requestId === scheduleRequest) loading.style.display = "none";
         });
     }
-
     function showScheduleMessage(message) {
       const notice = document.createElement("p");
       notice.className = "gyro-schedule-message";
@@ -679,13 +677,11 @@
     // 【欄位新版 4】用日期與起訖時間辨識堂次，額滿時不顯示勾選框。
     // 查詢回傳：location、capacityEnforced（true）、sessions（陣列）。
     // 場次欄位：date（YYYY-MM-DD）、time、remaining（0～4）。
-    function renderGyroSchedule(data, location, keepSessionKeys) {
-      if (data.location !== location || data.capacityEnforced !== true || !Array.isArray(data.sessions)) {
+    function renderGyroSchedule(data, keepSessionKeys) {
+      if (data.location !== GYRO_STUDIO || data.capacityEnforced !== true || !Array.isArray(data.sessions)) {
         throw new Error("團課名額資料尚未就緒");
       }
       const sessionKeys = new Set();
-      const locationOptions = Array.from(document.getElementById("f-location").options)
-        .map(option => option.value).filter(Boolean);
       const sessions = data.sessions.map(session => {
         if (typeof session.date !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(session.date)) {
           throw new Error("場次日期不正確");
@@ -698,7 +694,7 @@
             date.toISOString().slice(0, 10) !== session.date || sessionKeys.has(key) ||
             !Number.isInteger(session.remaining) || session.remaining < 0 || session.remaining > GYRO_CAPACITY ||
             typeof session.locationConflict !== "boolean" ||
-            (session.bookedLocation !== null && !locationOptions.includes(session.bookedLocation))) {
+            (session.bookedLocation !== null && ![GYRO_STUDIO, HOME_SERVICE_LOCATION].includes(session.bookedLocation))) {
           throw new Error("場次資料不正確");
         }
         sessionKeys.add(key);
@@ -720,20 +716,14 @@
         dateLabel.textContent = session.date.replaceAll("-", "/") +
           (session.day === 1 ? "（一）" : "（三）") + " " + session.time;
 
-        // 【地點與取消 3】已確定地點的場次，只有在該地點才可勾選。
-        const hasSeats = session.remaining > 0;
-        const otherLocation = session.bookedLocation && session.bookedLocation !== location;
-        const open = hasSeats && !otherLocation && !session.locationConflict;
+        const blocked = session.locationConflict ||
+          (session.bookedLocation !== null && session.bookedLocation !== GYRO_STUDIO);
+        const open = !blocked && session.remaining > 0;
         const status = document.createElement("span");
         status.className = open ? "gyro-session-open" : "gyro-session-full";
-        status.textContent = session.locationConflict ? "場次地點待確認，請聯繫 EAR 官方 LINE"
-          : hasSeats ? "剩 " + session.remaining + " 名" : "額滿";
+        status.textContent = blocked ? "本堂暫停報名"
+          : open ? "剩 " + session.remaining + " 名" : "已額滿";
         row.append(dateLabel);
-        if (!session.locationConflict && session.bookedLocation) {
-          const place = document.createElement("span");
-          place.textContent = "上課地點：" + session.bookedLocation;
-          row.append(place);
-        }
 
         if (open) {
           const label = document.createElement("label");
@@ -750,27 +740,10 @@
           row.append(label);
         } else {
           row.append(status);
-          if (otherLocation && hasSeats && !session.locationConflict) {
-            const switchButton = document.createElement("button");
-            switchButton.type = "button";
-            switchButton.className = "btn-back";
-            switchButton.textContent = "切換至" + session.bookedLocation.split("｜")[0] + "預約";
-            switchButton.addEventListener("click", () => switchGyroLocation(session.bookedLocation));
-            row.append(switchButton);
-          }
         }
         list.append(row);
       });
       document.getElementById("schedule-container").replaceChildren(list);
-    }
-
-    function switchGyroLocation(location) {
-      const select = document.getElementById("f-location");
-      if (select.disabled || document.getElementById("f-service").value !== "gyrokinesis" ||
-          select.value === location || !Array.from(select.options).some(option => option.value === location)) return;
-      if (!window.confirm("切換到「" + location + "」？原先勾選的場次會清除，請重新選課。")) return;
-      select.value = location;
-      handleBookingLocationChange();
     }
 
     // 渲染雙週表格
@@ -826,13 +799,9 @@
 
     function submitForm(e) {
       e.preventDefault();
-      // ==========================================
-      // 📍 請將這段複選收集與驗證碼放在這裡：
-      // ==========================================
-      // 嬋柔修改 6：預約送出日期與時段
-      const serviceSelect = document.getElementById("f-service");
+      if (bookingPending || (activeService !== "manual" && activeService !== "gyrokinesis")) return;
       const locationSelect = document.getElementById("f-location");
-      const isGyro = serviceSelect.value === "gyrokinesis";
+      const isGyro = activeService === "gyrokinesis";
       const selectedSlots = Array.from(
         document.querySelectorAll('#schedule-container input[name="slot_checkbox"]:checked'),
         checkbox => {
@@ -877,10 +846,10 @@
         lineName: document.getElementById("f-line").value,
         gender: document.getElementById("f-gender").value,
         birthday: document.getElementById("f-birthday").value,
-        serviceType: document.getElementById("f-service").value,
+        serviceType: activeService,
         appointmentSlots: selectedSlots, // 傳遞複選的時段陣列
-        location: document.getElementById("f-location").value,
-        address: document.getElementById("f-address").value,
+        location: isGyro ? GYRO_STUDIO : locationSelect.value,
+        address: !isGyro ? document.getElementById("f-address").value : "",
         bodyCondition: selectedBody.join(", "),
         sourceChannel: isOldCustomer ? "" : selectedSources.join(", ")
       };
@@ -888,21 +857,22 @@
       // 修改 6：通過前端檢查後才鎖定送出按鈕，讓使用者補填後能再送出
       const btn = document.getElementById("submit-btn");
       const spinner = document.getElementById("btn-spinner");
+      bookingPending = true;
       btn.disabled = true;
+      document.querySelector("#step-form .btn-back").disabled = true;
       spinner.classList.add("show");
 
       // 嬋柔修改 7：後端須一次核對整批場次，再保留名額。
       // 若回傳 SESSION_FULL，該批次未成立，重新載入並保留仍可報名的勾選。
-      if (isGyro) {
-        payload.action = "bookGyro";
-        serviceSelect.disabled = true;
-        locationSelect.disabled = true;
-      }
+      if (isGyro) payload.action = "bookGyro";
       fetch(GAS_URL, {
         method: "POST",
         body: JSON.stringify(payload)
       })
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error("無法取得預約結果");
+        return res.json();
+      })
       .then(res => {
         if(res.success) {
           document.getElementById("step-form").style.display = "none";
@@ -910,7 +880,8 @@
           // 【排班修正 3】團課已確認時顯示報名結果，寄信成功才提示查收。
           let message = isOldCustomer
             ? "我們已收到您的預約，請確認下方的預約資訊。"
-            : "我們已經保留您的預約時段，確認信已寄至您的 Email，請留意查收。";
+            : "我們已經保留您的預約時段。" +
+              (res.notifications?.email === true ? "確認信已寄至您的 Email，請留意查收。" : "");
           if (isGyro) {
             message = res.alreadyRegistered
               ? "您已報名所選的嬋柔團課，請確認下方的場次。"
@@ -927,7 +898,7 @@
           
           // 將預約資料寫入結果頁面
           document.getElementById("res-name").innerText = payload.name;
-          document.getElementById("res-service").innerText = (payload.serviceType === "manual") ? "徒手/放鬆" : "嬋柔(Gyrokinesis)";
+          document.getElementById("res-service").innerText = isGyro ? "嬋柔心動團課" : "徒手放鬆";
           document.getElementById("res-time").innerText = timeString; 
           document.getElementById("res-location").innerText = payload.location;
           
@@ -948,10 +919,8 @@
       .finally(() => {
         btn.disabled = false;
         spinner.classList.remove("show");
-        if (isGyro) {
-          serviceSelect.disabled = false;
-          locationSelect.disabled = false;
-        }
+        bookingPending = false;
+        document.querySelector("#step-form .btn-back").disabled = false;
       });
     }
   </script>

@@ -19,6 +19,11 @@
   <!--連到CSS-->
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/collab.css" />
+  <script>
+    if (window.self !== window.top && new URLSearchParams(location.search).get("embed") === "booking") {
+      document.documentElement.classList.add("booking-embed");
+    }
+  </script>
 </head>
 <body>
 
@@ -89,7 +94,7 @@
       </div>
     </div>
   </header>
-    <main>
+    <main id="collaboration-content">
         <!-- 頂部金色雙色橫線 -->
       <div class="hero-topbar" aria-hidden="true">
         <div class="htb-gold"></div>
@@ -103,7 +108,6 @@
   <header class="sec-header" data-ani="slide-up">
           <h2 id="services-h">合作邀請表單</h2>
         </header>
-  </div>
 
   <!-- 深色標題列 -->
   <!-- 表單頁 -->
@@ -146,7 +150,7 @@
         <div class="form-card">
           <div class="step-header">
             <span class="step-num">2</span>
-            <h2>想合作的類型 <span style="font-size:.78rem;color:var(--gold);font-weight:400;">（可複選）</span></h2>
+            <h2>想合作的類型 <span class="collab-multiple-hint">（可複選）</span></h2>
           </div>
 
           <!--增加嬋柔選項-->
@@ -157,7 +161,7 @@
             </label>
             <label class="type-tag">
               <input type="checkbox" name="collab_type" value="嬋柔課程" />
-              <span style="font-size:1rem;line-height:1">🧘</span>嬋柔課程
+              <img src="img/GYROKINESIS.png" alt="嬋柔包班" width="25">嬋柔課程
             </label>
             <label class="type-tag">
               <input type="checkbox" name="collab_type" value="開課／公開課程" />
@@ -182,7 +186,7 @@
                 oninput="document.getElementById('type-other-chk').checked = this.value.trim() !== ''" />
             </label>
           </div>
-          <span class="err-msg" id="err-type" style="display:none;margin-top:.5rem;">請至少選擇一項合作類型</span>
+          <span class="err-msg" id="err-type">請至少選擇一項合作類型</span>
         </div>
 
         <!-- ③ 合作需求 -->
@@ -245,7 +249,7 @@
             </div>
             <div class="field">
               <label>活動形式</label>
-              <div class="radio-row" style="margin-top:.4rem;">
+              <div class="radio-row collab-format-options">
                 <label><input type="radio" name="event_format" value="實體" /> 實體</label>
                 <label><input type="radio" name="event_format" value="線上" /> 線上</label>
                 <label><input type="radio" name="event_format" value="皆可" checked /> 皆可</label>
@@ -253,7 +257,7 @@
             </div>
           </div>
 
-          <div class="field" style="margin-top:.25rem;">
+          <div class="field collab-venue-field">
             <label for="f-location">合作場域 ／ 地點</label>
             <input type="text" id="f-location" placeholder="請填寫地址或線上（如 Google Meet）" maxlength="100" />
           </div>
@@ -315,7 +319,7 @@
             <tr><th>其他說明</th><td id="c-message">—</td></tr>
           </tbody>
         </table>
-        <a href="index.html" class="btn-back-home">
+        <a href="index.html" class="btn-back-home" target="_top">
           <i class="fas fa-home"></i> 返回官網首頁
         </a>
       </div>
@@ -429,6 +433,22 @@
 <script>
   // ── GAS Web App URL ──
   const GAS_URL = 'https://script.google.com/macros/s/AKfycbxzZXoeP2sCBrJP0GP8eJ63oAvb7EB-RWbBHYWLeItTolyqA0CjjN2KZkeSS5mZb3fL/exec';
+
+  const isBookingEmbed = document.documentElement.classList.contains('booking-embed');
+  const bookingParentOrigin = location.protocol === 'file:' ? '*' : location.origin;
+
+  if (isBookingEmbed) {
+    const content = document.getElementById('collaboration-content');
+    const sendHeight = () => {
+      const height = Math.ceil(content.getBoundingClientRect().height);
+      if (height > 0) {
+        window.parent.postMessage({ type: 'ear:collab-height', height }, bookingParentOrigin);
+      }
+    };
+    const observer = new ResizeObserver(sendHeight);
+    observer.observe(content);
+    sendHeight();
+  }
 
   // ── 工具：取得勾選值（checkbox 群組，含「其他」）──
   function getChecked(name, otherChkId, otherTextId) {
@@ -590,7 +610,11 @@
       document.getElementById('form-section').style.display = 'none';
       const cp = document.getElementById('confirm-page');
       cp.classList.add('show');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (isBookingEmbed) {
+        window.parent.postMessage({ type: 'ear:collab-confirmed' }, bookingParentOrigin);
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
 
     } catch(err) {
       showToast('送出失敗，請稍後再試，或直接與我們聯繫 🙏');

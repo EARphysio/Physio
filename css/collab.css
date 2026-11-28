@@ -417,3 +417,63 @@ white-space: nowrap;
 .radio-row { gap: .55rem; }
 .btn-submit { padding: .9rem 2.5rem; font-size: .95rem; }
 }
+
+/* 合作邀請表單 */
+.collab-multiple-hint {
+  font-size: .78rem;
+  color: var(--gold);
+  font-weight: 400;
+}
+
+.collab-type-symbol {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+#err-type {
+  margin-top: .5rem;
+}
+
+.collab-format-options {
+  margin-top: .4rem;
+}
+
+.collab-venue-field {
+  margin-top: .25rem;
+}
+
+/* 由預約分頁嵌入時，頁面高度跟著表單內容調整。 */
+html.booking-embed,
+.booking-embed body {
+  overflow: hidden;
+}
+
+.booking-embed body {
+  margin: 0;
+  background: transparent;
+}
+
+.booking-embed body > header,
+.booking-embed body > footer,
+.booking-embed body > button,
+.booking-embed .nav-topline,
+.booking-embed #collaboration-content > .hero-topbar,
+.booking-embed #collaboration-content > .sec-wrap:empty {
+  display: none;
+}
+
+.booking-embed #collaboration-content {
+  display: flow-root;
+  padding-top: .5rem;
+}
+
+.booking-embed #collaboration-content > .sec-header {
+  margin-bottom: .75rem;
+  opacity: 1;
+  transform: none;
+}
+
+.booking-embed #collaboration-content .collab-wrap {
+  max-width: none;
+  padding: 0 .25rem 1rem;
+}
